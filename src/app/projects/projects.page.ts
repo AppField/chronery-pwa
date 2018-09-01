@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-projects',
+  selector: 'chy-projects',
   templateUrl: './projects.page.html',
   styleUrls: ['./projects.page.scss'],
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-imprint',
+  selector: 'chy-imprint',
   templateUrl: './imprint.page.html',
   styleUrls: ['./imprint.page.scss'],
 })

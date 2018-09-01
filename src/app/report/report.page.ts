@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-report',
+  selector: 'chy-report',
   templateUrl: './report.page.html',
   styleUrls: ['./report.page.scss'],
 })
