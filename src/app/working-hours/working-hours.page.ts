@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-working-hours',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WorkingHoursPage implements OnInit {
 
-  constructor() { }
+  toolbarColor: string;
+
+  constructor(private platform: Platform) {
+    this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
+  }
 
   ngOnInit() {
   }
