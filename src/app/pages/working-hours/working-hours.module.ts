@@ -6,8 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { WorkingHoursPage } from './working-hours.page';
-import { WorkCardComponent } from '../work-card/work-card.component';
-import { ProjectModalComponent } from '../project-modal/project-modal.component';
+import { WorkCardComponent } from '../../components/work-card/work-card.component';
+import { ProjectModalComponent } from '../../components/project-modal/project-modal.component';
 
 const routes: Routes = [
   {

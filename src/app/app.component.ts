@@ -68,7 +68,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private async presentUpdateToast() {
     const toast = await this.toastCtrl.create({
-      message: 'Eine neue Version ist erhältlich',
+      message: 'Eine neue Version ist verfügbar',
       showCloseButton: true,
       position: 'bottom',
       closeButtonText: 'Aktualisieren'

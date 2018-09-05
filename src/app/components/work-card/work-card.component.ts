@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicWindow, ModalController, NavController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 
 @Component({
@@ -9,7 +9,7 @@ import { ProjectModalComponent } from '../project-modal/project-modal.component'
 })
 export class WorkCardComponent implements OnInit {
 
-  displayFormat = 'HH: mm';
+  displayFormat = 'HH:mm';
 
   constructor(public modalCtrl: ModalController) {
   }
@@ -28,7 +28,6 @@ export class WorkCardComponent implements OnInit {
         const project = data['project'];
         console.log('project from modal selected', project);
       });
-
 
     return await modal.present();
   }

@@ -9,27 +9,27 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    loadChildren: './dashboard/dashboard.module#DashboardPageModule'
+    loadChildren: './pages/dashboard/dashboard.module#DashboardPageModule'
   },
   {
     path: 'working-hours',
-    loadChildren: './working-hours/working-hours.module#WorkingHoursPageModule'
+    loadChildren: './pages/working-hours/working-hours.module#WorkingHoursPageModule'
   },
   {
     path: 'report',
-    loadChildren: './report/report.module#ReportPageModule'
+    loadChildren: './pages/report/report.module#ReportPageModule'
   },
   {
     path: 'projects',
-    loadChildren: './projects/projects.module#ProjectsPageModule'
+    loadChildren: './pages/projects/projects.module#ProjectsPageModule'
   },
   {
     path: 'settings',
-    loadChildren: './settings/settings.module#SettingsPageModule'
+    loadChildren: './pages/settings/settings.module#SettingsPageModule'
   },
   {
     path: 'imprint',
-    loadChildren: './imprint/imprint.module#ImprintPageModule'
+    loadChildren: './pages/imprint/imprint.module#ImprintPageModule'
   }
 ];
 
