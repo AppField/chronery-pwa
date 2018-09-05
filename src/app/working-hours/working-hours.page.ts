@@ -17,4 +17,21 @@ export class WorkingHoursPage implements OnInit {
   ngOnInit() {
   }
 
+  /*
+  * Used to remove opened modal when pressing the back button on a smartphone.
+  * */
+  // backButtonListener(): void {
+  //   window.onpopstate = (evt) => {
+  //     // Close any active modals or overlays
+  //     let activePortal = this._ionicApp._loadingPortal.getActive() ||
+  //       this._ionicApp._modalPortal.getActive() ||
+  //       this._ionicApp._toastPortal.getActive() ||
+  //       this._ionicApp._overlayPortal.getActive();
+  //     if (activePortal) {
+  //       activePortal.dismiss();
+  //       return;
+  //     }
+  //   }
+  // }
+
 }

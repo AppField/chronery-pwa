@@ -31,6 +31,8 @@ export class ProjectModalComponent implements OnInit {
   }
 
   ngOnInit() {
+    // const projectModal = {projectModal: true};
+    // history.pushState(projectModal, "Project Modal", "Modal");
   }
 
   @HostListener('ionModalDidPresent')
