@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { IonicWindow, ModalController, NavController } from '@ionic/angular';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 
 @Component({
@@ -9,10 +9,7 @@ import { ProjectModalComponent } from '../project-modal/project-modal.component'
 })
 export class WorkCardComponent implements OnInit {
 
-  customActionSheetOptions: any = {
-    header: 'Projekt',
-    subHeader: 'Bitte wählen Sie ein Projekt aus'
-  };
+  displayFormat = 'HH: mm';
 
   constructor(public modalCtrl: ModalController) {
   }
@@ -26,10 +23,13 @@ export class WorkCardComponent implements OnInit {
       componentProps: {project: 'Nummer 6'},
     });
 
-    // const data = await modal.onWillDismiss();
-    // console.log('data from modal', data);
+    modal.onDidDismiss()
+      .then((data) => {
+        const project = data['project'];
+        console.log('project from modal selected', project);
+      });
+
 
     return await modal.present();
   }
-
 }

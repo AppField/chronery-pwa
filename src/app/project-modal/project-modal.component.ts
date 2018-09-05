@@ -1,5 +1,5 @@
 import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalController, Platform, Searchbar } from '@ionic/angular';
+import { ModalController, Platform, RippleEffect, Searchbar } from '@ionic/angular';
 
 @Component({
   selector: 'chy-project-modal',
@@ -40,6 +40,11 @@ export class ProjectModalComponent implements OnInit {
     console.log('Did present');
   }
 
+
+  selectProject(project): void {
+    console.log('selected project', project);
+    this.modalCtrl.dismiss(project);
+  }
 
   onCancel() {
     // console.log('will dismiss');

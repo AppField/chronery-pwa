@@ -1,6 +1,37 @@
 <ion-card>
   <ion-card-content>
-    <ion-button (click)="presentModal()">project</ion-button>
-    some form fields
+    <ion-item>
+      <ion-label position="floating">Projekt</ion-label>
+      <ion-input readonly (focus)="presentModal()" readonly></ion-input>
+    </ion-item>
+
+
+    <ion-grid class="time">
+      <ion-row>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Von</ion-label>
+            <ion-datetime [displayFormat]="displayFormat"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item>
+            <ion-label position="floating">Bis</ion-label>
+            <ion-datetime [displayFormat]="displayFormat"></ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-item>
+      <ion-label position="floating">Kommentar</ion-label>
+      <ion-input></ion-input>
+    </ion-item>
+
   </ion-card-content>
+
+  <ion-item class="activated">
+    <p class="spent">07:30 h</p>
+  </ion-item>
 </ion-card>
