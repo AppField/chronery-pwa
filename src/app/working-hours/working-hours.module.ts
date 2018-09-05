@@ -6,6 +6,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { WorkingHoursPage } from './working-hours.page';
+import { WorkCardComponent } from '../work-card/work-card.component';
+import { ProjectModalComponent } from '../project-modal/project-modal.component';
 
 const routes: Routes = [
   {
@@ -21,6 +23,8 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [WorkingHoursPage]
+  declarations: [WorkingHoursPage, WorkCardComponent, ProjectModalComponent],
+  entryComponents: [ProjectModalComponent]
 })
-export class WorkingHoursPageModule {}
+export class WorkingHoursPageModule {
+}

@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar [color]="toolbarColor">
+    <ion-searchbar #searchBar placeholder="Projekt suchen" animated
+                   showCancelButton cancelButtonText="Abbrechen"
+                   (ionCancel)="onCancel()"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let project of projects">
+
+      <ion-label>
+        <h2>{{project.name}}</h2>
+        <p>{{project.name}}</p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
