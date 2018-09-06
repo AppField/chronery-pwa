@@ -1,37 +1,48 @@
 <ion-card>
-  <ion-card-content>
-    <ion-item>
-      <ion-label position="floating">Projekt</ion-label>
-      <ion-input readonly (focus)="presentModal()" readonly></ion-input>
+  <form [formGroup]="form" (ngSubmit)="saveWorkingHours()">
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Projekt</ion-label>
+        <!--<ion-input readonly (focus)="presentModal()" readonly formControlName="project"></ion-input>-->
+        <ion-select [interfaceOptions]="actionSheetOptions" interface="action-sheet"
+                    placeholder="Projekt auswahlen" formControlName="project">
+          <ion-select-option *ngFor="let project of projects" [value]="project">
+            {{project.name}} - {{project.number}}
+          </ion-select-option>
+
+        </ion-select>
+      </ion-item>
+
+
+      <ion-grid class="time">
+        <ion-row>
+          <ion-col class="from">
+            <ion-item>
+              <ion-label position="floating">Von</ion-label>
+              <ion-datetime [displayFormat]="displayFormat" formControlName="from"></ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col class="to">
+            <ion-item>
+              <ion-label position="floating">Bis</ion-label>
+              <ion-datetime [displayFormat]="displayFormat" formControlName="to"
+                            (click)="onToFocus($event)"></ion-datetime>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+      <ion-item>
+        <ion-label position="floating">Kommentar</ion-label>
+        <ion-input formControlName="comment"></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+
+    <ion-item class="activated">
+      <p class="spent">{{form.get('minutesSpent').value | minutesToTime}}</p>
+      <!--<ion-input class="spent" [value]="form.get('minutesSpent').value | minutesToTime" formControlName="minutesSpent" readonly ></ion-input>-->
     </ion-item>
-
-
-    <ion-grid class="time">
-      <ion-row>
-        <ion-col class="from">
-          <ion-item>
-            <ion-label position="floating">Von</ion-label>
-            <ion-datetime [displayFormat]="displayFormat"></ion-datetime>
-          </ion-item>
-        </ion-col>
-        <ion-col class="to">
-          <ion-item>
-            <ion-label position="floating">Bis</ion-label>
-            <ion-datetime [displayFormat]="displayFormat"></ion-datetime>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-
-
-    <ion-item>
-      <ion-label position="floating">Kommentar</ion-label>
-      <ion-input></ion-input>
-    </ion-item>
-
-  </ion-card-content>
-
-  <ion-item class="activated">
-    <p class="spent">07:30 h</p>
-  </ion-item>
+  </form>
 </ion-card>
