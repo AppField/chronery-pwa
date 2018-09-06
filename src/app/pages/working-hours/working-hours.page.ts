@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { WorkingHours } from '../../models/working-hours';
 
 @Component({
   selector: 'app-working-hours',
@@ -10,11 +11,17 @@ export class WorkingHoursPage implements OnInit {
 
   toolbarColor: string;
 
+  workingHours: WorkingHours[] = [];
+
   constructor(private platform: Platform) {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
   }
 
   ngOnInit() {
+  }
+
+  addWorkingHours(): void {
+    this.workingHours.push(new WorkingHours());
   }
 
   /*

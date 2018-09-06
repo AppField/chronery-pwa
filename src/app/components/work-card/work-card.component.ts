@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { merge, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import * as differenceInMinutes from 'date-fns/difference_in_minutes';
 import { Utils } from '../../utils/utils';
+import { WorkingHours } from '../../models/working-hours';
 
 @Component({
   selector: 'chy-work-card',
@@ -35,15 +36,19 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     { name: 'Something', number: 'ST' }
   ];
 
+  @Input() workingHour: WorkingHours;
+
   constructor(public modalCtrl: ModalController,
               private fb: FormBuilder) {
+  }
 
+  ngOnInit() {
     this.form = this.fb.group({
-      project: ['', Validators.required],
-      from: [new Date().toISOString(), Validators.required],
-      to: ['', [CustomValidators.isAfter]],
-      comment: [''],
-      minutesSpent: ['']
+      project: [this.workingHour.project, Validators.required],
+      from: [this.workingHour.from, Validators.required],
+      to: [this.workingHour.to, [CustomValidators.isAfter]],
+      comment: [this.workingHour.comment],
+      minutesSpent: [this.workingHour.minutesSpent]
     });
 
 
@@ -57,10 +62,6 @@ export class WorkCardComponent implements OnInit, OnDestroy {
         merge(toControl.valueChanges)
       )
       .subscribe(() => this.setMinutesSpent());
-
-  }
-
-  ngOnInit() {
   }
 
   async presentModal() {

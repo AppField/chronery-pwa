@@ -9,6 +9,18 @@
 
 <ion-content padding>
 
-<chy-work-card></chy-work-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let workingHour of workingHours" size="12" size-sm="6" size-md="6" size-xl="4">
+        <chy-work-card [workingHour]="workingHour"></chy-work-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addWorkingHours()" size="large" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

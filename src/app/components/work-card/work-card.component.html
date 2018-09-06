@@ -1,6 +1,11 @@
 <ion-card>
   <form [formGroup]="form" (ngSubmit)="saveWorkingHours()">
     <ion-card-content>
+      <ion-fab vertical="top" horizontal="end" edge="false">
+        <ion-fab-button size="small" color="light" translucent="true">
+          <ion-icon name="close"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
       <ion-item>
         <ion-label position="stacked">Projekt</ion-label>
         <!--<ion-input readonly (focus)="presentModal()" readonly formControlName="project"></ion-input>-->

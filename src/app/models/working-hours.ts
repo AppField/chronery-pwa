@@ -1,9 +1,15 @@
-import { Datetime } from '@ionic/angular';
+import { Project } from './project';
 
-interface WorkingHours {
+export class WorkingHours {
   project: Project;
-  from: Datetime;
-  to: Datetime;
+  from: string;
+  to: string;
   comment: string;
   minutesSpent: string;
+
+  constructor() {
+    this.project = new Project();
+    this.from = new Date().toISOString();
+    this.to = '';
+  }
 }
