@@ -12,7 +12,8 @@
 
         </ion-select>
       </ion-item>
-
+      <div class="error" *ngIf="form.get('project').hasError('required') && form.get('project').touched">Pflichtfeld
+      </div>
 
       <ion-grid class="time">
         <ion-row>
@@ -21,6 +22,8 @@
               <ion-label position="floating">Von</ion-label>
               <ion-datetime [displayFormat]="displayFormat" formControlName="from"></ion-datetime>
             </ion-item>
+            <div class="error" *ngIf="form.get('from').hasError('required') && form.get('from').touched">Pflichtfeld
+            </div>
           </ion-col>
           <ion-col class="to">
             <ion-item>
@@ -28,6 +31,11 @@
               <ion-datetime [displayFormat]="displayFormat" formControlName="to"
                             (click)="onToFocus($event)"></ion-datetime>
             </ion-item>
+            <div class="error" *ngIf="form.get('to').hasError('required') && form.get('to').touched">Pflichtfeld
+            </div>
+            <div class="error" *ngIf="form.get('to').hasError('isNotAfter') && form.get('to').value != ''">
+              Muss nach der "Von"-Zeit sein
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>

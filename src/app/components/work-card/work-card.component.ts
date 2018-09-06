@@ -5,7 +5,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from '../../utils/custom-validators';
 import { merge, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import * as parse from 'date-fns/parse';
 import * as differenceInMinutes from 'date-fns/difference_in_minutes';
 import { Utils } from '../../utils/utils';
 
@@ -42,7 +41,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       project: ['', Validators.required],
       from: [new Date().toISOString(), Validators.required],
-      to: ['', [Validators.required, CustomValidators.isAfter]],
+      to: ['', [CustomValidators.isAfter]],
       comment: [''],
       minutesSpent: ['']
     });
