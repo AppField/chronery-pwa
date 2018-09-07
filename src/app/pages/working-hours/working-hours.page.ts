@@ -33,11 +33,18 @@ import { animate, keyframes, query, stagger, style, transition, trigger } from '
 export class WorkingHoursPage implements OnInit {
 
   toolbarColor: string;
+  menuType: string;
 
   workingHours: WorkingHours[] = [];
 
   constructor(private platform: Platform) {
-    this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
+    if (!this.platform.is('ios')) {
+      this.toolbarColor = 'primary';
+      this.menuType = 'overlay';
+    } else {
+      this.menuType = 'push';
+    }
+    // this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
     this.createDummyData();
   }
 
