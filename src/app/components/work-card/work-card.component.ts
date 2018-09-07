@@ -100,6 +100,10 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     this.form.controls['minutesSpent'].setValue(differenceMinutes > 0 ? differenceMinutes : 0);
   }
 
+  removeWorkingHours(): void {
+    console.log('WorkingHours to remove', this.workingHour);
+  }
+
   saveWorkingHours(): void {
     if (this.form.valid) {
       console.log('Form is VALID!');

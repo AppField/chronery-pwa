@@ -2,7 +2,7 @@
   <form [formGroup]="form" (ngSubmit)="saveWorkingHours()">
     <ion-card-content>
       <ion-fab vertical="top" horizontal="end" edge="false">
-        <ion-fab-button size="small" color="light" translucent="true">
+        <ion-fab-button size="small" color="light" translucent="true" (click)="removeWorkingHours()">
           <ion-icon name="close"></ion-icon>
         </ion-fab-button>
       </ion-fab>
