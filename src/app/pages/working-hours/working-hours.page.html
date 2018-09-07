@@ -1,26 +1,43 @@
-<ion-header>
-  <ion-toolbar [color]="toolbarColor">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Arbeitsstunden</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-menu contentId="workingHoursContent" side="end" class="day-picker">
 
-<ion-content padding>
+  <!--<ion-toolbar class="primary-gradient">-->
+    <!--<ion-title>Tagesauswahl</ion-title>-->
+  <!--</ion-toolbar>-->
 
-  <ion-grid>
-    <ion-row [@cardAnimation]="workingHours.length">
-      <ion-col *ngFor="let workingHour of workingHours" size="12" size-sm="6" size-md="6" size-xl="4">
-        <chy-work-card [workingHour]="workingHour" (deleteWorkingHours)="deleteWorkingHours()"></chy-work-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+  <ion-content class="primary-gradient">
+    <h3>HI1</h3>
+  </ion-content>
+</ion-menu>
 
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addWorkingHours()" size="large" color="primary">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+<ion-content id="workingHoursContent">
+
+
+  <ion-header>
+    <ion-toolbar [color]="toolbarColor">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Arbeitsstunden</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div>
+    <ion-grid>
+      <ion-row [@cardAnimation]="workingHours.length">
+        <ion-col *ngFor="let workingHour of workingHours" size="12" size-sm="6" size-md="6" size-xl="4">
+          <chy-work-card [workingHour]="workingHour" (deleteWorkingHours)="deleteWorkingHours()"></chy-work-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="addWorkingHours()" size="large" color="primary">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
 </ion-content>
+
+

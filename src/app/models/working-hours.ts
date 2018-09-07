@@ -11,5 +11,6 @@ export class WorkingHours {
     this.project = new Project();
     this.from = new Date().toISOString();
     this.to = '';
+    this.comment = '';
   }
 }

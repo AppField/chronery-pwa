@@ -15,10 +15,6 @@ import { animate, keyframes, query, stagger, style, transition, trigger } from '
 
         query(':enter', stagger('350ms', [
           animate('500ms ease-in', keyframes([
-            // style({ opacity: 0, transform: 'translateY(-75%)', offset: 0 }),
-            // style({ opacity: .5, transform: 'translateY(35px)', offset: 0.3 }),
-            // style({ opacity: 1, transform: 'translateY(0)', offset: 1.0 }),
-
             style({ opacity: 0, transform: 'translate3d(0, 20px, 0)', offset: 0 }),
             style({ opacity: 1, transform: 'translate3d(0, 0, 0)', offset: 1.0 }),
           ]))
