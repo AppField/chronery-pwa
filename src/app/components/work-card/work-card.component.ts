@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -37,6 +37,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
   ];
 
   @Input() workingHour: WorkingHours;
+  @Output() deleteWorkingHours = new EventEmitter();
 
   constructor(public modalCtrl: ModalController,
               private fb: FormBuilder) {
@@ -102,6 +103,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
 
   removeWorkingHours(): void {
     console.log('WorkingHours to remove', this.workingHour);
+    this.deleteWorkingHours.emit(this.workingHour);
   }
 
   saveWorkingHours(): void {

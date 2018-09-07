@@ -10,9 +10,9 @@
 <ion-content padding>
 
   <ion-grid>
-    <ion-row>
+    <ion-row [@cardAnimation]="workingHours.length">
       <ion-col *ngFor="let workingHour of workingHours" size="12" size-sm="6" size-md="6" size-xl="4">
-        <chy-work-card [workingHour]="workingHour"></chy-work-card>
+        <chy-work-card [workingHour]="workingHour" (deleteWorkingHours)="deleteWorkingHours()"></chy-work-card>
       </ion-col>
     </ion-row>
   </ion-grid>
