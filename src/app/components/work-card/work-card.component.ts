@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from '../../utils/custom-validators';
 import { merge, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import * as differenceInMinutes from 'date-fns/difference_in_minutes';
+import { differenceInMinutes, differenceInSeconds } from 'date-fns';
 import { Utils } from '../../utils/utils';
 import { WorkingHours } from '../../models/working-hours';
 
@@ -97,7 +97,10 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     const fromMinutes = Utils.getDateTime(from);
     const toMinutes = Utils.getDateTime(to);
 
-    const differenceMinutes = differenceInMinutes(toMinutes, fromMinutes);
+    // const differenceMinutes = differenceInMinutes(toMinutes, fromMinutes);
+    const differenceSeconds = differenceInSeconds(toMinutes, fromMinutes);
+    const differenceMinutes = differenceSeconds / 60;
+
     this.form.controls['minutesSpent'].setValue(differenceMinutes > 0 ? differenceMinutes : 0);
   }
 

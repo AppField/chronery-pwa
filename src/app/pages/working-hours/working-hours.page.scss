@@ -1,7 +1,4 @@
-.day-picker {
+.day-picker-menu {
   z-index: 1001;
-}
-
-.primary-gradient .toolbar-background, .primary-gradient {
-  background: linear-gradient(90deg, var(--ion-color-primary), var(--ion-color-tertiary-tint));
+  --background: linear-gradient(90deg, var(--ion-color-primary), var(--ion-color-tertiary-tint));
 }

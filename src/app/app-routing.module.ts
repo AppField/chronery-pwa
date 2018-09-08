@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { Utils } from './utils/utils';
 
 const routes: Routes = [
   {
@@ -13,6 +14,11 @@ const routes: Routes = [
   },
   {
     path: 'working-hours',
+    redirectTo: `working-hours/${Utils.encodeDate(new Date())}`
+    // loadChildren: './pages/working-hours/working-hours.module#WorkingHoursPageModule'
+  },
+  {
+    path: 'working-hours/:date',
     loadChildren: './pages/working-hours/working-hours.module#WorkingHoursPageModule'
   },
   {

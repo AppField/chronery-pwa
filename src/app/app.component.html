@@ -2,14 +2,14 @@
   <ion-split-pane when="md">
     <ion-menu contentId="content">
       <!--<ion-header>-->
-        <ion-toolbar>
-          <ion-title>Chronery</ion-title>
-        </ion-toolbar>
+      <ion-toolbar>
+        <ion-title>Chronery</ion-title>
+      </ion-toolbar>
       <!--</ion-header>-->
       <ion-content>
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" routerLinkActive="active">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
                 {{p.title}}

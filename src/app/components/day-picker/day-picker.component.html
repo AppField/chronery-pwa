@@ -1,0 +1,15 @@
+<!--<ion-toolbar class="primary-gradient">-->
+<!--<ion-title>Tagesauswahl</ion-title>-->
+<!--</ion-toolbar>-->
+
+
+
+  <ion-list>
+    <ion-menu-toggle auto-hide="false" *ngFor="let day of days">
+      <ion-item [routerLink]="[day.url]">
+        <ion-label>
+          {{ day.date | date: 'EEE dd.MM.'}}
+        </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-list>
