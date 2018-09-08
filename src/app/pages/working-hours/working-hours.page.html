@@ -1,19 +1,13 @@
-<ion-menu contentId="workingHoursContent" side="end" class="day-picker-menu" [type]="menuType">
-  <chy-day-picker></chy-day-picker>
-</ion-menu>
+<ion-header>
+  <ion-toolbar [color]="toolbarColor">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Arbeitsstunden</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content id="workingHoursContent">
-
-
-  <ion-header>
-    <ion-toolbar [color]="toolbarColor">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Arbeitsstunden</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
+<ion-content>
   <div>
     <ion-grid>
       <ion-row [@cardAnimation]="workingHours.length">
@@ -21,15 +15,25 @@
           <chy-work-card [workingHour]="workingHour" (deleteWorkingHours)="deleteWorkingHours()"></chy-work-card>
         </ion-col>
       </ion-row>
+
+
     </ion-grid>
 
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button (click)="addWorkingHours()" size="large" color="primary">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
   </div>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addWorkingHours()" size="large" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>
+
+<ion-footer>
+  <ion-item>
+    <ion-datetime displayFormat="DD. MMMM YYYY" [ngModel]="selectedDate" (ionChange)="updateWorkingHours()"
+                  class="selected-date"></ion-datetime>
+  </ion-item>
+</ion-footer>
 
 

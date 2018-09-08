@@ -14,11 +14,6 @@ const routes: Routes = [
   },
   {
     path: 'working-hours',
-    redirectTo: `working-hours/${Utils.encodeDate(new Date())}`
-    // loadChildren: './pages/working-hours/working-hours.module#WorkingHoursPageModule'
-  },
-  {
-    path: 'working-hours/:date',
     loadChildren: './pages/working-hours/working-hours.module#WorkingHoursPageModule'
   },
   {

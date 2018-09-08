@@ -1,4 +1,5 @@
-.day-picker-menu {
-  z-index: 1001;
-  --background: linear-gradient(90deg, var(--ion-color-primary), var(--ion-color-tertiary-tint));
+.selected-date {
+  color: var(--ion-color-primary);
+  width: 100%;
+  text-align: center;
 }

@@ -33,26 +33,25 @@ import { animate, keyframes, query, stagger, style, transition, trigger } from '
 export class WorkingHoursPage implements OnInit {
 
   toolbarColor: string;
-  menuType: string;
+  selectedDate: string;
 
   workingHours: WorkingHours[] = [];
 
   constructor(private platform: Platform) {
-    if (!this.platform.is('ios')) {
-      this.toolbarColor = 'primary';
-      this.menuType = 'overlay';
-    } else {
-      this.menuType = 'push';
-    }
-    // this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
+    this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
+    this.selectedDate = new Date().toISOString();
     this.createDummyData();
   }
 
   ngOnInit() {
   }
 
+  updateWorkingHours(): void {
+    console.log('selected date', this.selectedDate);
+  }
+
   addWorkingHours(): void {
-    this.workingHours.push(new WorkingHours());
+    this.workingHours.unshift(new WorkingHours());
   }
 
   deleteWorkingHours(workingHours: WorkingHours): void {

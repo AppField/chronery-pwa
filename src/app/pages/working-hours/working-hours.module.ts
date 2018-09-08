@@ -9,7 +9,6 @@ import { WorkingHoursPage } from './working-hours.page';
 import { WorkCardComponent } from '../../components/work-card/work-card.component';
 import { ProjectModalComponent } from '../../components/project-modal/project-modal.component';
 import { MinutesToTimePipe } from '../../utils/pipes/minutes-to-time';
-import { DayPickerComponent } from '../../components/day-picker/day-picker.component';
 
 const routes: Routes = [
   {
@@ -26,7 +25,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [WorkingHoursPage, WorkCardComponent, ProjectModalComponent, MinutesToTimePipe, DayPickerComponent],
+  declarations: [WorkingHoursPage, WorkCardComponent, ProjectModalComponent, MinutesToTimePipe],
   entryComponents: [ProjectModalComponent]
 })
 export class WorkingHoursPageModule {
