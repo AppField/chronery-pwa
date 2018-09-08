@@ -22,3 +22,14 @@ body {
 .active {
   color: var(--ion-color-primary)
 }
+
+.gradient {
+  --background: linear-gradient(90deg, var(--ion-color-tertiary-tint), var(--ion-color-primary)) !important;
+  --color: var(--ion-color-primary-contrast) !important;
+  background-color: linear-gradient(90deg, var(--ion-color-tertiary-tint), var(--ion-color-primary)) !important;
+  color: var(--ion-color-primary-contrast);
+
+  .active {
+    color: var(--ion-color-dark);
+  }
+}
