@@ -11,7 +11,7 @@
   <div>
     <ion-grid>
       <ion-row [@cardAnimation]="workingHours.length">
-        <ion-col *ngFor="let workingHour of workingHours" size="12" size-sm="6" size-md="6" size-xl="4">
+        <ion-col *ngFor="let workingHour of workingHours" size="12" size-sm="6" size-md="6" size-lg="4">
           <chy-work-card [workingHour]="workingHour" (deleteWorkingHours)="deleteWorkingHours()"></chy-work-card>
         </ion-col>
       </ion-row>

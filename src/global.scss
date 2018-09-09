@@ -33,3 +33,9 @@ body {
     color: var(--ion-color-dark);
   }
 }
+
+@media screen and (min-width: 960px) {
+  .split-pane-md.split-pane-visible > .split-pane-side {
+    max-width: 300px;
+  }
+}
