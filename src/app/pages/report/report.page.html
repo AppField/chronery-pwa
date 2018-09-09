@@ -5,6 +5,17 @@
     </ion-buttons>
     <ion-title>Bericht</ion-title>
   </ion-toolbar>
+  <ion-toolbar [color]="toolbarColor">
+    <ion-item [ngClass]="contrastColor">
+      <ion-label>Projekte</ion-label>
+      <ion-select multiple="true" cancelText="Abbrechen" okText="Filtern" (ionChange)="updateProjects($event)"
+                  placeholder="Projekte auswählen">
+        <ion-select-option *ngFor="let project of projects" [value]="project">
+          {{project.name}} - {{project.number}}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
@@ -15,33 +26,11 @@
   <ion-icon class="date-direction" name="arrow-forward"></ion-icon>
   <ion-toolbar class="datepicker-toolbar">
 
-    <ion-datetime displayFormat="DD.MM.YYYY" [ngModel]="from" (ionChange)="updateReport()"
+    <ion-datetime displayFormat="DD.MM.YYYY" [value]="from" (ionChange)="updateFrom($event)"
                   class="date-picker"></ion-datetime>
 
-    <ion-datetime displayFormat="DD.MM.YYYY" [ngModel]="from" (ionChange)="updateReport()"
+    <ion-datetime displayFormat="DD.MM.YYYY" [value]="to" (ionChange)="updateTo($event)"
                   class="date-picker "></ion-datetime>
 
   </ion-toolbar>
-  <!--<ion-grid>-->
-  <!--<ion-row>-->
-  <!--<ion-col size="4">-->
-  <!--<ion-item>-->
-  <!--<ion-label position="stacked">Von</ion-label>-->
-  <!--<ion-datetime displayFormat="DD.MM.YYYY" [ngModel]="from" (ionChange)="updateReport()"-->
-  <!--class="date-picker"></ion-datetime>-->
-  <!--</ion-item>-->
-  <!--</ion-col>-->
-  <!--<ion-col size="2">-->
-  <!--<ion-icon name="arrow-forward"></ion-icon>-->
-  <!--</ion-col>-->
-  <!--<ion-col size="4">-->
-  <!--<ion-item>-->
-  <!--<ion-label position="stacked">Bis</ion-label>-->
-  <!--<ion-datetime displayFormat="DD.MM.YYYY" [ngModel]="from" (ionChange)="updateReport()"-->
-  <!--class="date-picker "></ion-datetime>-->
-  <!--</ion-item>-->
-
-  <!--</ion-col>-->
-  <!--</ion-row>-->
-  <!--</ion-grid>-->
 </ion-footer>

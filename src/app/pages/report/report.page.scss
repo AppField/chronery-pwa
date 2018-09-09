@@ -1,3 +1,13 @@
+.contrast-color {
+  color: var(--ion-color-primary-contrast);
+  .ion-select-inner {
+    color: var(--ion-color-primary-contrast);
+  }
+  .select-text {
+    color: white;
+  }
+}
+
 .date-picker {
   width: 50%;
   display: inline-block;

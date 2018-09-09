@@ -39,3 +39,7 @@ body {
     max-width: 300px;
   }
 }
+
+.alert-checkbox-group.sc-ion-alert-ios, .alert-checkbox-group.sc-ion-alert-md {
+  max-height: none;
+}
