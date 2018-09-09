@@ -30,10 +30,12 @@
 </ion-content>
 
 <ion-footer>
-  <ion-item>
-    <ion-datetime displayFormat="DD. MMMM YYYY" [ngModel]="selectedDate" (ionChange)="updateWorkingHours()"
-                  class="selected-date"></ion-datetime>
-  </ion-item>
+  <ion-toolbar>
+    <!--<ion-item>-->
+      <ion-datetime displayFormat="DD. MMMM YYYY" [ngModel]="selectedDate" (ionChange)="updateWorkingHours()"
+                    class="selected-date"></ion-datetime>
+    <!--</ion-item>-->
+  </ion-toolbar>
 </ion-footer>
 
 

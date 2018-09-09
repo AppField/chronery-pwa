@@ -1,0 +1,10 @@
+.date-picker {
+  width: 50%;
+  display: inline-block;
+
+  color: var(--ion-color-primary);
+
+  &:last-of-type {
+    text-align: right;
+  }
+}
