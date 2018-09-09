@@ -5,8 +5,43 @@
     </ion-buttons>
     <ion-title>Projekte</ion-title>
   </ion-toolbar>
+  <ion-toolbar [color]="toolbarColor">
+    <ion-searchbar animated [showCancelButton]="showCancelButton" cancelButtonText="Abbrechen"
+                   placeholder="Projekte durchsuchen"
+                   (ionChange)="searchProjects($event)"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <div>
+    <ion-grid>
+      <ion-row [@cardAnimation]="projects.length">
+        <ion-col *ngFor="let project of projects" size="12" size-sm="6" size-lg="4" size-xl="3">
+          <ion-card>
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="stacked">Projektname</ion-label>
+                <ion-input [value]="project.name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Projektnummer</ion-label>
+                <ion-input [value]="project.name"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="fixed">Aktiv</ion-label>
+                <ion-checkbox slot="end"></ion-checkbox>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addProject()" size="large" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
