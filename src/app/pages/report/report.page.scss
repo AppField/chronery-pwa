@@ -12,6 +12,10 @@
 
 .report-table {
 
+  .table-header {
+    --padding-start: 0;
+  }
+
   .no-padding {
     padding: 0;
   }
@@ -42,6 +46,7 @@
 
   &:last-of-type {
     text-align: right;
+    padding-right: 16px;
   }
 }
 
