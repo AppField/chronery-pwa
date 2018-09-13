@@ -41,14 +41,9 @@ export class AppComponent implements OnInit, OnDestroy {
       icon: 'settings'
     },
     {
-      title: 'Anmelden',
-      url: '/login',
-      icon: 'log-in'
-    },
-    {
-      title: 'Registrieren',
-      url: '/register',
-      icon: 'person-add'
+      title: 'Authentifizieren',
+      url: '/authenticate',
+      icon: 'person'
     }
   ];
 

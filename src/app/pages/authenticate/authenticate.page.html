@@ -1,0 +1,67 @@
+<ion-grid class="grid">
+  <ion-row class="row">
+    <ion-col size="12" size-xs="12" size-md="6" class="login">
+      <h1>Anmelden</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <ion-item>
+          <ion-label color="primary" class="label" position="floating">E-Mail</ion-label>
+          <ion-input formControlName="email"></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="loginEmailRequired">Pflichtfeld</div>
+        <div class="error" *ngIf="loginEmailEmail">
+          Geben sie eine g&uuml;ltige E-Mail Adresse an
+        </div>
+        <ion-item>
+          <ion-label color="primary" position="floating">Passwort</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="loginPasswordRequired">Pflichtfeld</div>
+
+        <ion-button padding type="submit" color="light" fill="outline">Anmelden</ion-button>
+      </form>
+
+    </ion-col>
+    <ion-col size="12" size-xs="12" size-md="6" class="register">
+
+      <h1>Registrieren</h1>
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <ion-item>
+          <ion-label color="primary" class="label" position="floating">E-Mail</ion-label>
+          <ion-input formControlName="email"></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="registerEmailRequired">
+          Pflichtfeld
+        </div>
+        <div class="error" *ngIf="registerEmailEmail">
+          Geben sie eine g&uuml;ltige E-Mail Adresse an
+        </div>
+        <ion-item>
+          <ion-label color="primary" position="floating">Vorname</ion-label>
+          <ion-input formControlName="firstName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" position="floating">Nachname</ion-label>
+          <ion-input formControlName="lastName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" position="floating">Passwort</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="registerPasswordRequired">Pflichtfeld</div>
+        <ion-item>
+          <ion-label color="primary" position="floating">Passwort wiederholen</ion-label>
+          <ion-input type="password" formControlName="repeatPassword"></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="registerRepeatPasswordRequired">Pflichtfeld</div>
+        <div class="error" *ngIf="registerRepeatPasswordMismatch">
+          Passw&ouml;rter stimmen nicht &uuml;berein
+        </div>
+
+
+        <ion-button padding type="submit" color="light" fill="outline">Registrieren</ion-button>
+
+      </form>
+
+    </ion-col>
+  </ion-row>
+</ion-grid>

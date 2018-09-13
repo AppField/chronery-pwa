@@ -1,0 +1,42 @@
+
+:host {
+  background-color: var(--ion-color-primary);
+  color: var(--ion-color-primary-contrast);
+  display: flex;
+  justify-content: center;
+}
+
+.grid {
+  width: 70%;
+  text-align: center;
+}
+
+.label-floating, .in-item, .item-has-focus {
+  //color: var(--ion-color-primary-contrast);
+}
+
+.item-label {
+  --ion-color-primary: var(--ion-color-primary-contrast);
+}
+
+.in-item {
+  color: var(--ion-color-dark);
+}
+
+@media screen and (min-width: 768px) {
+  .login {
+    text-align: right;
+    border-right: 1px solid var(--ion-color-tertiary);
+    padding-right: 1rem;
+  }
+  .register {
+    text-align: left;
+    padding-left: 1rem;
+    border-left: 1px solid var(--ion-color-tertiary);
+  }
+}
+
+.error {
+  color: var(--ion-color-warning);
+  text-align:left;
+}

@@ -33,12 +33,8 @@ const routes: Routes = [
     loadChildren: './pages/imprint/imprint.module#ImprintPageModule'
   },
   {
-    path: 'login',
-    loadChildren: './pages/login/login.module#LoginPageModule'
-  },
-  {
-    path: 'register',
-    loadChildren: './pages/register/register.module#RegisterPageModule'
+    path: 'authenticate',
+    loadChildren: './pages/authenticate/authenticate.module#AuthenticatePageModule'
   }
 ];
 

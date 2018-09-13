@@ -6,6 +6,15 @@ export const environment = {
   production: false
 };
 
+export const firebaseConfig = {
+  apiKey: 'AIzaSyASFyw_JVSBhq1UOme_n56g_PC2hY8w7pk',
+  authDomain: 'chronery-pwa.firebaseapp.com',
+  databaseURL: 'https://chronery-pwa.firebaseio.com',
+  projectId: 'chronery-pwa',
+  storageBucket: 'chronery-pwa.appspot.com',
+  messagingSenderId: '503130821725'
+};
+
 /*
  * In development mode, to ignore zone related error stack frames such as
  * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can
