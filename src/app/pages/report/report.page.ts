@@ -11,9 +11,11 @@ import { Project } from '../../models/project';
 export class ReportPage implements OnInit {
 
   toolbarColor: string;
+  contrastColor: string;
+  isDesktop: boolean;
   from: string;
   to: string;
-  contrastColor: string;
+
 
   projects: Project[] = [
     { name: 'Test Project 1', number: 'TP1', active: true },
@@ -31,6 +33,7 @@ export class ReportPage implements OnInit {
   constructor(private platform: Platform) {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
     this.contrastColor = !this.platform.is('ios') ? 'contrast-color' : null;
+    this.isDesktop = this.platform.is('desktop');
     this.from = new Date().toISOString();
     this.to = new Date().toISOString();
 

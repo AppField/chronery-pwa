@@ -13,6 +13,10 @@ body {
   user-select: auto;
 }
 
+.ion-menu{
+  --border: 0;
+}
+
 .error {
   color: var(--ion-color-danger);
   font-size: .75rem;

@@ -8,6 +8,33 @@
   }
 }
 
+/* START TABLE STYLES */
+
+.report-table {
+
+  .no-padding {
+    padding: 0;
+  }
+
+  .ion-label {
+    white-space: normal;
+  }
+
+  @media screen and (max-width: 720px) {
+    .hide-sm {
+      display: none;
+    }
+  }
+
+  @media screen and(min-width: 720px) {
+    .hide-big {
+      display: none;
+    }
+  }
+}
+
+/* END TABLE STYLES */
+
 .date-picker {
   width: 50%;
   display: inline-block;
