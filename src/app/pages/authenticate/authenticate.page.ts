@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Utils } from '../../utils/utils';
 import { CustomValidators } from '../../utils/custom-validators';
+import { UserService } from '../../services/user/user.service';
+import { LoginData, RegisterData } from '../../models/authenticate';
 
 @Component({
   selector: 'chy-authenticate',
@@ -12,8 +13,10 @@ export class AuthenticatePage implements OnInit {
 
   loginForm: FormGroup;
   registerForm: FormGroup;
+  isLoading = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private userService: UserService) {
   }
 
   ngOnInit() {
@@ -33,15 +36,30 @@ export class AuthenticatePage implements OnInit {
     });
   }
 
-  login(): void {
+  async login() {
     if (this.loginForm.valid) {
-      console.log('login', this.loginForm.value);
+      this.isLoading = true;
+      const loginData = new LoginData(
+        this.loginForm.get('email').value,
+        this.loginForm.get('password').value
+      );
+      const loggedin = await this.userService.login(loginData);
+      this.isLoading = false;
     }
   }
 
-  register(): void {
+  async register() {
     if (this.registerForm.valid) {
-      console.log('register data', this.registerForm.value);
+      this.isLoading = true;
+      const registerData = new RegisterData(
+        this.registerForm.get('email').value,
+        this.registerForm.get('firstName').value,
+        this.registerForm.get('lastName').value,
+        this.registerForm.get('password').value
+      );
+      const registered = await this.userService.register(registerData);
+      this.isLoading = false;
+      console.log('registered', registered);
     }
   }
 
@@ -54,7 +72,9 @@ export class AuthenticatePage implements OnInit {
   }
 
   get loginEmailEmail(): boolean {
-    return this.loginForm.get('email').hasError('email') && !this.loginForm.get('email').hasError('required');
+    return this.loginForm.get('email').hasError('email')
+      && !this.loginForm.get('email').hasError('required')
+      && this.loginForm.get('email').touched;
   }
 
   get loginPasswordRequired(): boolean {
@@ -67,7 +87,8 @@ export class AuthenticatePage implements OnInit {
   }
 
   get registerEmailEmail(): boolean {
-    return this.registerForm.get('email').hasError('email') && !this.registerForm.get('email').hasError('required');
+    return this.registerForm.get('email').hasError('email') && !this.registerForm.get('email').hasError('required')
+      && this.registerForm.get('email').touched;
   }
 
   get registerPasswordRequired(): boolean {
@@ -79,7 +100,7 @@ export class AuthenticatePage implements OnInit {
   }
 
   get registerRepeatPasswordMismatch(): boolean {
-    return !this.registerForm.get('repeatPassword').hasError('required') && this.registerForm.get('repeatPassword').hasError('mismatch');
+    return !this.registerForm.get('repeatPassword').hasError('required') && this.registerForm.get('repeatPassword').hasError('mismatch') && this.registerForm.get('repeatPassword').touched;
   }
 
 }

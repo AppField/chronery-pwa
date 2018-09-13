@@ -18,6 +18,8 @@
         <div class="error" *ngIf="loginPasswordRequired">Pflichtfeld</div>
 
         <ion-button padding type="submit" color="light" fill="outline">Anmelden</ion-button>
+        <!-- Make enter to submit-->
+        <button type="submit" style="display:none"></button>
       </form>
 
     </ion-col>
@@ -35,14 +37,14 @@
         <div class="error" *ngIf="registerEmailEmail">
           Geben sie eine g&uuml;ltige E-Mail Adresse an
         </div>
-        <ion-item>
-          <ion-label color="primary" position="floating">Vorname</ion-label>
-          <ion-input formControlName="firstName"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label color="primary" position="floating">Nachname</ion-label>
-          <ion-input formControlName="lastName"></ion-input>
-        </ion-item>
+        <!--<ion-item>-->
+        <!--<ion-label color="primary" position="floating">Vorname</ion-label>-->
+        <!--<ion-input formControlName="firstName"></ion-input>-->
+        <!--</ion-item>-->
+        <!--<ion-item>-->
+        <!--<ion-label color="primary" position="floating">Nachname</ion-label>-->
+        <!--<ion-input formControlName="lastName"></ion-input>-->
+        <!--</ion-item>-->
         <ion-item>
           <ion-label color="primary" position="floating">Passwort</ion-label>
           <ion-input type="password" formControlName="password"></ion-input>
@@ -57,11 +59,13 @@
           Passw&ouml;rter stimmen nicht &uuml;berein
         </div>
 
-
         <ion-button padding type="submit" color="light" fill="outline">Registrieren</ion-button>
+        <!-- Make enter to submit-->
+        <button type="submit" style="display:none"></button>
 
       </form>
 
     </ion-col>
+    <chy-loading-overlay *ngIf="isLoading"></chy-loading-overlay>
   </ion-row>
 </ion-grid>

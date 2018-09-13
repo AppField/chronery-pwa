@@ -7,12 +7,9 @@
 }
 
 .grid {
-  width: 70%;
+  position: relative;
+  width: 90%;
   text-align: center;
-}
-
-.label-floating, .in-item, .item-has-focus {
-  //color: var(--ion-color-primary-contrast);
 }
 
 .item-label {
@@ -23,7 +20,17 @@
   color: var(--ion-color-dark);
 }
 
+.register {
+  padding-top: 1rem;
+  border-top: 2px solid var(--ion-color-tertiary);
+  margin-top: 1rem;
+}
+
 @media screen and (min-width: 768px) {
+  .grid {
+    width: 70%;
+  }
+
   .login {
     text-align: right;
     border-right: 1px solid var(--ion-color-tertiary);
@@ -32,11 +39,14 @@
   .register {
     text-align: left;
     padding-left: 1rem;
+    padding-top: 5px;
+    border-top: none;
     border-left: 1px solid var(--ion-color-tertiary);
+    margin-top: 0;
   }
 }
 
 .error {
   color: var(--ion-color-warning);
-  text-align:left;
+  text-align: left;
 }

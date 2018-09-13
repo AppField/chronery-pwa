@@ -1,22 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from 'firebase';
-
-interface RegisterData {
-  email: string;
-  password: string;
-}
-
-interface LoginData {
-  email: string;
-  password: string;
-}
+import { AngularFireAuth } from '@angular/fire/auth';
+import { LoginData, RegisterData } from '../../models/authenticate';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserServiceService {
-
+export class UserService {
   user: User;
 
 
