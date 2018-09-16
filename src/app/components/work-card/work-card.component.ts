@@ -2,12 +2,12 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { ModalController } from '@ionic/angular';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CustomValidators } from '../../utils/custom-validators';
 import { merge, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { differenceInMinutes, differenceInSeconds } from 'date-fns';
-import { Utils } from '../../utils/utils';
+import { differenceInSeconds } from 'date-fns';
 import { WorkingHours } from '../../models/working-hours';
+import { getDateTime } from '../../utils/utils';
+import { timeIsAfter } from '../../utils/custom-validators';
 
 @Component({
   selector: 'chy-work-card',
@@ -47,7 +47,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       project: [this.workingHour.project, Validators.required],
       from: [this.workingHour.from, Validators.required],
-      to: [this.workingHour.to, [CustomValidators.isAfter]],
+      to: [this.workingHour.to, [timeIsAfter]],
       comment: [this.workingHour.comment],
       minutesSpent: [this.workingHour.minutesSpent]
     });
@@ -94,8 +94,8 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     const from = this.form.controls['from'].value;
     const to = this.form.controls['to'].value;
 
-    const fromMinutes = Utils.getDateTime(from);
-    const toMinutes = Utils.getDateTime(to);
+    const fromMinutes = getDateTime(from);
+    const toMinutes = getDateTime(to);
 
     // const differenceMinutes = differenceInMinutes(toMinutes, fromMinutes);
     const differenceSeconds = differenceInSeconds(toMinutes, fromMinutes);
