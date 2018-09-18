@@ -39,11 +39,6 @@ export class AppComponent implements OnInit, OnDestroy {
       title: 'Einstellungen',
       url: '/settings',
       icon: 'settings'
-    },
-    {
-      title: 'Authentifizieren',
-      url: '/authenticate',
-      icon: 'person'
     }
   ];
 

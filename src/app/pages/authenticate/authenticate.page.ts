@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../../services/user/user.service';
-import { LoginData, RegisterData } from '../../models/authenticate';
 import { matchPasswordValidator } from '../../utils/custom-validators';
 import { ToastController } from '@ionic/angular';
+import { AuthService } from '../../core/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'chy-authenticate',
@@ -17,8 +17,9 @@ export class AuthenticatePage implements OnInit {
   isLoading = false;
 
   constructor(private fb: FormBuilder,
-              private userService: UserService,
-              private toastCtrl: ToastController) {
+              private auth: AuthService,
+              private toastCtrl: ToastController,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -38,20 +39,31 @@ export class AuthenticatePage implements OnInit {
     });
   }
 
+  async loginWithGoogle() {
+    const loggedin = await this.auth.googleLogin();
+    // this.router.navigate(['/dashboard']);
+    console.log('Logged in with Google', loggedin);
+    if (loggedin) {
+      this.handleLogin();
+    }
+  }
+
   async login() {
     if (this.loginForm.valid) {
       this.isLoading = true;
-      const loginData = new LoginData(
-        this.loginForm.get('email').value,
-        this.loginForm.get('password').value
-      );
+      const email = this.loginForm.get('email').value;
+      const password = this.loginForm.get('password').value;
+
       let loggedin = null;
       try {
-        loggedin = await this.userService.login(loginData);
+        loggedin = await this.auth.emailLogin(email, password);
       } catch (error) {
         this.handleError(error);
       }
       this.isLoading = false;
+      if (loggedin) {
+        this.handleLogin();
+      }
       console.log('logged in', loggedin);
     }
   }
@@ -59,20 +71,23 @@ export class AuthenticatePage implements OnInit {
   async register() {
     if (this.registerForm.valid) {
       this.isLoading = true;
-      const registerData = new RegisterData(
-        this.registerForm.get('email').value,
-        this.registerForm.get('firstName').value,
-        this.registerForm.get('lastName').value,
-        this.registerForm.get('password').value
-      );
+
+      const email = this.registerForm.get('email').value;
+      const password = this.registerForm.get('password').value;
+      const firstName = this.registerForm.get('firstName').value;
+      const lastName = this.registerForm.get('lastName').value;
+
       let registered = null;
       try {
-        registered = await this.userService.register(registerData);
+        registered = await this.auth.emailSignUp(email, password);
       } catch (error) {
         this.handleError(error);
       }
 
       this.isLoading = false;
+      if (registered) {
+        this.handleLogin();
+      }
       console.log('registered', registered);
     }
   }
@@ -93,6 +108,9 @@ export class AuthenticatePage implements OnInit {
       case 'auth/wrong-password':
         message = 'E-Mail Adresse oder Passwort ungültig.';
         break;
+      case 'auth/too-many-requests':
+        message = 'Es wurden zu viele Anfragen von Ihrem Gerät geschickt. Bitte versuchen Sie es in Kürze erneut.';
+        break;
       default:
         message = error.message;
     }
@@ -104,6 +122,10 @@ export class AuthenticatePage implements OnInit {
       closeButtonText: 'OK'
     });
     toast.present();
+  }
+
+  private handleLogin(): void {
+    this.router.navigate(['/']);
   }
 
   // GETTERS for validation errors

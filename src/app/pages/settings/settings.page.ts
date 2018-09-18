@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { AuthService } from '../../core/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'chy-settings',
@@ -9,12 +11,21 @@ import { Platform } from '@ionic/angular';
 export class SettingsPage implements OnInit {
 
   toolbarColor: string;
+  user$: Observable<any>;
 
-  constructor(private platform: Platform) {
+  constructor(private platform: Platform,
+              public auth: AuthService) {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
+
+    this.user$ = this.auth.user$;
   }
 
   ngOnInit() {
+
+  }
+
+  signOut(): void {
+    this.auth.signOut();
   }
 
 }

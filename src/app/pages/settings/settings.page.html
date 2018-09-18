@@ -9,4 +9,24 @@
 
 <ion-content padding>
 
+  <ion-card *ngIf="(user$ | async) as user">
+    <ion-card-header>
+      <ion-card-title>Profil Daten</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>E-Mail</ion-label>
+        <ion-input [value]="user.email" readonly></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Anzeigename</ion-label>
+        <ion-input [value]="user.displayName" readonly></ion-input>
+      </ion-item>
+    </ion-card-content>
+
+    <ion-button (click)="signOut()">Abmelden</ion-button>
+
+  </ion-card>
+
+
 </ion-content>
