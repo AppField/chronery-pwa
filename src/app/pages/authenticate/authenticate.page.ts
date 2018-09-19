@@ -14,6 +14,7 @@ export class AuthenticatePage implements OnInit {
 
   loginForm: FormGroup;
   registerForm: FormGroup;
+  isEmailLogin = false;
   isLoading = false;
 
   constructor(private fb: FormBuilder,
@@ -37,6 +38,10 @@ export class AuthenticatePage implements OnInit {
       password: ['', Validators.required],
       repeatPassword: ['', [Validators.required, matchPasswordValidator]]
     });
+  }
+
+  loginWithEmail() {
+    console.log('login with email');
   }
 
   async loginWithGoogle() {
