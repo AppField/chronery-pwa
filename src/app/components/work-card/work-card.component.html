@@ -17,7 +17,8 @@
 
         </ion-select>
       </ion-item>
-      <div class="error" *ngIf="form.get('project').hasError('required') && form.get('project').touched">Pflichtfeld
+      <div class="error" *ngIf="form.get('project').hasError('required') && form.get('project').touched"
+           [@expandCollapse]>Pflichtfeld
       </div>
 
       <ion-grid class="time">
@@ -27,7 +28,8 @@
               <ion-label position="floating">Von</ion-label>
               <ion-datetime [displayFormat]="displayFormat" formControlName="from"></ion-datetime>
             </ion-item>
-            <div class="error" *ngIf="form.get('from').hasError('required') && form.get('from').touched">Pflichtfeld
+            <div class="error" *ngIf="form.get('from').hasError('required') && form.get('from').touched"
+                 [@expandCollapse]>Pflichtfeld
             </div>
           </ion-col>
           <ion-col class="to">
@@ -36,9 +38,11 @@
               <ion-datetime [displayFormat]="displayFormat" formControlName="to"
                             (click)="onToFocus($event)"></ion-datetime>
             </ion-item>
-            <div class="error" *ngIf="form.get('to').hasError('required') && form.get('to').touched">Pflichtfeld
+            <div class="error" *ngIf="form.get('to').hasError('required') && form.get('to').touched" [@expandCollapse]>
+              Pflichtfeld
             </div>
-            <div class="error" *ngIf="form.get('to').hasError('isNotAfter') && form.get('to').value != ''">
+            <div class="error" *ngIf="form.get('to').hasError('isNotAfter') && form.get('to').value != ''"
+                 [@expandCollapse]>
               Muss nach der "Von"-Zeit sein
             </div>
           </ion-col>

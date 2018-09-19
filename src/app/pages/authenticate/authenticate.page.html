@@ -35,42 +35,40 @@
 
 <ng-template #emailLogin>
   <ion-card *ngIf="isEmailLogin" color="light" class="email-card">
-    <ion-card-header>
+    <ion-card-header class="card-header">
       <ion-card-title>
         {{ formTitle }}
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <form [formGroup]="activeForm" (ngSubmit)="emailFormSubmit()">
+      <form [formGroup]="activeForm" (ngSubmit)="emailFormSubmit()" (keydown.enter)="emailFormSubmit()">
         <ion-item>
           <ion-label color="primary" class="label" position="floating">E-Mail</ion-label>
           <ion-input formControlName="email"></ion-input>
         </ion-item>
-        <div class="error" *ngIf="emailRequired">Pflichtfeld</div>
-        <div class="error" *ngIf="emailValid">
+        <div class="error" *ngIf="emailRequired" [@expandCollapse]>Pflichtfeld</div>
+        <div class="error" *ngIf="emailValid" [@expandCollapse]>
           Geben sie eine g&uuml;ltige E-Mail Adresse an
         </div>
 
         <!-- Password field -->
-        <ion-item *ngIf="isEmailChecked">
+        <ion-item *ngIf="isEmailChecked" [@expandCollapse]>
           <ion-label color="primary" position="floating">Passwort</ion-label>
           <ion-input type="password" formControlName="password"></ion-input>
         </ion-item>
-        <div class="error" *ngIf="passwordRequired">Pflichtfeld</div>
+        <div class="error" *ngIf="passwordRequired" [@expandCollapse]>Pflichtfeld</div>
 
         <!-- Repeat Password field, when registering-->
-        <ion-item *ngIf="isRegistering">
+        <ion-item *ngIf="isRegistering" [@expandCollapse]>
           <ion-label color="primary" position="floating">Passwort wiederholen</ion-label>
           <ion-input type="password" formControlName="repeatPassword"></ion-input>
         </ion-item>
-        <div class="error" *ngIf="repeatPasswordRequired">Pflichtfeld</div>
-        <div class="error" *ngIf="repeatPasswordMismatch">
+        <div class="error" *ngIf="repeatPasswordRequired" [@expandCollapse]>Pflichtfeld</div>
+        <div class="error" *ngIf="repeatPasswordMismatch" [@expandCollapse]>
           Passw&ouml;rter stimmen nicht &uuml;berein
         </div>
 
         <!-- Make enter to submit-->
-        <button type="submit" style="display:none"></button>
-
         <ion-button fill="outline" type="button" (click)="isEmailLogin = false">Abbrechen</ion-button>
         <ion-button color="primary" padding type="submit">Weiter</ion-button>
 
@@ -78,49 +76,6 @@
 
     </ion-card-content>
 
-    <chy-loading-overlay *ngIf="!isLoading"></chy-loading-overlay>
+    <chy-loading-overlay *ngIf="isLoading"></chy-loading-overlay>
   </ion-card>
 </ng-template>
-
-
-<!--<h1>Registrieren</h1>-->
-<!--<form [formGroup]="registerForm" (ngSubmit)="register()">-->
-<!--<ion-item>-->
-<!--<ion-label color="primary" class="label" position="floating">E-Mail</ion-label>-->
-<!--<ion-input formControlName="email"></ion-input>-->
-<!--</ion-item>-->
-<!--<div class="error" *ngIf="registerEmailRequired">-->
-<!--Pflichtfeld-->
-<!--</div>-->
-<!--<div class="error" *ngIf="registerEmailEmail">-->
-<!--Geben sie eine g&uuml;ltige E-Mail Adresse an-->
-<!--</div>-->
-<!--&lt;!&ndash;<ion-item>&ndash;&gt;-->
-<!--&lt;!&ndash;<ion-label color="primary" position="floating">Vorname</ion-label>&ndash;&gt;-->
-<!--&lt;!&ndash;<ion-input formControlName="firstName"></ion-input>&ndash;&gt;-->
-<!--&lt;!&ndash;</ion-item>&ndash;&gt;-->
-<!--&lt;!&ndash;<ion-item>&ndash;&gt;-->
-<!--&lt;!&ndash;<ion-label color="primary" position="floating">Nachname</ion-label>&ndash;&gt;-->
-<!--&lt;!&ndash;<ion-input formControlName="lastName"></ion-input>&ndash;&gt;-->
-<!--&lt;!&ndash;</ion-item>&ndash;&gt;-->
-<!--<ion-item>-->
-<!--<ion-label color="primary" position="floating">Passwort</ion-label>-->
-<!--<ion-input type="password" formControlName="password"></ion-input>-->
-<!--</ion-item>-->
-<!--<div class="error" *ngIf="registerPasswordRequired">Pflichtfeld</div>-->
-<!--<ion-item>-->
-<!--<ion-label color="primary" position="floating">Passwort wiederholen</ion-label>-->
-<!--<ion-input type="password" formControlName="repeatPassword"></ion-input>-->
-<!--</ion-item>-->
-<!--<div class="error" *ngIf="registerRepeatPasswordRequired">Pflichtfeld</div>-->
-<!--<div class="error" *ngIf="registerRepeatPasswordMismatch">-->
-<!--Passw&ouml;rter stimmen nicht &uuml;berein-->
-<!--</div>-->
-
-<!--<ion-button padding type="submit" color="light" fill="outline">Registrieren</ion-button>-->
-<!--&lt;!&ndash; Make enter to submit&ndash;&gt;-->
-<!--<button type="submit" style="display:none"></button>-->
-
-<!--</form>-->
-
-

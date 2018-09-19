@@ -4,11 +4,13 @@ import { matchPasswordValidator } from '../../utils/custom-validators';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from '../../core/auth.service';
 import { Router } from '@angular/router';
+import { expandCollapse } from '../../core/expand-collapse.animation';
 
 @Component({
   selector: 'chy-authenticate',
   templateUrl: './authenticate.page.html',
   styleUrls: ['./authenticate.page.scss'],
+  animations: [expandCollapse]
 })
 export class AuthenticatePage implements OnInit {
 
@@ -29,14 +31,6 @@ export class AuthenticatePage implements OnInit {
   }
 
   ngOnInit() {
-    // setup login Form
-    // this.loginForm = this.fb.group({
-    //   email: ['', [Validators.required, Validators.email]],
-    //   password: ['', Validators.required]
-    // });
-
-    // setup register Form
-
   }
 
   emailLoginChosen(): void {
@@ -45,14 +39,6 @@ export class AuthenticatePage implements OnInit {
     });
     this.isEmailLogin = true;
   }
-
-  // loginWithEmail() {
-  //   this.loginForm = this.fb.group({
-  //     email: ['', [Validators.required, Validators.email]],
-  //     password: ['', Validators.required],
-  //   });
-  //   this.isEmailLogin = true;
-  // }
 
   async loginWithGoogle() {
     const loggedin = await this.auth.googleLogin();
@@ -92,7 +78,6 @@ export class AuthenticatePage implements OnInit {
     const email = this.emailForm.get('email').value;
     const signupError = await this.auth.emailSignInMethods(email);
 
-    console.log('CHECK IF EMAIL EXISTS', signupError);
     const emailExists = signupError.length > 0;
 
     if (emailExists) {
@@ -131,7 +116,6 @@ export class AuthenticatePage implements OnInit {
       if (loggedin) {
         this.handleLogin();
       }
-      console.log('logged in', loggedin);
     }
   }
 
@@ -155,7 +139,6 @@ export class AuthenticatePage implements OnInit {
       if (registered) {
         this.handleLogin();
       }
-      console.log('registered', registered);
     }
   }
 
@@ -227,7 +210,6 @@ export class AuthenticatePage implements OnInit {
 
   get emailRequired(): boolean {
     const form = this.activeForm;
-    console.log('is email touched', form.get('email').touched);
     return form.get('email').hasError('required') && form.get('email').touched;
   }
 

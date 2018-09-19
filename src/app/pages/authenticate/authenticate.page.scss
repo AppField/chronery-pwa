@@ -27,6 +27,14 @@
   margin: 0 auto;
 }
 
+.card-header {
+  padding-bottom: 0;
+}
+
+.card-content {
+  padding-top: 0;
+}
+
 @media screen and (min-width: 768px) {
   .inner-content {
     width: 70%;

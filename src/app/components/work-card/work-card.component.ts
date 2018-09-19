@@ -8,11 +8,13 @@ import { differenceInSeconds } from 'date-fns';
 import { WorkingHours } from '../../models/working-hours';
 import { getDateTime } from '../../utils/utils';
 import { timeIsAfter } from '../../utils/custom-validators';
+import { expandCollapse } from '../../core/expand-collapse.animation';
 
 @Component({
   selector: 'chy-work-card',
   templateUrl: './work-card.component.html',
-  styleUrls: ['./work-card.component.scss']
+  styleUrls: ['./work-card.component.scss'],
+  animations: [expandCollapse]
 })
 export class WorkCardComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();

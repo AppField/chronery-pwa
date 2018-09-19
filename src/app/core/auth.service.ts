@@ -151,9 +151,15 @@ export class AuthService {
 
   private async handleError(error) {
     console.log('error occured', error);
+    let message = 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut';
+    switch (error.code) {
+      case 'auth/wrong-password':
+        message = 'Bitte überprüfen Sie die eingegebene E-Mail Adresse und das Passwort.';
+        break;
+    }
 
     const toast = await this.toastCtrl.create({
-      message: 'Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut',
+      message: message,
       duration: 4000,
       showCloseButton: true,
       position: 'middle',
