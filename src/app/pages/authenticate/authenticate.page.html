@@ -1,9 +1,8 @@
 <ion-content class="outer">
   <div class="content">
 
-    <div class="inner-content">
-
-      <div *ngIf="!isEmailLogin; else emailLogin">
+    <div *ngIf="!isEmailLogin; else emailLogin" [@fadeInOut] class="buttons-container">
+      <div class="buttons">
         <ion-button color="tertiary" (click)="emailLoginChosen()" expand="block" padding>
           <ion-icon slot="start" name="mail"></ion-icon>
           Mit E-Mail anmelden
@@ -34,7 +33,7 @@
 </ion-content>
 
 <ng-template #emailLogin>
-  <ion-card *ngIf="isEmailLogin" color="light" class="email-card">
+  <ion-card color="light" class="email-card" [@fadeInOut]>
     <ion-card-header class="card-header">
       <ion-card-title>
         {{ formTitle }}

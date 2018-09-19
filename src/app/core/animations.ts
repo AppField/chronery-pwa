@@ -13,3 +13,16 @@ export const expandCollapse = trigger('expandCollapse', [
   transition(':enter', animate('250ms ease-out')),
   transition(':leave', animate('250ms ease-in'))
 ]);
+
+export const fadeInOut = trigger('fadeInOut', [
+  state('*', style({
+    'opacity': '1',
+    'transform': 'scale3d(1, 1, 1)'
+  })),
+  state('void', style({
+    'opacity': '0',
+    'transform': 'scale3d(0.5, 0.5, 0.5)'
+  })),
+  transition(':enter', animate('500ms ease-out')),
+  transition(':leave', animate('500ms ease-in'))
+]);

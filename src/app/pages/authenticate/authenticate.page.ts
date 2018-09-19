@@ -4,13 +4,13 @@ import { matchPasswordValidator } from '../../utils/custom-validators';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from '../../core/auth.service';
 import { Router } from '@angular/router';
-import { expandCollapse } from '../../core/expand-collapse.animation';
+import { expandCollapse, fadeInOut } from '../../core/animations';
 
 @Component({
   selector: 'chy-authenticate',
   templateUrl: './authenticate.page.html',
   styleUrls: ['./authenticate.page.scss'],
-  animations: [expandCollapse]
+  animations: [expandCollapse, fadeInOut]
 })
 export class AuthenticatePage implements OnInit {
 

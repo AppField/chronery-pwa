@@ -8,7 +8,7 @@ import { differenceInSeconds } from 'date-fns';
 import { WorkingHours } from '../../models/working-hours';
 import { getDateTime } from '../../utils/utils';
 import { timeIsAfter } from '../../utils/custom-validators';
-import { expandCollapse } from '../../core/expand-collapse.animation';
+import { expandCollapse } from '../../core/animations';
 
 @Component({
   selector: 'chy-work-card',
