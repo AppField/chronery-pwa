@@ -21,18 +21,10 @@
   text-align: center;
 }
 
-.item-label {
-  --ion-color-primary: var(--ion-color-primary-contrast);
-}
-
-.in-item {
-  color: var(--ion-color-dark);
-}
-
-.register {
-  padding-top: 1rem;
-  border-top: 2px solid var(--ion-color-tertiary);
-  margin-top: 1rem;
+.email-card {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 @media screen and (min-width: 768px) {
@@ -42,7 +34,7 @@
 }
 
 .error {
-  color: var(--ion-color-warning);
+  color: var(--ion-color-danger);
   text-align: left;
 }
 

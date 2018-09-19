@@ -1,62 +1,86 @@
 <ion-content class="outer">
-<div class="content">
+  <div class="content">
 
-  <div class="inner-content">
+    <div class="inner-content">
 
-    <ion-button color="tertiary" class="email" (click)="loginWithEmail()" expand="block" padding>
-      <ion-icon slot="start" name="mail"></ion-icon>
-      Mit E-Mail anmelden
-    </ion-button>
+      <div *ngIf="!isEmailLogin; else emailLogin">
+        <ion-button color="tertiary" (click)="emailLoginChosen()" expand="block" padding>
+          <ion-icon slot="start" name="mail"></ion-icon>
+          Mit E-Mail anmelden
+        </ion-button>
 
-    <ion-button class="google" (click)="loginWithGoogle()" expand="block" padding>
-      <ion-icon slot="start" name="logo-google"></ion-icon>
-      Mit Google Anmelden
-    </ion-button>
+        <ion-button class="google" (click)="loginWithGoogle()" expand="block" padding>
+          <ion-icon slot="start" name="logo-google"></ion-icon>
+          Mit Google Anmelden
+        </ion-button>
 
-    <ion-button class="facebook" (click)="loginWithFacebook()" expand="block" padding>
-      <ion-icon slot="start" name="logo-facebook"></ion-icon>
-      Mit Facebook Anmelden
-    </ion-button>
+        <ion-button class="facebook" (click)="loginWithFacebook()" expand="block" padding>
+          <ion-icon slot="start" name="logo-facebook"></ion-icon>
+          Mit Facebook Anmelden
+        </ion-button>
 
-    <ion-button class="twitter" (click)="loginWithTwitter()" expand="block" padding>
-      <ion-icon slot="start" name="logo-twitter"></ion-icon>
-      Mit Facebook Anmelden
-    </ion-button>
+        <ion-button class="twitter" (click)="loginWithTwitter()" expand="block" padding>
+          <ion-icon slot="start" name="logo-twitter"></ion-icon>
+          Mit Twitter Anmelden
+        </ion-button>
 
-    <ion-button class="github" (click)="loginWithGithub()" expand="block" padding>
-      <ion-icon slot="start" name="logo-github"></ion-icon>
-      Mit Github Anmelden
-    </ion-button>
+        <ion-button class="github" (click)="loginWithGithub()" expand="block" padding>
+          <ion-icon slot="start" name="logo-github"></ion-icon>
+          Mit Github Anmelden
+        </ion-button>
+      </div>
+    </div>
   </div>
-</div>
 </ion-content>
 
-<ion-card *ngIf="isEmailLogin">
-  <ion-card-content>
-    <h1>Anmelden</h1>
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <ion-item>
-        <ion-label color="primary" class="label" position="floating">E-Mail</ion-label>
-        <ion-input formControlName="email"></ion-input>
-      </ion-item>
-      <div class="error" *ngIf="loginEmailRequired">Pflichtfeld</div>
-      <div class="error" *ngIf="loginEmailEmail">
-        Geben sie eine g&uuml;ltige E-Mail Adresse an
-      </div>
-      <ion-item>
-        <ion-label color="primary" position="floating">Passwort</ion-label>
-        <ion-input type="password" formControlName="password"></ion-input>
-      </ion-item>
-      <div class="error" *ngIf="loginPasswordRequired">Pflichtfeld</div>
+<ng-template #emailLogin>
+  <ion-card *ngIf="isEmailLogin" color="light" class="email-card">
+    <ion-card-header>
+      <ion-card-title>
+        {{ formTitle }}
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form [formGroup]="activeForm" (ngSubmit)="emailFormSubmit()">
+        <ion-item>
+          <ion-label color="primary" class="label" position="floating">E-Mail</ion-label>
+          <ion-input formControlName="email"></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="emailRequired">Pflichtfeld</div>
+        <div class="error" *ngIf="emailValid">
+          Geben sie eine g&uuml;ltige E-Mail Adresse an
+        </div>
 
-      <ion-button padding type="submit" color="light" fill="outline">Anmelden</ion-button>
-      <!-- Make enter to submit-->
-      <button type="submit" style="display:none"></button>
-    </form>
+        <!-- Password field -->
+        <ion-item *ngIf="isEmailChecked">
+          <ion-label color="primary" position="floating">Passwort</ion-label>
+          <ion-input type="password" formControlName="password"></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="passwordRequired">Pflichtfeld</div>
 
-  </ion-card-content>
-  <chy-loading-overlay *ngIf="isLoading"></chy-loading-overlay>
-</ion-card>
+        <!-- Repeat Password field, when registering-->
+        <ion-item *ngIf="isRegistering">
+          <ion-label color="primary" position="floating">Passwort wiederholen</ion-label>
+          <ion-input type="password" formControlName="repeatPassword"></ion-input>
+        </ion-item>
+        <div class="error" *ngIf="repeatPasswordRequired">Pflichtfeld</div>
+        <div class="error" *ngIf="repeatPasswordMismatch">
+          Passw&ouml;rter stimmen nicht &uuml;berein
+        </div>
+
+        <!-- Make enter to submit-->
+        <button type="submit" style="display:none"></button>
+
+        <ion-button fill="outline" type="button" (click)="isEmailLogin = false">Abbrechen</ion-button>
+        <ion-button color="primary" padding type="submit">Weiter</ion-button>
+
+      </form>
+
+    </ion-card-content>
+
+    <chy-loading-overlay *ngIf="!isLoading"></chy-loading-overlay>
+  </ion-card>
+</ng-template>
 
 
 <!--<h1>Registrieren</h1>-->

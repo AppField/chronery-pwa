@@ -3,7 +3,7 @@ import { Observable, of } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { startWith, switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { auth } from 'firebase/app';
 import { ToastController } from '@ionic/angular';
 
@@ -73,6 +73,17 @@ export class AuthService {
     } catch (error) {
       this.handleError(error);
       return false;
+    }
+  }
+
+  // ======== Find Sign In Methods for E-Mail ======== //
+  async emailSignInMethods(email: string) {
+    try {
+      const methods = await this.afAuth.auth.fetchSignInMethodsForEmail(email);
+      console.log('SIGN IN METHODS', methods);
+      return methods;
+    } catch (error) {
+      this.handleError(error);
     }
   }
 

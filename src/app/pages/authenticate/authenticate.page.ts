@@ -12,9 +12,14 @@ import { Router } from '@angular/router';
 })
 export class AuthenticatePage implements OnInit {
 
+  emailForm: FormGroup;
   loginForm: FormGroup;
   registerForm: FormGroup;
+
   isEmailLogin = false;
+  isEmailChecked = false;
+  isRegistering = false;
+
   isLoading = false;
 
   constructor(private fb: FormBuilder,
@@ -25,24 +30,29 @@ export class AuthenticatePage implements OnInit {
 
   ngOnInit() {
     // setup login Form
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    });
+    // this.loginForm = this.fb.group({
+    //   email: ['', [Validators.required, Validators.email]],
+    //   password: ['', Validators.required]
+    // });
 
     // setup register Form
-    this.registerForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      firstName: [''],
-      lastName: [''],
-      password: ['', Validators.required],
-      repeatPassword: ['', [Validators.required, matchPasswordValidator]]
-    });
+
   }
 
-  loginWithEmail() {
-    console.log('login with email');
+  emailLoginChosen(): void {
+    this.emailForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+    });
+    this.isEmailLogin = true;
   }
+
+  // loginWithEmail() {
+  //   this.loginForm = this.fb.group({
+  //     email: ['', [Validators.required, Validators.email]],
+  //     password: ['', Validators.required],
+  //   });
+  //   this.isEmailLogin = true;
+  // }
 
   async loginWithGoogle() {
     const loggedin = await this.auth.googleLogin();
@@ -70,6 +80,39 @@ export class AuthenticatePage implements OnInit {
     if (loggedin) {
       this.handleLogin();
     }
+  }
+
+  // FORM SUBMIT HANDLERS
+
+  async checkEmail() {
+    if (!this.emailForm.valid) {
+      return;
+    }
+    // check if user exists;
+    const email = this.emailForm.get('email').value;
+    const signupError = await this.auth.emailSignInMethods(email);
+
+    console.log('CHECK IF EMAIL EXISTS', signupError);
+    const emailExists = signupError.length > 0;
+
+    if (emailExists) {
+      // When there is an account associated with this email, show the login form
+      this.loginForm = this.fb.group({
+        email: [email, [Validators.required, Validators.email]],
+        password: ['', Validators.required],
+      });
+    } else {
+      // When there isn't an account associated with this email, show the register form
+      this.registerForm = this.fb.group({
+        email: [email, [Validators.required, Validators.email]],
+        firstName: [''],
+        lastName: [''],
+        password: ['', Validators.required],
+        repeatPassword: ['', [Validators.required, matchPasswordValidator]]
+      });
+      this.isRegistering = true;
+    }
+    this.isEmailChecked = true;
   }
 
   async login() {
@@ -152,43 +195,110 @@ export class AuthenticatePage implements OnInit {
     this.router.navigate(['/']);
   }
 
+  get activeForm(): FormGroup {
+    if (!this.isEmailChecked) {
+      return this.emailForm;
+    } else if (this.isRegistering) {
+      return this.registerForm;
+    } else {
+      return this.loginForm;
+    }
+  }
+
+  emailFormSubmit(): void {
+    if (!this.isEmailChecked) {
+      this.checkEmail();
+    } else if (this.isRegistering) {
+      this.register();
+    } else {
+      this.login();
+    }
+  }
+
+  get formTitle(): string {
+    if (!this.isRegistering) {
+      return 'Mit E-Mail anmelden';
+    } else {
+      return 'Konto erstellen';
+    }
+  }
+
   // GETTERS for validation errors
 
+  get emailRequired(): boolean {
+    const form = this.activeForm;
+    console.log('is email touched', form.get('email').touched);
+    return form.get('email').hasError('required') && form.get('email').touched;
+  }
+
+  get emailValid(): boolean {
+    const form = this.activeForm;
+    return form.get('email').hasError('email')
+      && !form.get('email').hasError('required')
+      && form.get('email').touched;
+  }
+
+  get passwordRequired(): boolean {
+    const form = this.activeForm;
+    const control = form.get('password');
+    if (control) {
+      return control.hasError('required') && control.touched;
+    }
+  }
+
+  get repeatPasswordRequired(): boolean {
+    const form = this.activeForm;
+    const control = form.get('repeatPassword');
+    if (control) {
+      return control.hasError('required') && control.touched;
+    }
+  }
+
+  get repeatPasswordMismatch(): boolean {
+    const form = this.activeForm;
+    const control = form.get('repeatPassword');
+    if (control) {
+      return !control.hasError('required') &&
+        control.hasError('mismatch') && control.touched;
+    }
+  }
+
   // LOGIN GETTERS
-  get loginEmailRequired(): boolean {
-    return this.loginForm.get('email').hasError('required') && this.loginForm.get('email').touched;
-  }
-
-  get loginEmailEmail(): boolean {
-    return this.loginForm.get('email').hasError('email')
-      && !this.loginForm.get('email').hasError('required')
-      && this.loginForm.get('email').touched;
-  }
-
-  get loginPasswordRequired(): boolean {
-    return this.loginForm.get('password').hasError('required') && this.loginForm.get('password').touched;
-  }
+  // get loginEmailRequired(): boolean {
+  //   return this.loginForm.get('email').hasError('required') && this.loginForm.get('email').touched;
+  // }
+  //
+  // get loginEmailEmail(): boolean {
+  //   return this.loginForm.get('email').hasError('email')
+  //     && !this.loginForm.get('email').hasError('required')
+  //     && this.loginForm.get('email').touched;
+  // }
+  //
+  // get loginPasswordRequired(): boolean {
+  //   return this.loginForm.get('password').hasError('required') && this.loginForm.get('password').touched;
+  // }
 
   //  REGISTER GETTERS
-  get registerEmailRequired(): boolean {
-    return this.registerForm.get('email').hasError('required') && this.registerForm.get('email').touched;
-  }
-
-  get registerEmailEmail(): boolean {
-    return this.registerForm.get('email').hasError('email') && !this.registerForm.get('email').hasError('required')
-      && this.registerForm.get('email').touched;
-  }
-
-  get registerPasswordRequired(): boolean {
-    return this.registerForm.get('password').hasError('required') && this.registerForm.get('password').touched;
-  }
+  // get registerEmailRequired(): boolean {
+  //   return this.registerForm.get('email').hasError('required') && this.registerForm.get('email').touched;
+  // }
+  //
+  // get registerEmailEmail(): boolean {
+  //   return this.registerForm.get('email').hasError('email') && !this.registerForm.get('email').hasError('required')
+  //     && this.registerForm.get('email').touched;
+  // }
+  //
+  // get registerPasswordRequired(): boolean {
+  //   return this.registerForm.get('password').hasError('required') && this.registerForm.get('password').touched;
+  // }
 
   get registerRepeatPasswordRequired(): boolean {
     return this.registerForm.get('repeatPassword').hasError('required') && this.registerForm.get('repeatPassword').touched;
   }
 
   get registerRepeatPasswordMismatch(): boolean {
-    return !this.registerForm.get('repeatPassword').hasError('required') && this.registerForm.get('repeatPassword').hasError('mismatch') && this.registerForm.get('repeatPassword').touched;
+    return !this.registerForm.get('repeatPassword').hasError('required') &&
+      this.registerForm.get('repeatPassword').hasError('mismatch') && this.registerForm.get('repeatPassword').touched;
   }
 
 }
