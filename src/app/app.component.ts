@@ -6,6 +6,7 @@ import { environment } from '../environments/environment';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { WindowRefService } from './services/window-ref.service';
+import { AuthService } from './core/auth.service';
 
 @Component({
   selector: 'chy-root',
@@ -46,7 +47,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private platform: Platform,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
-    private windowRef: WindowRefService
+    private windowRef: WindowRefService,
+    public auth: AuthService
   ) {
   }
 

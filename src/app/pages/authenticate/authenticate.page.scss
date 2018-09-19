@@ -56,3 +56,16 @@
 .google {
   --background: #db4437;
 }
+
+.facebook {
+  --background: #3b5998;
+}
+
+.twitter {
+  --background: #006dbf;
+}
+
+.github {
+  --background: #24292e;
+  color: var(--ion-color-dark-contrast);
+}

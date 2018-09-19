@@ -13,6 +13,13 @@ body {
   user-select: auto;
 }
 
+.profile-photo {
+  width: 90%;
+  border-radius: 50%;
+  margin: 0 auto;
+  display: flex;
+}
+
 .ion-menu {
   --border: 0;
 }

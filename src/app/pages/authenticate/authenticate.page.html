@@ -21,10 +21,27 @@
         <!-- Make enter to submit-->
         <button type="submit" style="display:none"></button>
       </form>
-      <ion-button class="google" (click)="loginWithGoogle()">
+
+      <ion-button class="google" (click)="loginWithGoogle()" expand="block" padding>
         <ion-icon slot="start" name="logo-google"></ion-icon>
-        <span> Mit Google Anmelden</span>
+        Mit Google Anmelden
       </ion-button>
+
+      <ion-button class="facebook" (click)="loginWithFacebook()" expand="block" padding>
+        <ion-icon slot="start" name="logo-facebook"></ion-icon>
+        Mit Facebook Anmelden
+      </ion-button>
+
+      <ion-button class="twitter" (click)="loginWithTwitter()" expand="block" padding>
+        <ion-icon slot="start" name="logo-twitter"></ion-icon>
+        Mit Facebook Anmelden
+      </ion-button>
+
+      <ion-button class="github" (click)="loginWithGithub()" expand="block" padding>
+        <ion-icon slot="start" name="logo-github"></ion-icon>
+        Mit Github Anmelden
+      </ion-button>
+
     </ion-col>
     <ion-col size="12" size-xs="12" size-md="6" class="register">
 

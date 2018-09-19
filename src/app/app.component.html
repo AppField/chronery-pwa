@@ -7,6 +7,7 @@
       </ion-toolbar>
       <!--</ion-header>-->
       <ion-content class="gradient">
+        <img *ngIf="auth.user$ | async as user" [src]="user.photoURL" class="profile-photo">
         <ion-list class="gradient">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" routerLinkActive="active" class="gradient">

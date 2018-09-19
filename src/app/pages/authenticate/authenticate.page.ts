@@ -41,8 +41,27 @@ export class AuthenticatePage implements OnInit {
 
   async loginWithGoogle() {
     const loggedin = await this.auth.googleLogin();
-    // this.router.navigate(['/dashboard']);
-    console.log('Logged in with Google', loggedin);
+    if (loggedin) {
+      this.handleLogin();
+    }
+  }
+
+  async loginWithFacebook() {
+    const loggedin = await this.auth.facebookLogin();
+    if (loggedin) {
+      this.handleLogin();
+    }
+  }
+
+  async loginWithTwitter() {
+    const loggedin = await this.auth.twitterLogin();
+    if (loggedin) {
+      this.handleLogin();
+    }
+  }
+
+  async loginWithGithub() {
+    const loggedin = await this.auth.githubLogin();
     if (loggedin) {
       this.handleLogin();
     }
