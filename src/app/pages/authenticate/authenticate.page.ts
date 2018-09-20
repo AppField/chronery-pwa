@@ -157,8 +157,17 @@ export class AuthenticatePage implements OnInit {
 
       this.isLoading = false;
       if (registered) {
+        this.verifyEmail();
+
         this.handleLogin();
       }
+    }
+  }
+
+  private async verifyEmail() {
+    const emailSent = await this.auth.sendVerificationMail();
+    if (emailSent) {
+
     }
   }
 

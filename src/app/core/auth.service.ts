@@ -93,7 +93,8 @@ export class AuthService {
     try {
       const credential = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
       console.log('credentials', credential);
-      this.updateUserData(credential.user);
+      await this.updateUserData(credential.user);
+      this.sendVerificationMail();
       return true;
 
     } catch (error) {
@@ -109,6 +110,27 @@ export class AuthService {
       this.updateUserData(credential.user);
       return true;
 
+    } catch (error) {
+      this.handleError(error);
+      return false;
+    }
+  }
+
+  // ======== Send a verification Link to an email======== //
+
+  async sendVerificationMail() {
+    const user = this.afAuth.auth.currentUser;
+    try {
+      await user.sendEmailVerification();
+      const toast = await this.toastCtrl.create({
+        message: 'Ihnen wurde eine E-Mail mit einem Link zugesendet. Bitte betätigen Sie diesen Link, um Ihre E-Mail Adresse zu bestätigen',
+        duration: 10000,
+        showCloseButton: true,
+        position: 'middle',
+        closeButtonText: 'OK'
+      });
+      toast.present();
+      return true;
     } catch (error) {
       this.handleError(error);
       return false;
