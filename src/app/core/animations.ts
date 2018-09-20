@@ -27,13 +27,15 @@ export const fadeScaleInOut = trigger('fadeScaleInOut', [
   transition(':leave', animate('250ms ease-in'))
 ]);
 
-export const fadeInOut = (opacityIn) => trigger('fadeInOut', [
-  state('*', style({
-    'opacity': `${opacityIn}`,
-  })),
-  state('void', style({
-    'opacity': '0'
-  })),
-  transition(':enter', animate('250ms ease-out')),
-  transition(':leave', animate('250ms ease-in'))
-]);
+export function fadeInOut(opacityIn) {
+  return trigger('fadeInOut', [
+    state('*', style({
+      'opacity': `${opacityIn}`,
+    })),
+    state('void', style({
+      'opacity': '0'
+    })),
+    transition(':enter', animate('250ms ease-out')),
+    transition(':leave', animate('250ms ease-in'))
+  ]);
+}
