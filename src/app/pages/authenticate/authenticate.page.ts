@@ -115,7 +115,8 @@ export class AuthenticatePage implements OnInit {
       firstName: [''],
       lastName: [''],
       password: ['', Validators.required],
-      repeatPassword: ['', [Validators.required, matchPasswordValidator]]
+      repeatPassword: ['', [Validators.required, matchPasswordValidator]],
+      readDataProtection: [false, Validators.required]
     });
 
   }

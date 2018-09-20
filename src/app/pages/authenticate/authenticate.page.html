@@ -67,14 +67,20 @@
           Passw&ouml;rter stimmen nicht &uuml;berein
         </div>
 
+        <ion-item *ngIf="isRegistering">
+          <ion-label>Datenschutzerkl&auml;rung gelesen</ion-label>
+          <ion-checkbox slot="end" formControlName="readDataProtection"></ion-checkbox>
+        </ion-item>
         <!-- Make enter to submit-->
-        <ion-button fill="outline" type="button" (click)="cancelEmailLogin()">Abbrechen</ion-button>
-        <ion-button color="primary" padding type="submit">{{ buttonText }}</ion-button>
+        <div class="submit-buttons">
+          <ion-button tabindex="1" fill="outline" type="button" (click)="cancelEmailLogin()" padding>Abbrechen
+          </ion-button>
+          <ion-button color="primary" padding type="submit">{{ buttonText }}</ion-button>
+        </div>
 
       </form>
-
+      <a routerDirection="root" routerLink="/imprint">Datenschutzerkl&auml;rung</a>
     </ion-card-content>
-
     <chy-loading-overlay *ngIf="isLoading" [@fadeInOut]></chy-loading-overlay>
   </ion-card>
 </ng-template>
