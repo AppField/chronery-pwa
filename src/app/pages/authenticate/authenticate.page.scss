@@ -39,10 +39,14 @@
   position: relative;
   max-width: 400px;
   margin: 0 auto;
+
+  @media screen and (min-width: 768px) {
+    width: 400px;
+  }
 }
 
 .card-header {
-  padding-bottom: 0;
+  //padding-bottom: 0;
 }
 
 .card-content {

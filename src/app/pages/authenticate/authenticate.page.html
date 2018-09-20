@@ -1,7 +1,7 @@
 <ion-content class="outer">
   <div class="content">
 
-    <div *ngIf="!isEmailLogin; else emailLogin" [@fadeInOut] class="buttons-container">
+    <div *ngIf="!isEmailLogin; else emailLogin" [@fadeScaleInOut] class="buttons-container">
       <div class="buttons">
         <ion-button color="tertiary" (click)="emailLoginChosen()" expand="block" padding>
           <ion-icon slot="start" name="mail"></ion-icon>
@@ -33,7 +33,7 @@
 </ion-content>
 
 <ng-template #emailLogin>
-  <ion-card color="light" class="email-card" [@fadeInOut]>
+  <ion-card color="light" class="email-card" [@fadeScaleInOut]>
     <ion-card-header class="card-header">
       <ion-card-title>
         {{ formTitle }}
@@ -75,6 +75,6 @@
 
     </ion-card-content>
 
-    <chy-loading-overlay *ngIf="isLoading"></chy-loading-overlay>
+    <chy-loading-overlay *ngIf="isLoading" [@fadeInOut]></chy-loading-overlay>
   </ion-card>
 </ng-template>
