@@ -10,7 +10,7 @@ import { expandCollapse, fadeScaleInOut, fadeInOut } from '../../core/animations
   selector: 'chy-authenticate',
   templateUrl: './authenticate.page.html',
   styleUrls: ['./authenticate.page.scss'],
-  animations: [expandCollapse, fadeScaleInOut, fadeInOut]
+  animations: [expandCollapse, fadeScaleInOut, fadeInOut(0.5)]
 })
 export class AuthenticatePage implements OnInit {
 
@@ -33,11 +33,22 @@ export class AuthenticatePage implements OnInit {
   ngOnInit() {
   }
 
+  reset(): void {
+    this.isEmailLogin = false;
+    this.isEmailChecked = false;
+    this.isRegistering = false;
+  }
+
   emailLoginChosen(): void {
     this.emailForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
     });
     this.isEmailLogin = true;
+  }
+
+  cancelEmailLogin(): void {
+    this.isEmailLogin = false;
+    this.reset();
   }
 
   async loginWithGoogle() {
@@ -82,22 +93,31 @@ export class AuthenticatePage implements OnInit {
 
     if (emailExists) {
       // When there is an account associated with this email, show the login form
-      this.loginForm = this.fb.group({
-        email: [email, [Validators.required, Validators.email]],
-        password: ['', Validators.required],
-      });
+      this.setuploginForm(email);
     } else {
       // When there isn't an account associated with this email, show the register form
-      this.registerForm = this.fb.group({
-        email: [email, [Validators.required, Validators.email]],
-        firstName: [''],
-        lastName: [''],
-        password: ['', Validators.required],
-        repeatPassword: ['', [Validators.required, matchPasswordValidator]]
-      });
+      this.setupRegisterForm(email);
       this.isRegistering = true;
     }
     this.isEmailChecked = true;
+  }
+
+  private setuploginForm(email): void {
+    this.loginForm = this.fb.group({
+      email: [email, [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    });
+  }
+
+  private setupRegisterForm(email): void {
+    this.registerForm = this.fb.group({
+      email: [email, [Validators.required, Validators.email]],
+      firstName: [''],
+      lastName: [''],
+      password: ['', Validators.required],
+      repeatPassword: ['', [Validators.required, matchPasswordValidator]]
+    });
+
   }
 
   async login() {
@@ -206,6 +226,16 @@ export class AuthenticatePage implements OnInit {
     }
   }
 
+  get buttonText(): string {
+    if (!this.isEmailChecked) {
+      return 'Weiter';
+    } else if (this.isRegistering) {
+      return 'Registrieren';
+    } else {
+      return 'Anmelden';
+    }
+  }
+
   // GETTERS for validation errors
 
   get emailRequired(): boolean {
@@ -244,43 +274,4 @@ export class AuthenticatePage implements OnInit {
         control.hasError('mismatch') && control.touched;
     }
   }
-
-  // LOGIN GETTERS
-  // get loginEmailRequired(): boolean {
-  //   return this.loginForm.get('email').hasError('required') && this.loginForm.get('email').touched;
-  // }
-  //
-  // get loginEmailEmail(): boolean {
-  //   return this.loginForm.get('email').hasError('email')
-  //     && !this.loginForm.get('email').hasError('required')
-  //     && this.loginForm.get('email').touched;
-  // }
-  //
-  // get loginPasswordRequired(): boolean {
-  //   return this.loginForm.get('password').hasError('required') && this.loginForm.get('password').touched;
-  // }
-
-  //  REGISTER GETTERS
-  // get registerEmailRequired(): boolean {
-  //   return this.registerForm.get('email').hasError('required') && this.registerForm.get('email').touched;
-  // }
-  //
-  // get registerEmailEmail(): boolean {
-  //   return this.registerForm.get('email').hasError('email') && !this.registerForm.get('email').hasError('required')
-  //     && this.registerForm.get('email').touched;
-  // }
-  //
-  // get registerPasswordRequired(): boolean {
-  //   return this.registerForm.get('password').hasError('required') && this.registerForm.get('password').touched;
-  // }
-
-  get registerRepeatPasswordRequired(): boolean {
-    return this.registerForm.get('repeatPassword').hasError('required') && this.registerForm.get('repeatPassword').touched;
-  }
-
-  get registerRepeatPasswordMismatch(): boolean {
-    return !this.registerForm.get('repeatPassword').hasError('required') &&
-      this.registerForm.get('repeatPassword').hasError('mismatch') && this.registerForm.get('repeatPassword').touched;
-  }
-
 }

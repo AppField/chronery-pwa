@@ -27,9 +27,9 @@ export const fadeScaleInOut = trigger('fadeScaleInOut', [
   transition(':leave', animate('250ms ease-in'))
 ]);
 
-export const fadeInOut = trigger('fadeInOut', [
+export const fadeInOut = (opacityIn) => trigger('fadeInOut', [
   state('*', style({
-    'opacity': '1',
+    'opacity': `${opacityIn}`,
   })),
   state('void', style({
     'opacity': '0'
