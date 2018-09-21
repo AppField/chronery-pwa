@@ -176,7 +176,6 @@ export class AuthService {
     if (readDataProtection) {
       data.readDataProtection = readDataProtection;
     }
-    console.log('user to update', data);
 
     return userRef.set(data, { merge: true });
   }
