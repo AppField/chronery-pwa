@@ -68,12 +68,17 @@
         <!-- Password field -->
         <ion-item *ngIf="isEmailChecked" [@expandCollapse]>
           <ion-label color="primary" position="floating">Passwort</ion-label>
-          <ion-input type="password" formControlName="password"></ion-input>
+          <ion-input #passwordInput type="password" formControlName="password"></ion-input>
         </ion-item>
         <div class="error" *ngIf="passwordRequired" [@expandCollapse]>Pflichtfeld</div>
         <div class="error" *ngIf="passwordHasLengthSix" [@expandCollapse]>Das Passwort muss mindestens 6 Zeichen lang
           sein.
         </div>
+        <ion-button class="resetPasswordBtn" padding *ngIf="showResetPasswordButton" color="tertiary" fill="clear" size="small" [@expandCollapse]
+                    (click)="resetPassword()">Wollen Sie Ihr Passwort zur&uuml;cksetzen?
+        </ion-button>
+        <p padding [@expandCollapse] *ngIf="showPasswordResetMailSent" class="tertiary">
+          Es wurde Ihnen eine E-Mail zum Zur&uuml;cksetzen des Passworts zugesendet.</p>
 
         <!-- Repeat Password field, when registering-->
         <ion-item *ngIf="isRegistering" [@expandCollapse]>

@@ -69,7 +69,6 @@ export class AuthService {
   private async oAuthLogin(provider) {
     try {
       const credential = await this.afAuth.auth.signInWithPopup(provider);
-      console.log('credentials', credential);
       this.updateUserData(credential.user);
       return true;
 
@@ -95,7 +94,6 @@ export class AuthService {
   async emailSignUp(email: string, password: string, firstName: string, lastName: string, readDataProtection: boolean) {
     try {
       const credential = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
-      console.log('credentials', credential);
       await this.updateUserData(credential.user, firstName, lastName, readDataProtection);
       this.sendVerificationMail();
       return true;
@@ -109,13 +107,13 @@ export class AuthService {
   async emailLogin(email: string, password: string) {
     try {
       const credential = await this.afAuth.auth.signInWithEmailAndPassword(email, password);
-      console.log('credentials', credential);
       this.updateUserData(credential.user);
       return true;
 
     } catch (error) {
-      this.handleError(error);
-      return false;
+      // this.handleError(error);
+      throw error;
+      // return false;
     }
   }
 
@@ -144,7 +142,8 @@ export class AuthService {
   async resetPassword(email: string) {
     try {
       const fbAuth = auth();
-      return await fbAuth.sendPasswordResetEmail(email);
+      await fbAuth.sendPasswordResetEmail(email);
+      return true;
     } catch (error) {
       this.handleError(error);
       return false;

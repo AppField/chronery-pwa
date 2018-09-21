@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { hasLengthSix, isEmail, matchPasswordValidator, mustBeTruthy } from '../../utils/custom-validators';
 import { ToastController } from '@ionic/angular';
@@ -23,6 +23,10 @@ export class AuthenticatePage implements OnInit {
   isRegistering = false;
 
   isLoading = false;
+  showResetPasswordButton = false;
+  showPasswordResetMailSent = false;
+
+  @ViewChild('passwordInput') passwordInput;
 
   constructor(private fb: FormBuilder,
               private auth: AuthService,
@@ -37,6 +41,8 @@ export class AuthenticatePage implements OnInit {
     this.isEmailLogin = false;
     this.isEmailChecked = false;
     this.isRegistering = false;
+    this.showResetPasswordButton = false;
+    this.showPasswordResetMailSent = false;
   }
 
   emailLoginChosen(): void {
@@ -49,6 +55,14 @@ export class AuthenticatePage implements OnInit {
   cancelEmailLogin(): void {
     this.isEmailLogin = false;
     this.reset();
+  }
+
+  async resetPassword() {
+    const email = this.loginForm.get('email').value.trim();
+    const reset = await this.auth.resetPassword(email);
+    this.showResetPasswordButton = false;
+    this.showPasswordResetMailSent = true;
+    console.log('PASSWORD RESET', reset);
   }
 
   async loginWithGoogle() {
@@ -107,6 +121,9 @@ export class AuthenticatePage implements OnInit {
       email: [email, [Validators.required, isEmail]],
       password: ['', Validators.required],
     });
+    // automatically focus password input field
+    // setTimeout is used to let angular register the field
+    setTimeout(() => this.passwordInput.focus());
   }
 
   private setupRegisterForm(email): void {
@@ -130,6 +147,9 @@ export class AuthenticatePage implements OnInit {
       try {
         loggedin = await this.auth.emailLogin(email, password);
       } catch (error) {
+        if (error.code === 'auth/wrong-password') {
+          this.showResetPasswordButton = true;
+        }
         this.handleError(error);
       }
       this.isLoading = false;
