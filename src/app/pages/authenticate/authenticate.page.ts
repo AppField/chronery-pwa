@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { matchPasswordValidator } from '../../utils/custom-validators';
+import { hasLengthSix, matchPasswordValidator, mustBeTruthy } from '../../utils/custom-validators';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from '../../core/auth.service';
 import { Router } from '@angular/router';
@@ -86,7 +86,7 @@ export class AuthenticatePage implements OnInit {
       return;
     }
     // check if user exists;
-    const email = this.emailForm.get('email').value;
+    const email = this.emailForm.get('email').value.trim();
     const signupError = await this.auth.emailSignInMethods(email);
 
     const emailExists = signupError.length > 0;
@@ -114,17 +114,23 @@ export class AuthenticatePage implements OnInit {
       email: [email, [Validators.required, Validators.email]],
       firstName: [''],
       lastName: [''],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, hasLengthSix]],
       repeatPassword: ['', [Validators.required, matchPasswordValidator]],
-      readDataProtection: [false, Validators.required]
+      readDataProtection: [false, [Validators.required, mustBeTruthy]]
     });
+  }
+
+  onReadDataProtectionChange($event): void {
+    const control = this.registerForm.get('readDataProtection');
+    control.setValue($event.target.value);
+    control.markAsTouched();
 
   }
 
   async login() {
     if (this.loginForm.valid) {
       this.isLoading = true;
-      const email = this.loginForm.get('email').value;
+      const email = this.loginForm.get('email').value.trim();
       const password = this.loginForm.get('password').value;
 
       let loggedin = null;
@@ -144,31 +150,23 @@ export class AuthenticatePage implements OnInit {
     if (this.registerForm.valid) {
       this.isLoading = true;
 
-      const email = this.registerForm.get('email').value;
+      const email = this.registerForm.get('email').value.trim();
       const password = this.registerForm.get('password').value;
-      const firstName = this.registerForm.get('firstName').value;
-      const lastName = this.registerForm.get('lastName').value;
+      const firstName = this.registerForm.get('firstName').value.trim();
+      const lastName = this.registerForm.get('lastName').value.trim();
+      const readDataProtection = this.registerForm.get('readDataProtection').value;
 
       let registered = null;
       try {
-        registered = await this.auth.emailSignUp(email, password);
+        registered = await this.auth.emailSignUp(email, password, firstName, lastName, readDataProtection);
       } catch (error) {
         this.handleError(error);
       }
 
       this.isLoading = false;
       if (registered) {
-        this.verifyEmail();
-
         this.handleLogin();
       }
-    }
-  }
-
-  private async verifyEmail() {
-    const emailSent = await this.auth.sendVerificationMail();
-    if (emailSent) {
-
     }
   }
 
@@ -268,6 +266,16 @@ export class AuthenticatePage implements OnInit {
     }
   }
 
+  get passwordHasLengthSix(): boolean {
+    const form = this.activeForm;
+    const control = form.get('password');
+    if (control) {
+      return !control.hasError('required')
+        && control.hasError('hasLengthSix')
+        && control.touched;
+    }
+  }
+
   get repeatPasswordRequired(): boolean {
     const form = this.activeForm;
     const control = form.get('repeatPassword');
@@ -282,6 +290,14 @@ export class AuthenticatePage implements OnInit {
     if (control) {
       return !control.hasError('required') &&
         control.hasError('mismatch') && control.touched;
+    }
+  }
+
+  get readDataProtection(): boolean {
+    const form = this.activeForm;
+    const control = form.get('readDataProtection');
+    if (control) {
+      return control.hasError('notChecked') && control.touched;
     }
   }
 }

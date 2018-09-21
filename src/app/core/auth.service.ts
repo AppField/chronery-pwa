@@ -12,6 +12,9 @@ interface User {
   email?: string;
   photoURL?: string;
   displayName?: string;
+  firstName?: string;
+  lastName?: string;
+  readDataProtection?: boolean;
 }
 
 @Injectable({
@@ -89,11 +92,11 @@ export class AuthService {
 
   // ======== E-Mail/Password Auth ======== //
 
-  async emailSignUp(email: string, password: string) {
+  async emailSignUp(email: string, password: string, firstName: string, lastName: string, readDataProtection: boolean) {
     try {
       const credential = await this.afAuth.auth.createUserWithEmailAndPassword(email, password);
       console.log('credentials', credential);
-      await this.updateUserData(credential.user);
+      await this.updateUserData(credential.user, firstName, lastName, readDataProtection);
       this.sendVerificationMail();
       return true;
 
@@ -150,7 +153,7 @@ export class AuthService {
 
   // ======== Sets user data to firestore after successful login ======== //
 
-  private updateUserData(user) {
+  private updateUserData(user, firstName?: string, lastName?: string, readDataProtection?: boolean) {
 
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${user.uid}`);
 
@@ -160,6 +163,20 @@ export class AuthService {
       photoURL: user.photoURL,
       displayName: user.displayName,
     };
+
+    if (firstName) {
+      data.firstName = firstName;
+      data.displayName = firstName;
+    }
+    if (lastName) {
+      data.lastName = lastName;
+      data.displayName += ` ${lastName}`;
+    }
+
+    if (readDataProtection) {
+      data.readDataProtection = readDataProtection;
+    }
+    console.log('user to update', data);
 
     return userRef.set(data, { merge: true });
   }

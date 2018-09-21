@@ -50,12 +50,30 @@
           Geben sie eine g&uuml;ltige E-Mail Adresse an
         </div>
 
+        <!-- Optional First Name -->
+        <ion-item *ngIf="isRegistering">
+          <ion-label color="primary" class="label" position="floating">Vorname
+            <small>Optional</small>
+          </ion-label>
+          <ion-input formControlName="firstName"></ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="isRegistering">
+          <ion-label color="primary" class="label" position="floating">Nachname
+            <small>Optional</small>
+          </ion-label>
+          <ion-input formControlName="lastName"></ion-input>
+        </ion-item>
+
         <!-- Password field -->
         <ion-item *ngIf="isEmailChecked" [@expandCollapse]>
           <ion-label color="primary" position="floating">Passwort</ion-label>
           <ion-input type="password" formControlName="password"></ion-input>
         </ion-item>
         <div class="error" *ngIf="passwordRequired" [@expandCollapse]>Pflichtfeld</div>
+        <div class="error" *ngIf="passwordHasLengthSix" [@expandCollapse]>Das Passwort muss mindestens 6 Zeichen lang
+          sein.
+        </div>
 
         <!-- Repeat Password field, when registering-->
         <ion-item *ngIf="isRegistering" [@expandCollapse]>
@@ -71,6 +89,11 @@
           <ion-label>Datenschutzerkl&auml;rung gelesen</ion-label>
           <ion-checkbox slot="end" formControlName="readDataProtection"></ion-checkbox>
         </ion-item>
+        <div class="error" *ngIf="readDataProtection" [@expandCollapse]>Bitte best&auml;tigen Sie, dass Sie die
+          Datenschutzerkl&auml;rung
+          gelesen haben.
+        </div>
+
         <!-- Make enter to submit-->
         <div class="submit-buttons">
           <ion-button tabindex="1" fill="outline" type="button" (click)="cancelEmailLogin()" padding>Abbrechen
