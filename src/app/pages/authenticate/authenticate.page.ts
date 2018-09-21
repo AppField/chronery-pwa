@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { hasLengthSix, matchPasswordValidator, mustBeTruthy } from '../../utils/custom-validators';
+import { hasLengthSix, isEmail, matchPasswordValidator, mustBeTruthy } from '../../utils/custom-validators';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from '../../core/auth.service';
 import { Router } from '@angular/router';
@@ -41,7 +41,7 @@ export class AuthenticatePage implements OnInit {
 
   emailLoginChosen(): void {
     this.emailForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, isEmail]],
     });
     this.isEmailLogin = true;
   }
@@ -104,27 +104,20 @@ export class AuthenticatePage implements OnInit {
 
   private setuploginForm(email): void {
     this.loginForm = this.fb.group({
-      email: [email, [Validators.required, Validators.email]],
+      email: [email, [Validators.required, isEmail]],
       password: ['', Validators.required],
     });
   }
 
   private setupRegisterForm(email): void {
     this.registerForm = this.fb.group({
-      email: [email, [Validators.required, Validators.email]],
+      email: [email, [Validators.required, isEmail]],
       firstName: [''],
       lastName: [''],
       password: ['', [Validators.required, hasLengthSix]],
       repeatPassword: ['', [Validators.required, matchPasswordValidator]],
       readDataProtection: [false, [Validators.required, mustBeTruthy]]
     });
-  }
-
-  onReadDataProtectionChange($event): void {
-    const control = this.registerForm.get('readDataProtection');
-    control.setValue($event.target.value);
-    control.markAsTouched();
-
   }
 
   async login() {
@@ -217,6 +210,8 @@ export class AuthenticatePage implements OnInit {
   }
 
   emailFormSubmit(): void {
+    console.log('submitting form');
+    this.markControlsAsTouched();
     if (!this.isEmailChecked) {
       this.checkEmail();
     } else if (this.isRegistering) {
@@ -244,6 +239,13 @@ export class AuthenticatePage implements OnInit {
     }
   }
 
+  private markControlsAsTouched(): void {
+    const controls = this.activeForm.controls;
+    Object.keys(controls).forEach((key: string) => {
+      controls[key].markAsTouched();
+    });
+  }
+
   // GETTERS for validation errors
 
   get emailRequired(): boolean {
@@ -253,7 +255,7 @@ export class AuthenticatePage implements OnInit {
 
   get emailValid(): boolean {
     const form = this.activeForm;
-    return form.get('email').hasError('email')
+    return form.get('email').hasError('invalidEmail')
       && !form.get('email').hasError('required')
       && form.get('email').touched;
   }
