@@ -179,6 +179,39 @@ export class AuthService {
     return userRef.set(data, { merge: true });
   }
 
+  // ======== Delete User Account and delete User Document ======== //
+
+  async deleteAccount(email: string) {
+    if (email !== this.afAuth.auth.currentUser.email) {
+      const toast = await this.toastCtrl.create({
+        message: 'Die eingegebene E-Mail stimmt nicht mit der E-Mail Adresse des Accounts überein.',
+        duration: 5000,
+        showCloseButton: true,
+        position: 'middle',
+        closeButtonText: 'OK'
+      });
+      toast.present();
+      return false;
+    }
+
+    const uid = this.afAuth.auth.currentUser.uid;
+    try {
+      await Promise.all([this.deleteUserDocument(uid), this.afAuth.auth.currentUser.delete()]);
+      return true;
+    } catch (error) {
+      this.handleError(error);
+      return false;
+    }
+  }
+
+  private async deleteUserDocument(uid: string) {
+    if (uid) {
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${uid}`);
+      return userRef.delete();
+
+    }
+  }
+
   // ======== Utility======== //
 
   async signOut() {

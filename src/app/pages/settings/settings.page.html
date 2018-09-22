@@ -24,9 +24,14 @@
       </ion-item>
     </ion-card-content>
 
-    <ion-buttons slot="start">
-      <ion-button (click)="signOut()">Abmelden</ion-button>
-    </ion-buttons>
+    <ion-toolbar color="default">
+      <ion-buttons slot="start">
+        <ion-button color="warning" (click)="signOut()">Abmelden</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end">
+        <ion-button color="danger" (click)="confirmDelete()">Account l&ouml;schen</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
 
 
   </ion-card>
