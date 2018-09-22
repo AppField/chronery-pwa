@@ -40,10 +40,10 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <form [formGroup]="activeForm" (ngSubmit)="emailFormSubmit()" (keydown.enter)="emailFormSubmit()">
+      <form [formGroup]="activeForm" (ngSubmit)="emailFormSubmit()">
         <ion-item>
           <ion-label color="primary" class="label" position="floating">E-Mail</ion-label>
-          <ion-input formControlName="email"></ion-input>
+          <ion-input formControlName="email" (keydown.enter)="emailFormSubmit()"></ion-input>
         </ion-item>
         <div class="error" *ngIf="emailRequired" [@expandCollapse]>Pflichtfeld</div>
         <div class="error" *ngIf="emailValid" [@expandCollapse]>
@@ -55,26 +55,28 @@
           <ion-label color="primary" class="label" position="floating">Vorname
             <small>Optional</small>
           </ion-label>
-          <ion-input formControlName="firstName"></ion-input>
+          <ion-input formControlName="firstName" (keydown.enter)="emailFormSubmit()"></ion-input>
         </ion-item>
 
         <ion-item *ngIf="isRegistering">
           <ion-label color="primary" class="label" position="floating">Nachname
             <small>Optional</small>
           </ion-label>
-          <ion-input formControlName="lastName"></ion-input>
+          <ion-input formControlName="lastName" (keydown.enter)="emailFormSubmit()"></ion-input>
         </ion-item>
 
         <!-- Password field -->
         <ion-item *ngIf="isEmailChecked" [@expandCollapse]>
           <ion-label color="primary" position="floating">Passwort</ion-label>
-          <ion-input #passwordInput type="password" formControlName="password"></ion-input>
+          <ion-input #passwordInput type="password" formControlName="password"
+                     (keydown.enter)="emailFormSubmit()"></ion-input>
         </ion-item>
         <div class="error" *ngIf="passwordRequired" [@expandCollapse]>Pflichtfeld</div>
         <div class="error" *ngIf="passwordHasLengthSix" [@expandCollapse]>Das Passwort muss mindestens 6 Zeichen lang
           sein.
         </div>
-        <ion-button class="resetPasswordBtn" padding *ngIf="showResetPasswordButton" color="tertiary" fill="clear" size="small" [@expandCollapse]
+        <ion-button class="resetPasswordBtn" padding *ngIf="showResetPasswordButton" color="tertiary" fill="clear"
+                    size="small" [@expandCollapse]
                     (click)="resetPassword()">Wollen Sie Ihr Passwort zur&uuml;cksetzen?
         </ion-button>
         <p padding [@expandCollapse] *ngIf="showPasswordResetMailSent" class="tertiary">
@@ -83,7 +85,7 @@
         <!-- Repeat Password field, when registering-->
         <ion-item *ngIf="isRegistering" [@expandCollapse]>
           <ion-label color="primary" position="floating">Passwort wiederholen</ion-label>
-          <ion-input type="password" formControlName="repeatPassword"></ion-input>
+          <ion-input type="password" formControlName="repeatPassword" (keydown.enter)="emailFormSubmit()"></ion-input>
         </ion-item>
         <div class="error" *ngIf="repeatPasswordRequired" [@expandCollapse]>Pflichtfeld</div>
         <div class="error" *ngIf="repeatPasswordMismatch" [@expandCollapse]>
@@ -92,13 +94,13 @@
 
         <ion-item *ngIf="isRegistering">
           <ion-label>Datenschutzerkl&auml;rung gelesen</ion-label>
-          <ion-checkbox slot="end" formControlName="readDataProtection"></ion-checkbox>
+          <ion-checkbox slot="end" formControlName="readDataProtection"
+                        (keydown.enter)="emailFormSubmit()"></ion-checkbox>
         </ion-item>
         <div class="error" *ngIf="readDataProtection" [@expandCollapse]>
           Bitte lesen Sie die Datenschutzerkl&auml;rung und best&auml;tigen es anschlie&szlig;end.
         </div>
 
-        <!-- Make enter to submit-->
         <div class="submit-buttons">
           <ion-button tabindex="1" fill="outline" type="button" (click)="cancelEmailLogin()" padding>Abbrechen
           </ion-button>
