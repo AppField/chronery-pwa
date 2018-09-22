@@ -193,11 +193,15 @@ export class AuthService {
       case 'auth/wrong-password':
         message = 'Bitte überprüfen Sie die eingegebene E-Mail Adresse und das Passwort.';
         break;
+      case 'auth/account-exists-with-different-credential':
+        message = 'Es existiert bereits ein Account mit der selben E-Mail Adresse, jedoch mit einer anderen Anmelde-Methode. ' +
+          'Bitte melden Sie sich mit der verwendeten Anmelde-Methode an.';
+        break;
     }
 
     const toast = await this.toastCtrl.create({
       message: message,
-      duration: 4000,
+      duration: 5000,
       showCloseButton: true,
       position: 'middle',
       closeButtonText: 'OK'
