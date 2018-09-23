@@ -34,7 +34,7 @@ export class AuthService {
     this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
-          return this.afs.doc<User>(`user/${user.uid}`).valueChanges();
+          return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
         } else {
           return of(null);
         }
@@ -154,7 +154,7 @@ export class AuthService {
 
   private updateUserData(user, firstName?: string, lastName?: string, readDataProtection?: boolean) {
 
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${user.uid}`);
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
 
     const data: User = {
       uid: user.uid,
@@ -206,7 +206,7 @@ export class AuthService {
 
   private async deleteUserDocument(uid: string) {
     if (uid) {
-      const userRef: AngularFirestoreDocument<any> = this.afs.doc(`user/${uid}`);
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
       return userRef.delete();
 
     }
