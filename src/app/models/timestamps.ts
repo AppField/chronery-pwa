@@ -1,5 +1,5 @@
 export class Timestamps {
-  uid: string;
+  id: string;
   createdAt: Date;
   updatedAt: Date;
 

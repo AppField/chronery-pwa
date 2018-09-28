@@ -4,7 +4,7 @@ import { Project } from '../../models/project';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { ProjectsService } from '../../services/projects/projects.service';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'chy-projects',
@@ -34,12 +34,12 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class ProjectsPage implements OnInit, OnDestroy {
 
+  private destroy$: Subject<boolean> = new Subject<boolean>();
+
   toolbarColor: string = null;
   showCancelButton = true;
-  projects$: Observable<Project[]>;
-  // projects: Project[];
-
-  private destroy$: Subject<boolean> = new Subject<boolean>();
+  // projects$: Observable<Project[]>;
+  projects: Project[] = [];
 
   constructor(private platform: Platform,
               private projectsService: ProjectsService,
@@ -50,15 +50,12 @@ export class ProjectsPage implements OnInit, OnDestroy {
       this.showCancelButton = false;
     }
 
-    this.projects$ = this.projectsService.projects;
-
-    // this.projectsService.projects
-    //   .pipe(
-    //     takeUntil(this.destroy$)
-    //   )
-    //   .subscribe((projects: Project[]) => {
-    //     this.projects = projects;
-    //   });
+    this.projectsService.projects
+      .pipe(take(1))
+      .subscribe((projects: Project[]) => {
+          this.projects = projects;
+        }
+      );
   }
 
   ngOnInit() {
@@ -111,7 +108,9 @@ export class ProjectsPage implements OnInit, OnDestroy {
   }
 
   setProject(project: Project) {
-    console.log('projet to set', project);
+    if (project) {
+      this.projectsService.updateProject(project);
+    }
   }
 
   private async showToast(message: string) {
@@ -123,6 +122,12 @@ export class ProjectsPage implements OnInit, OnDestroy {
       closeButtonText: 'OK'
     });
     toast.present();
+  }
+
+  trackById(index: number, project: Project): string {
+    if (project) {
+      return project.id;
+    }
   }
 
   ngOnDestroy() {

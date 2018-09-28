@@ -16,18 +16,6 @@ export class ReportPage implements OnInit {
   from: string;
   to: string;
 
-
-  projects: Project[] = [
-    { name: 'Test Project 1', number: 'TP1', active: true },
-    { name: 'Project 2', number: 'TP2', active: true },
-    { name: 'Test Project 1', number: 'TP1', active: true },
-    { name: 'Web Design', number: 'WD', active: false },
-    { name: 'Backend', number: 'BE', active: false },
-    { name: 'Firebase Setup', number: 'FBS', active: true },
-    { name: 'Uni Project', number: 'UP', active: true },
-    { name: 'Something', number: 'ST', active: false }
-  ] as Project[];
-
   selectedProjects: Project[] = [];
 
   constructor(private platform: Platform) {

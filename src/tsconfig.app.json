@@ -1,4 +1,4 @@
-{
+{"build": "rimraf dist && webpack --progress --profile --bail",
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/app",

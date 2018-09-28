@@ -3,6 +3,7 @@ import { Project } from '../../models/project';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,18 +20,34 @@ export class ProjectsService {
     this.projectsCollection = afs
       .collection(`users/${uid}/projects`, ref => ref.orderBy('createdAt', 'desc'));
 
-    this.projects = this.projectsCollection.valueChanges();
+    this.projects = this.projectsCollection.snapshotChanges()
+      .pipe(
+        map(actions => {
+          return actions.map(a => {
+            const data = a.payload.doc.data();
+            const project = new Project(data.name, data.number, data.active);
+            project.id = a.payload.doc.id;
+            return project;
+          });
+        })
+      );
   }
 
   async createProject(project: Project) {
-
-    const projectAdded = await this.projectsCollection.add({ ...project });
-    console.log(projectAdded);
-
+    return await this.projectsCollection.add({ ...project });
   }
 
   async updateProject(project: Project) {
-
+    try {
+      // set id to null since it's not a part of the actual document of the firestore object
+      project = { ...project };
+      const id = project.id;
+      project.id = null;
+      const updatedProject = await this.projectsCollection.doc(`/${id}`).update({ ...project });
+      console.log('updated project', updatedProject);
+    } catch (error) {
+      console.log('error updating project', error);
+    }
   }
 
 }

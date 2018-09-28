@@ -15,28 +15,26 @@
 <ion-content padding>
   <div>
     <ion-grid>
-      <ng-container *ngIf="projects$ | async as projects">
-        <ion-row [@cardAnimation]="projects.length">
-          <ion-col *ngFor="let project of projects" size="12" size-sm="6" size-lg="4" size-xl="3">
-            <ion-card>
-              <ion-card-content>
-                <ion-item>
-                  <ion-label position="stacked">Projektname</ion-label>
-                  <ion-input [value]="project.name" (blur)="setProject(project)"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label position="stacked">Projektnummer</ion-label>
-                  <ion-input [value]="project.name"></ion-input>
-                </ion-item>
-                <ion-item>
-                  <ion-label position="fixed">Aktiv</ion-label>
-                  <ion-checkbox slot="end" [checked]="project.active"></ion-checkbox>
-                </ion-item>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-        </ion-row>
-      </ng-container>
+      <ion-row [@cardAnimation]="projects.length">
+        <ion-col *ngFor="let project of projects; trackBy: trackById" size="12" size-sm="6" size-lg="4" size-xl="3">
+          <ion-card>
+            <ion-card-content>
+              <ion-item>
+                <ion-label position="stacked">Projektname</ion-label>
+                <ion-input [(ngModel)]="project.name" (blur)="setProject(project)"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="stacked">Projektnummer</ion-label>
+                <ion-input [(ngModel)]="project.number" (blur)="setProject(project)"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="fixed">Aktiv</ion-label>
+                <ion-checkbox slot="end" [(ngModel)]="project.active" (ionChange)="setProject(project)"></ion-checkbox>
+              </ion-item>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </div>
 
