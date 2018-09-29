@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { endOfMonth } from 'date-fns';
 import { Project } from '../../models/project';
+import { Observable } from 'rxjs';
+import { ProjectsService } from '../../services/projects/projects.service';
 
 @Component({
   selector: 'chy-report',
@@ -16,15 +17,18 @@ export class ReportPage implements OnInit {
   from: string;
   to: string;
 
+  projects$: Observable<Project[]>;
   selectedProjects: Project[] = [];
 
-  constructor(private platform: Platform) {
+  constructor(private platform: Platform,
+              private projectsService: ProjectsService) {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
     this.contrastColor = !this.platform.is('ios') ? 'contrast-color' : null;
     this.isDesktop = this.platform.is('desktop');
     this.from = new Date().toISOString();
     this.to = new Date().toISOString();
 
+    this.projects$ = this.projectsService.projects$;
   }
 
   ngOnInit() {

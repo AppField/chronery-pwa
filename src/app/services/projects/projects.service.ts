@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Project } from '../../models/project';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -10,8 +10,11 @@ import { map } from 'rxjs/operators';
 })
 export class ProjectsService {
 
+  private _projects$ = new BehaviorSubject<Project[]>([]);
+
   projectsCollection: AngularFirestoreCollection<Project>;
-  projects: Observable<Project[]>;
+
+  projects$ = this._projects$.asObservable();
 
   constructor(private afs: AngularFirestore,
               private afAuth: AngularFireAuth) {
@@ -20,7 +23,7 @@ export class ProjectsService {
     this.projectsCollection = afs
       .collection(`users/${uid}/projects`, ref => ref.orderBy('createdAt', 'desc'));
 
-    this.projects = this.projectsCollection.snapshotChanges()
+    this.projectsCollection.snapshotChanges()
       .pipe(
         map(actions => {
           return actions.map(a => {
@@ -30,7 +33,11 @@ export class ProjectsService {
             return project;
           });
         })
-      );
+      )
+      .subscribe((projects: Project[]) => {
+        console.log('SNAPSHOT CHANGE', projects);
+        this._projects$.next(projects);
+      });
   }
 
   async createProject(project: Project) {

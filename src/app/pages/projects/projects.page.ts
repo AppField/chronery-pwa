@@ -50,9 +50,10 @@ export class ProjectsPage implements OnInit, OnDestroy {
       this.showCancelButton = false;
     }
 
-    this.projectsService.projects
-      .pipe(take(1))
+    this.projectsService.projects$
+      .pipe(takeUntil(this.destroy$))
       .subscribe((projects: Project[]) => {
+          console.log('projects', projects);
           this.projects = projects;
         }
       );

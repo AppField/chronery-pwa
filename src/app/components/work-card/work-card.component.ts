@@ -9,6 +9,7 @@ import { WorkingHours } from '../../models/working-hours';
 import { getDateTime } from '../../utils/utils';
 import { timeIsAfter } from '../../utils/custom-validators';
 import { expandCollapse } from '../../core/animations';
+import { Project } from '../../models/project';
 
 @Component({
   selector: 'chy-work-card',
@@ -26,18 +27,8 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     subHeader: 'Wähle das Projekt aus, für welches du arbeitest.'
   };
 
-  // TODO: remove with service
-  projects = [
-    { name: 'Test Project 1', number: 'TP1' },
-    { name: 'Project 2', number: 'TP2' },
-    { name: 'Test Project 1', number: 'TP1' },
-    { name: 'Web Design', number: 'WD' },
-    { name: 'Backend', number: 'BE' },
-    { name: 'Firebase Setup', number: 'FBS' },
-    { name: 'Uni Project', number: 'UP' },
-    { name: 'Something', number: 'ST' }
-  ];
 
+  @Input() projects: Project[];
   @Input() workingHour: WorkingHours;
   @Output() deleteWorkingHours = new EventEmitter();
 

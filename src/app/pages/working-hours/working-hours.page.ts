@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { WorkingHours } from '../../models/working-hours';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
+import { ProjectsService } from '../../services/projects/projects.service';
+import { Observable } from 'rxjs';
+import { Project } from '../../models/project';
 
 
 @Component({
@@ -36,11 +39,15 @@ export class WorkingHoursPage implements OnInit {
   selectedDate: string;
 
   workingHours: WorkingHours[] = [];
+  projects$: Observable<Project[]>;
 
-  constructor(private platform: Platform) {
+  constructor(private platform: Platform,
+              private projectsService: ProjectsService) {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
     this.selectedDate = new Date().toISOString();
     this.createDummyData();
+
+    this.projects$ = this.projectsService.projects$;
   }
 
   ngOnInit() {
