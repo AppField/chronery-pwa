@@ -40,6 +40,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
   showCancelButton = true;
   // projects$: Observable<Project[]>;
   projects: Project[] = [];
+  hideInactive = true;
 
   constructor(private platform: Platform,
               private projectsService: ProjectsService,
@@ -112,6 +113,10 @@ export class ProjectsPage implements OnInit, OnDestroy {
     if (project) {
       this.projectsService.updateProject(project);
     }
+  }
+
+  showInactiveChange(): void {
+    this.projectsService.updateHideInactive(this.hideInactive);
   }
 
   private async showToast(message: string) {

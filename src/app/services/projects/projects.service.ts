@@ -21,7 +21,9 @@ export class ProjectsService {
     const uid = this.afAuth.auth.currentUser.uid;
 
     this.projectsCollection = afs
-      .collection(`users/${uid}/projects`, ref => ref.orderBy('createdAt', 'desc'));
+      .collection(`users/${uid}/projects`, ref => ref
+        .orderBy('createdAt', 'desc')
+        .where('active', '==', true));
 
     this.projectsCollection.snapshotChanges()
       .pipe(
@@ -35,9 +37,12 @@ export class ProjectsService {
         })
       )
       .subscribe((projects: Project[]) => {
-        console.log('SNAPSHOT CHANGE', projects);
         this._projects$.next(projects);
       });
+  }
+
+  updateHideInactive(hideInactive: boolean): void {
+
   }
 
   async createProject(project: Project) {

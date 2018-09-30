@@ -4,6 +4,15 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Projekte</ion-title>
+
+
+    <ion-buttons slot="end">
+      <ion-label>
+        <small>Inaktive ausblenden</small>
+      </ion-label>
+      <ion-toggle color="secondary" slot="end" [(ngModel)]="hideInactive" (ionChange)="showInactiveChange()"></ion-toggle>
+    </ion-buttons>
+
   </ion-toolbar>
   <ion-toolbar [color]="toolbarColor">
     <ion-searchbar animated [showCancelButton]="showCancelButton" cancelButtonText="Abbrechen"
