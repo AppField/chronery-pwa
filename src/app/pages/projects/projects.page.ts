@@ -15,17 +15,17 @@ import { combineLatest, merge, take, takeUntil } from 'rxjs/operators';
       transition('* => *', [
         query(':enter', style({ opacity: 0 }), { optional: true }),
 
-        query(':enter', stagger('350ms', [
-          animate('500ms ease-in', keyframes([
-            style({ opacity: 0, transform: 'translate3d(0, 20px, 0)', offset: 0 }),
+        query(':enter', stagger('200ms', [
+          animate('250ms ease-in', keyframes([
+            style({ opacity: 0, transform: 'translate3d(0, 10px, 0)', offset: 0 }),
             style({ opacity: 1, transform: 'translate3d(0, 0, 0)', offset: 1.0 }),
           ]))
         ]), { optional: true }),
 
-        query(':leave', stagger('350ms', [
-          animate('500ms ease-in', keyframes([
+        query(':leave', stagger('200ms', [
+          animate('250ms ease-out', keyframes([
             style({ opacity: 1, transform: 'translate3d(0, 0, 0)', offset: 0 }),
-            style({ opacity: 0, transform: 'translate3d(0, 20px, 0)', offset: 1.0 })
+            style({ opacity: 0, transform: 'translate3d(0, 10px, 0)', offset: 1.0 })
           ]))
         ]), { optional: true })
       ])
