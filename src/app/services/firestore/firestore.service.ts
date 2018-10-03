@@ -64,7 +64,9 @@ export class FirestoreService<Item extends Timestamps> {
   }
 
   async addItem(item: Item) {
-    return await this.collection.add(item);
+    // Firestore needs an object, not an instance of a class. Cast it to an object
+    const copied = Object.assign({}, item) as Item;
+    return await this.collection.add(copied);
   }
 
   async filterItems(queries: FirebaseQuery[]) {
