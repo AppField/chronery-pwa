@@ -12,7 +12,7 @@ interface FirebaseQuery {
   value: string | boolean | number;
 }
 
-export class FirebaseService<Item extends Timestamps> {
+export class FirestoreService<Item extends Timestamps> {
   private readonly collectionPath: string;
   private _items$ = new BehaviorSubject<Item[]>([]);
   private _filteredItems$ = new BehaviorSubject<Item[]>([]);

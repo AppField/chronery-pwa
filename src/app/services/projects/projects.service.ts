@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Project } from '../../models/project';
-import { FirebaseService } from '../firebase/firebase.service';
+import { FirestoreService } from '../firestore/firestore.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
 import WhereFilterOp = firebase.firestore.WhereFilterOp;
@@ -14,7 +14,7 @@ interface FirebaseQuery {
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectsService extends FirebaseService<Project> {
+export class ProjectsService extends FirestoreService<Project> {
 
   constructor(
     afs: AngularFirestore,
