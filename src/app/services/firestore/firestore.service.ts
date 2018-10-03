@@ -1,16 +1,9 @@
-import { AngularFirestore, AngularFirestoreCollection, QueryDocumentSnapshot } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
 import { Timestamps } from '../../models/timestamps';
-import WhereFilterOp = firebase.firestore.WhereFilterOp;
-
-
-interface FirebaseQuery {
-  field: string;
-  operator: WhereFilterOp;
-  value: string | boolean | number;
-}
+import { FirebaseQuery } from '../../models/firebase-query';
 
 export class FirestoreService<Item extends Timestamps> {
   private readonly collectionPath: string;

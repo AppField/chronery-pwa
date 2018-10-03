@@ -3,13 +3,7 @@ import { Project } from '../../models/project';
 import { FirestoreService } from '../firestore/firestore.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import WhereFilterOp = firebase.firestore.WhereFilterOp;
-
-interface FirebaseQuery {
-  field: string;
-  operator: WhereFilterOp;
-  value: string | boolean | number;
-}
+import { FirebaseQuery } from '../../models/firebase-query';
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +19,6 @@ export class ProjectsService extends FirestoreService<Project> {
         { field: 'active', operator: '==', value: true } as FirebaseQuery
       ]
     );
-
-    // .where('active', '==', true));
-
   }
 
   updateHideInactive(hideInactive: boolean): void {
