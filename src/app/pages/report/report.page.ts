@@ -28,7 +28,7 @@ export class ReportPage implements OnInit {
     this.from = new Date().toISOString();
     this.to = new Date().toISOString();
 
-    this.projects$ = this.projectsService.projects$;
+    this.projects$ = this.projectsService.items$;
   }
 
   ngOnInit() {

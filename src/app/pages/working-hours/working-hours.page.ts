@@ -47,7 +47,7 @@ export class WorkingHoursPage implements OnInit {
     this.selectedDate = new Date().toISOString();
     this.createDummyData();
 
-    this.projects$ = this.projectsService.projects$;
+    this.projects$ = this.projectsService.items$;
   }
 
   ngOnInit() {

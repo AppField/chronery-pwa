@@ -1,65 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Project } from '../../models/project';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { FirebaseService } from '../firebase/firebase.service';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import WhereFilterOp = firebase.firestore.WhereFilterOp;
+
+interface FirebaseQuery {
+  field: string;
+  operator: WhereFilterOp;
+  value: string | boolean | number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectsService {
+export class ProjectsService extends FirebaseService<Project> {
 
-  private _projects$ = new BehaviorSubject<Project[]>([]);
+  constructor(
+    afs: AngularFirestore,
+    afAuth: AngularFireAuth
+  ) {
+    super(afs, afAuth, 'projects',
+      [
+        { field: 'active', operator: '==', value: true } as FirebaseQuery
+      ]
+    );
 
-  projectsCollection: AngularFirestoreCollection<Project>;
+    // .where('active', '==', true));
 
-  projects$ = this._projects$.asObservable();
-
-  constructor(private afs: AngularFirestore,
-              private afAuth: AngularFireAuth) {
-    const uid = this.afAuth.auth.currentUser.uid;
-
-    this.projectsCollection = afs
-      .collection(`users/${uid}/projects`, ref => ref
-        .orderBy('createdAt', 'desc')
-        .where('active', '==', true));
-
-    this.projectsCollection.snapshotChanges()
-      .pipe(
-        map(actions => {
-          return actions.map(a => {
-            const data = a.payload.doc.data();
-            const project = new Project(data.name, data.number, data.active);
-            project.id = a.payload.doc.id;
-            return project;
-          });
-        })
-      )
-      .subscribe((projects: Project[]) => {
-        this._projects$.next(projects);
-      });
   }
 
   updateHideInactive(hideInactive: boolean): void {
-
+    console.log('filter!', hideInactive);
+    const inactiveQuery = [{ field: 'active', operator: '==', value: hideInactive } as FirebaseQuery];
+    this.filterItems(inactiveQuery);
   }
 
-  async createProject(project: Project) {
-    return await this.projectsCollection.add({ ...project });
-  }
-
-  async updateProject(project: Project) {
-    try {
-      // set id to null since it's not a part of the actual document of the firestore object
-      project = { ...project };
-      const id = project.id;
-      project.id = null;
-      const updatedProject = await this.projectsCollection.doc(`/${id}`).update({ ...project });
-      console.log('updated project', updatedProject);
-    } catch (error) {
-      console.log('error updating project', error);
-    }
-  }
 
 }

@@ -4,7 +4,7 @@ import { Project } from '../../models/project';
 import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { ProjectsService } from '../../services/projects/projects.service';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { combineLatest, merge, take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'chy-projects',
@@ -51,13 +51,30 @@ export class ProjectsPage implements OnInit, OnDestroy {
       this.showCancelButton = false;
     }
 
-    this.projectsService.projects$
-      .pipe(takeUntil(this.destroy$))
+    this.projectsService.items$
+      .pipe(
+        merge(this.projectsService.filteredItems$)
+      )
       .subscribe((projects: Project[]) => {
-          console.log('projects', projects);
-          this.projects = projects;
-        }
-      );
+        console.log(projects);
+        this.projects = projects;
+      });
+
+
+    // .pipe(takeUntil(this.destroy$))
+    // .subscribe((projects: Project[]) => {
+    //   console.log(projects);
+    //   this.projects = projects;
+    // });
+
+
+    // this.projectsService.items$
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe((projects: Project[]) => {
+    //       console.log('projects', projects);
+    //       this.projects = projects;
+    //     }
+    //   );
   }
 
   ngOnInit() {
@@ -95,7 +112,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
             const { name, number } = inputs;
             if (name !== '' && number !== '') {
               const newProject = new Project(name, number);
-              this.projectsService.createProject(newProject);
+              this.projectsService.addItem(newProject);
             } else {
               const message = 'Bitte geben Sie einen Namen und eine Nummer für das Projekt an.';
               this.showToast(message);
@@ -111,7 +128,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
 
   setProject(project: Project) {
     if (project) {
-      this.projectsService.updateProject(project);
+      this.projectsService.updateItem(project);
     }
   }
 
