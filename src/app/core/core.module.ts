@@ -7,7 +7,7 @@ import { AuthService } from './auth.service';
 @NgModule({
   imports: [
     AngularFireAuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule.enablePersistence()
   ],
   providers: [AuthService, AuthGuard]
 })
