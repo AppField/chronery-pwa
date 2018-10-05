@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { WorkingHours } from '../../models/working-hours';
-import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { ProjectsService } from '../../services/projects/projects.service';
 import { Observable } from 'rxjs';
 import { Project } from '../../models/project';
+import { appear } from '../../core/animations';
 
 
 @Component({
@@ -12,25 +12,7 @@ import { Project } from '../../models/project';
   templateUrl: './working-hours.page.html',
   styleUrls: ['./working-hours.page.scss'],
   animations: [
-    trigger('cardAnimation', [
-      transition('* => *', [
-        query(':enter', style({ opacity: 0 }), { optional: true }),
-
-        query(':enter', stagger('350ms', [
-          animate('500ms ease-in', keyframes([
-            style({ opacity: 0, transform: 'translate3d(0, 20px, 0)', offset: 0 }),
-            style({ opacity: 1, transform: 'translate3d(0, 0, 0)', offset: 1.0 }),
-          ]))
-        ]), { optional: true }),
-
-        query(':leave', stagger('350ms', [
-          animate('500ms ease-in', keyframes([
-            style({ opacity: 1, transform: 'translate3d(0, 0, 0)', offset: 0 }),
-            style({ opacity: 0, transform: 'translate3d(0, 20px, 0)', offset: 1.0 })
-          ]))
-        ]), { optional: true })
-      ])
-    ])
+    appear
   ]
 })
 export class WorkingHoursPage implements OnInit {

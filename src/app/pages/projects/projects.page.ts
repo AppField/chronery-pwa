@@ -1,35 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AlertController, Platform, ToastController } from '@ionic/angular';
 import { Project } from '../../models/project';
-import { animate, keyframes, query, stagger, style, transition, trigger } from '@angular/animations';
 import { ProjectsService } from '../../services/projects/projects.service';
-import { Observable, Subject } from 'rxjs';
-import { combineLatest, merge, take, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { merge } from 'rxjs/operators';
+import { appear } from '../../core/animations';
 
 @Component({
   selector: 'chy-projects',
   templateUrl: './projects.page.html',
   styleUrls: ['./projects.page.scss'],
   animations: [
-    trigger('cardAnimation', [
-      transition('* => *', [
-        query(':enter', style({ opacity: 0 }), { optional: true }),
-
-        query(':enter', stagger('200ms', [
-          animate('250ms ease-in', keyframes([
-            style({ opacity: 0, transform: 'translate3d(0, 10px, 0)', offset: 0 }),
-            style({ opacity: 1, transform: 'translate3d(0, 0, 0)', offset: 1.0 }),
-          ]))
-        ]), { optional: true }),
-
-        query(':leave', stagger('200ms', [
-          animate('250ms ease-out', keyframes([
-            style({ opacity: 1, transform: 'translate3d(0, 0, 0)', offset: 0 }),
-            style({ opacity: 0, transform: 'translate3d(0, 10px, 0)', offset: 1.0 })
-          ]))
-        ]), { optional: true })
-      ])
-    ])
+    appear
   ]
 })
 export class ProjectsPage implements OnInit, OnDestroy {
