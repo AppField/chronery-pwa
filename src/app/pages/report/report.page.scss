@@ -1,10 +1,10 @@
 .contrast-color {
   color: var(--ion-color-primary-contrast);
-  .ion-select-inner {
-    color: var(--ion-color-primary-contrast);
-  }
-  .select-text {
-    color: white;
+
+  .select-field {
+    --color: var(--ion-color-primary-contrast);
+    --placeholder-color: var(--ion-color-primary-contrast);
+    --icon-color: var(--ion-color-primary-contrast);
   }
 }
 

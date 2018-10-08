@@ -9,7 +9,7 @@
     <ion-item [ngClass]="contrastColor">
       <ion-label>Projekte</ion-label>
       <ion-select multiple="true" cancelText="Abbrechen" okText="Filtern" (ionChange)="updateProjects($event)"
-                  placeholder="Projekte auswählen">
+                  placeholder="Projekte auswählen" class="select-field">
         <ion-select-option *ngFor="let project of projects$ | async" [value]="project">
           {{project.name}} - {{project.number}}
         </ion-select-option>
