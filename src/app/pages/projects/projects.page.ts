@@ -3,7 +3,7 @@ import { AlertController, Platform, ToastController } from '@ionic/angular';
 import { Project } from '../../models/project';
 import { ProjectsService } from '../../services/projects/projects.service';
 import { Subject } from 'rxjs';
-import { merge } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { appear } from '../../core/animations';
 
 @Component({
@@ -34,29 +34,12 @@ export class ProjectsPage implements OnInit, OnDestroy {
     }
 
     this.projectsService.items$
-      .pipe(
-        merge(this.projectsService.filteredItems$)
-      )
+      .pipe(takeUntil(this.destroy$))
       .subscribe((projects: Project[]) => {
-        console.log(projects);
-        this.projects = projects;
+        if (this.hideInactive) {
+          this.projects = projects;
+        }
       });
-
-
-    // .pipe(takeUntil(this.destroy$))
-    // .subscribe((projects: Project[]) => {
-    //   console.log(projects);
-    //   this.projects = projects;
-    // });
-
-
-    // this.projectsService.items$
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((projects: Project[]) => {
-    //       console.log('projects', projects);
-    //       this.projects = projects;
-    //     }
-    //   );
   }
 
   ngOnInit() {
@@ -114,8 +97,8 @@ export class ProjectsPage implements OnInit, OnDestroy {
     }
   }
 
-  showInactiveChange(): void {
-    this.projectsService.updateHideInactive(this.hideInactive);
+  async showInactiveChange() {
+    this.projects = await this.projectsService.updateHideInactive(this.hideInactive);
   }
 
   private async showToast(message: string) {
