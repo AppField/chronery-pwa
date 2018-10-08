@@ -3,6 +3,7 @@ import { Platform } from '@ionic/angular';
 import { Project } from '../../models/project';
 import { Observable } from 'rxjs';
 import { ProjectsService } from '../../services/projects/projects.service';
+import { endOfMonth } from 'date-fns';
 
 @Component({
   selector: 'chy-report',
@@ -25,8 +26,13 @@ export class ReportPage implements OnInit {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
     this.contrastColor = !this.platform.is('ios') ? 'contrast-color' : null;
     this.isDesktop = this.platform.is('desktop');
-    this.from = new Date().toISOString();
-    this.to = new Date().toISOString();
+
+    const from = new Date();
+    from.setUTCDate(1);
+    this.from = from.toISOString();
+
+    const to = endOfMonth(new Date());
+    this.to = to.toISOString();
 
     this.projects$ = this.projectsService.items$;
   }
