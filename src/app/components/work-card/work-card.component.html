@@ -7,10 +7,11 @@
         </ion-fab-button>
       </ion-fab>
 
-      <ion-item (click)="openProjectModal()">
+
+      <ion-item>
         <ion-label position="stacked">Projekt</ion-label>
         <!-- visible input field to show text value on an input and interact with the user -->
-        <ion-input class="select-modal" placeholder="Projekt ausw&auml;hlen" readonly
+        <ion-input class="select-modal" placeholder="Projekt ausw&auml;hlen" readonly (ionFocus)="openProjectModal()"
                    [value]="displayProject" role="button"></ion-input>
 
         <!-- hidden input field to hold actual value (project object) -->
@@ -18,9 +19,7 @@
 
       </ion-item>
 
-      <div class="error" *ngIf="projectRequired"
-           [@expandCollapse]>Pflichtfeld
-      </div>
+      <div class="error" *ngIf="projectRequired" [@expandCollapse]>Pflichtfeld</div>
 
       <ion-grid class="time">
         <ion-row>
