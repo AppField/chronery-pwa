@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -15,25 +15,22 @@ import { Project } from '../../models/project';
   selector: 'chy-work-card',
   templateUrl: './work-card.component.html',
   styleUrls: ['./work-card.component.scss'],
-  animations: [expandCollapse]
+  animations: [expandCollapse],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkCardComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   form: FormGroup;
   displayFormat = 'HH:mm';
-  actionSheetOptions: any = {
-    header: 'Projekt',
-    subHeader: 'Wähle das Projekt aus, für welches du arbeitest.'
-  };
-
 
   @Input() projects: Project[];
   @Input() workingHour: WorkingHours;
   @Output() deleteWorkingHours = new EventEmitter();
 
   constructor(public modalCtrl: ModalController,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -58,6 +55,13 @@ export class WorkCardComponent implements OnInit, OnDestroy {
       .subscribe(() => this.setMinutesSpent());
   }
 
+  get displayProject(): string {
+    const project = this.form.get('project').value;
+    if (project.id) {
+      return `${project.name} - ${project.number}`;
+    }
+  }
+
   async openProjectModal() {
     const modal = await this.modalCtrl.create({
       component: ProjectModalComponent,
@@ -66,11 +70,16 @@ export class WorkCardComponent implements OnInit, OnDestroy {
 
     modal.onDidDismiss()
       .then((data) => {
-        console.log('data from modal', data);
-        const project = data['project'];
-        console.log('project from modal selected', project);
+        const project = data['data'];
+
+        if (project) {
+          this.form.get('project').setValue(project);
+          this.cd.detectChanges();
+        }
         this.form.controls['project'].markAsTouched();
       });
+
+
 
     return await modal.present();
   }
@@ -100,7 +109,6 @@ export class WorkCardComponent implements OnInit, OnDestroy {
   }
 
   removeWorkingHours(): void {
-    console.log('WorkingHours to remove', this.workingHour);
     this.deleteWorkingHours.emit(this.workingHour);
   }
 

@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, Platform, RippleEffect, Searchbar } from '@ionic/angular';
 import { Project } from '../../models/project';
 
@@ -7,7 +7,7 @@ import { Project } from '../../models/project';
   templateUrl: './project-modal.component.html',
   styleUrls: ['./project-modal.component.scss']
 })
-export class ProjectModalComponent implements OnInit {
+export class ProjectModalComponent implements OnInit, AfterViewInit {
   @ViewChild('searchBar') searchBar: Searchbar;
 
   @Input() project: any;
@@ -26,9 +26,17 @@ export class ProjectModalComponent implements OnInit {
     // history.pushState(projectModal, "Project Modal", "Modal");
   }
 
+  ngAfterViewInit() {
+    // TODO: remove this with modals ionModalDiPresent event
+    setTimeout(() => {
+      this.searchBar.focus();
+    }, 250);
+
+  }
+
   @HostListener('ionModalDidPresent')
   modalDidPresent(event) {
-    console.log('Did present');
+    console.log('======================= MODAL DID LOAD =======================');
   }
 
 
@@ -38,7 +46,6 @@ export class ProjectModalComponent implements OnInit {
   }
 
   onCancel() {
-    // console.log('will dismiss');
     this.modalCtrl.dismiss();
   }
 

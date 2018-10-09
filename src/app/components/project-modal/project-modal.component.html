@@ -1,5 +1,13 @@
 <ion-header>
   <ion-toolbar [color]="toolbarColor">
+    <ion-buttons slot="start">
+      <ion-button (click)="onCancel()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Projekt ausw&auml;hlen</ion-title>
+  </ion-toolbar>
+  <ion-toolbar [color]="toolbarColor">
     <ion-searchbar #searchBar placeholder="Projekt suchen" animated
                    showCancelButton cancelButtonText="Abbrechen"
                    (ionCancel)="onCancel()" [(ngModel)]="searchText"></ion-searchbar>

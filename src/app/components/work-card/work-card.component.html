@@ -8,19 +8,14 @@
       </ion-fab>
 
       <ion-item>
-
         <ion-label position="stacked">Projekt</ion-label>
-        <!--<ion-input readonly (focus)="presentModal()" readonly formControlName="project"></ion-input>-->
-        <!--<ion-select [interfaceOptions]="actionSheetOptions" interface="action-sheet"-->
-        <!--placeholder="Projekt auswahlen" formControlName="project"-->
-        <!--(blur)="saveWorkingHours()">-->
-        <!--<ion-select-option *ngFor="let project of projects" [value]="project">-->
-        <!--{{project.name}} - {{project.number}}-->
-        <!--</ion-select-option>-->
+        <!-- visible input field to show text value on an input and interact with the user -->
+        <ion-input class="select-modal" placeholder="Projekt ausw&auml;hlen" readonly (click)="openProjectModal()"
+                   [value]="displayProject" role="button"></ion-input>
 
-        <!--</ion-select>-->
+        <!-- hidden input field to hold actual value (projec tobje-->
+        <input formControlName="project" hidden/>
 
-        <ion-input placeholder="Projekt ausw&auml;hlen" readonly (click)="openProjectModal()"></ion-input>
       </ion-item>
 
       <div class="error" *ngIf="form.get('project').hasError('required') && form.get('project').dirty"
