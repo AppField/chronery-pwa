@@ -13,12 +13,12 @@
         <ion-input class="select-modal" placeholder="Projekt ausw&auml;hlen" readonly (click)="openProjectModal()"
                    [value]="displayProject" role="button"></ion-input>
 
-        <!-- hidden input field to hold actual value (projec tobje-->
+        <!-- hidden input field to hold actual value (project object) -->
         <input formControlName="project" hidden/>
 
       </ion-item>
 
-      <div class="error" *ngIf="form.get('project').hasError('required') && form.get('project').dirty"
+      <div class="error" *ngIf="projectRequired"
            [@expandCollapse]>Pflichtfeld
       </div>
 
@@ -26,11 +26,11 @@
         <ion-row>
           <ion-col class="from">
             <ion-item>
-              <ion-label position="floating">Von</ion-label>
+              <ion-label position="stacked">Von</ion-label>
               <ion-datetime [displayFormat]="displayFormat" formControlName="from"
                             (blur)="saveWorkingHours()"></ion-datetime>
             </ion-item>
-            <div class="error" *ngIf="form.get('from').hasError('required') && form.get('from').touched"
+            <div class="error" *ngIf="fromRequired"
                  [@expandCollapse]>Pflichtfeld
             </div>
           </ion-col>
@@ -38,19 +38,18 @@
             <ion-item>
               <ion-label position="floating">Bis</ion-label>
               <ion-datetime [displayFormat]="displayFormat" formControlName="to"
-                            (click)="onToFocus($event)" (blur)="saveWorkingHours()"></ion-datetime>
+                            (focus)="onToFocus($event)" (blur)="saveWorkingHours()"></ion-datetime>
             </ion-item>
-            <div class="error" *ngIf="form.get('to').hasError('required') && form.get('to').touched" [@expandCollapse]>
+            <div class="error" *ngIf="toRequired" [@expandCollapse]>
               Pflichtfeld
             </div>
-            <div class="error" *ngIf="form.get('to').hasError('isNotAfter') && form.get('to').value != ''"
+            <div class="error" *ngIf="toIsNotAFter"
                  [@expandCollapse]>
               Muss nach der "Von"-Zeit sein
             </div>
           </ion-col>
         </ion-row>
       </ion-grid>
-
 
       <ion-item>
         <ion-label position="floating">Kommentar</ion-label>

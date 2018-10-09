@@ -6,7 +6,7 @@ import { merge, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { differenceInSeconds } from 'date-fns';
 import { WorkingHours } from '../../models/working-hours';
-import { getDateTime } from '../../utils/utils';
+import { getDateTime, getDateWithCurrentTime } from '../../utils/utils';
 import { timeIsAfter } from '../../utils/custom-validators';
 import { expandCollapse } from '../../core/animations';
 import { Project } from '../../models/project';
@@ -57,7 +57,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
 
   get displayProject(): string {
     const project = this.form.get('project').value;
-    if (project.id) {
+    if (project && project.hasOwnProperty('id')) {
       return `${project.name} - ${project.number}`;
     }
   }
@@ -77,21 +77,20 @@ export class WorkCardComponent implements OnInit, OnDestroy {
           this.cd.detectChanges();
         }
         this.form.controls['project'].markAsTouched();
+        this.cd.detectChanges();
       });
-
-
 
     return await modal.present();
   }
 
   onToFocus(event): void {
-    // const toValue = this.form.controls['to'].value;
-    // if (toValue === '' || !toValue) {
-    //   setTimeout(() => {
-    //     this.form.controls['to'].patchValue(new Date().toISOString());
-    //   });
-    //
-    // }
+    const toValue = this.form.controls['to'].value;
+    if (toValue === '' || !toValue) {
+      setTimeout(() => {
+        this.form.controls['to'].setValue(getDateWithCurrentTime().toISOString());
+      });
+
+    }
   }
 
   setMinutesSpent(): void {
@@ -125,6 +124,24 @@ export class WorkCardComponent implements OnInit, OnDestroy {
 
       console.log('Form is INVALID!');
     }
+  }
+
+  // GETTER FOR VALIDATIONS
+
+  get projectRequired(): boolean {
+    return this.form.get('project').hasError('required') && this.form.get('project').touched;
+  }
+
+  get fromRequired(): boolean {
+    return this.form.get('from').hasError('required') && this.form.get('from').touched;
+  }
+
+  get toRequired(): boolean {
+    return this.form.get('to').hasError('required') && this.form.get('to').touched;
+  }
+
+  get toIsNotAFter(): boolean {
+    return this.form.get('to').hasError('isNotAfter') && this.form.get('to').value != '';
   }
 
   ngOnDestroy() {

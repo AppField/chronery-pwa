@@ -18,6 +18,13 @@ export function getDateTime(time): Date {
   return date;
 }
 
+export function getDateWithCurrentTime(): Date {
+  const date = new Date();
+  // Add timezone offset
+  date.setUTCHours(date.getUTCHours() - date.getTimezoneOffset() / 60);
+  return date;
+}
+
 export function encodeDate(date: Date): string {
   return format(date, 'YYYY-MM-dd');
 }
