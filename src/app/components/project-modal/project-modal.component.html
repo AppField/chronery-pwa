@@ -16,8 +16,8 @@
 <ion-content>
   <ion-list>
 
-    <ion-item *ngFor="let project of projects | filter: searchText" (click)="selectProject(project)">
-      <ion-ripple-effect tapClick="true"></ion-ripple-effect>
+    <ion-item *ngFor="let project of projects | filter: searchText" button (click)="selectProject(project)">
+      <ion-ripple-effect></ion-ripple-effect>
       <ion-label>
         <h2>{{project.name}}</h2>
         <p>{{project.number}}</p>
