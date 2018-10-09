@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { WorkingHours } from '../../models/working-hours';
 import { ProjectsService } from '../../services/projects/projects.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Project } from '../../models/project';
 import { appear } from '../../core/animations';
+import { WorkingHoursService } from '../../services/working-hours/working-hours.service';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -15,7 +17,8 @@ import { appear } from '../../core/animations';
     appear
   ]
 })
-export class WorkingHoursPage implements OnInit {
+export class WorkingHoursPage implements OnInit, OnDestroy {
+  private destroy$ = new Subject<boolean>();
 
   toolbarColor: string;
   selectedDate: string;
@@ -24,19 +27,26 @@ export class WorkingHoursPage implements OnInit {
   projects$: Observable<Project[]>;
 
   constructor(private platform: Platform,
-              private projectsService: ProjectsService) {
+              private projectsService: ProjectsService,
+              private workingHoursService: WorkingHoursService
+  ) {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
     this.selectedDate = new Date().toISOString();
-    this.createDummyData();
 
     this.projects$ = this.projectsService.items$;
+
+    this.workingHoursService.items$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((workingHours: WorkingHours[]) => {
+        this.workingHours = workingHours;
+      });
   }
 
   ngOnInit() {
   }
 
-  updateWorkingHours(): void {
-    console.log('selected date', this.selectedDate);
+  updateWorkingHours(workingHours: WorkingHours): void {
+    console.log('working hours to update', workingHours);
   }
 
   addWorkingHours(): void {
@@ -65,11 +75,8 @@ export class WorkingHoursPage implements OnInit {
   //   }
   // }
 
-  // TODO: Remove method with actual data
-  private createDummyData(): void {
-    for (let i = 0; i < 4; i++) {
-      this.workingHours.push(new WorkingHours());
-    }
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
-
 }

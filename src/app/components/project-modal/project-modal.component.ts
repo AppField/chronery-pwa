@@ -1,5 +1,6 @@
 import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, Platform, RippleEffect, Searchbar } from '@ionic/angular';
+import { Project } from '../../models/project';
 
 @Component({
   selector: 'chy-project-modal',
@@ -12,18 +13,8 @@ export class ProjectModalComponent implements OnInit {
   @Input() project: any;
 
   toolbarColor: string;
-
-  projects = [
-    {name: 'Test Project 1', number: 'TP1'},
-    {name: 'Project 2', number: 'TP2'},
-    {name: 'Test Project 1', number: 'TP1'},
-    {name: 'Web Design', number: 'WD'},
-    {name: 'Backend', number: 'BE'},
-    {name: 'Firebase Setup', number: 'FBS'},
-    {name: 'Uni Project', number: 'UP'},
-    {name: 'Something', number: 'ST'}
-  ];
-
+  projects: Project[];
+  searchText = '';
 
   constructor(private platform: Platform,
               private modalCtrl: ModalController) {
@@ -41,7 +32,7 @@ export class ProjectModalComponent implements OnInit {
   }
 
 
-  selectProject(project): void {
+  selectProject(project: Project): void {
     console.log('selected project', project);
     this.modalCtrl.dismiss(project);
   }

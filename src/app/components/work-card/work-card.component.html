@@ -6,18 +6,24 @@
           <ion-icon name="close"></ion-icon>
         </ion-fab-button>
       </ion-fab>
+
       <ion-item>
+
         <ion-label position="stacked">Projekt</ion-label>
         <!--<ion-input readonly (focus)="presentModal()" readonly formControlName="project"></ion-input>-->
-        <ion-select [interfaceOptions]="actionSheetOptions" interface="action-sheet"
-                    placeholder="Projekt auswahlen" formControlName="project">
-          <ion-select-option *ngFor="let project of projects" [value]="project">
-            {{project.name}} - {{project.number}}
-          </ion-select-option>
+        <!--<ion-select [interfaceOptions]="actionSheetOptions" interface="action-sheet"-->
+        <!--placeholder="Projekt auswahlen" formControlName="project"-->
+        <!--(blur)="saveWorkingHours()">-->
+        <!--<ion-select-option *ngFor="let project of projects" [value]="project">-->
+        <!--{{project.name}} - {{project.number}}-->
+        <!--</ion-select-option>-->
 
-        </ion-select>
+        <!--</ion-select>-->
+
+        <ion-input placeholder="Projekt ausw&auml;hlen" readonly (click)="openProjectModal()"></ion-input>
       </ion-item>
-      <div class="error" *ngIf="form.get('project').hasError('required') && form.get('project').touched"
+
+      <div class="error" *ngIf="form.get('project').hasError('required') && form.get('project').dirty"
            [@expandCollapse]>Pflichtfeld
       </div>
 
@@ -26,7 +32,8 @@
           <ion-col class="from">
             <ion-item>
               <ion-label position="floating">Von</ion-label>
-              <ion-datetime [displayFormat]="displayFormat" formControlName="from"></ion-datetime>
+              <ion-datetime [displayFormat]="displayFormat" formControlName="from"
+                            (blur)="saveWorkingHours()"></ion-datetime>
             </ion-item>
             <div class="error" *ngIf="form.get('from').hasError('required') && form.get('from').touched"
                  [@expandCollapse]>Pflichtfeld
@@ -36,7 +43,7 @@
             <ion-item>
               <ion-label position="floating">Bis</ion-label>
               <ion-datetime [displayFormat]="displayFormat" formControlName="to"
-                            (click)="onToFocus($event)"></ion-datetime>
+                            (click)="onToFocus($event)" (blur)="saveWorkingHours()"></ion-datetime>
             </ion-item>
             <div class="error" *ngIf="form.get('to').hasError('required') && form.get('to').touched" [@expandCollapse]>
               Pflichtfeld
@@ -52,7 +59,7 @@
 
       <ion-item>
         <ion-label position="floating">Kommentar</ion-label>
-        <ion-input formControlName="comment"></ion-input>
+        <ion-input formControlName="comment" (blur)="saveWorkingHours()"></ion-input>
       </ion-item>
 
     </ion-card-content>

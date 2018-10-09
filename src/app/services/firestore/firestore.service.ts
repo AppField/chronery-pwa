@@ -91,6 +91,7 @@ export class FirestoreService<Item extends Timestamps> {
       const copied = Object.assign({}, item) as Item;
       const id = copied.id;
       copied.id = null;
+      copied.updatedAt = new Date();
 
       this.collection.doc(`/${id}`).update(copied);
     } catch (error) {

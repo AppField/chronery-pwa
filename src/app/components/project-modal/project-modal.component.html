@@ -2,14 +2,14 @@
   <ion-toolbar [color]="toolbarColor">
     <ion-searchbar #searchBar placeholder="Projekt suchen" animated
                    showCancelButton cancelButtonText="Abbrechen"
-                   (ionCancel)="onCancel()"></ion-searchbar>
+                   (ionCancel)="onCancel()" [(ngModel)]="searchText"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
 
-    <ion-item *ngFor="let project of projects" (click)="selectProject(project)">
+    <ion-item *ngFor="let project of projects | filter: searchText" (click)="selectProject(project)">
       <ion-ripple-effect tapClick="true"></ion-ripple-effect>
       <ion-label>
         <h2>{{project.name}}</h2>

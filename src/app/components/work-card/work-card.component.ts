@@ -58,16 +58,18 @@ export class WorkCardComponent implements OnInit, OnDestroy {
       .subscribe(() => this.setMinutesSpent());
   }
 
-  async presentModal() {
+  async openProjectModal() {
     const modal = await this.modalCtrl.create({
       component: ProjectModalComponent,
-      componentProps: { project: 'Nummer 6' },
+      componentProps: { projects: this.projects, project: 'Nummer 6' },
     });
 
     modal.onDidDismiss()
       .then((data) => {
+        console.log('data from modal', data);
         const project = data['project'];
         console.log('project from modal selected', project);
+        this.form.controls['project'].markAsTouched();
       });
 
     return await modal.present();
@@ -107,6 +109,12 @@ export class WorkCardComponent implements OnInit, OnDestroy {
       console.log('Form is VALID!');
       console.log(this.form.value);
     } else {
+      const keys = Object.keys(this.form.controls);
+      keys.forEach((key: string) => {
+        this.form.controls[key].markAsTouched();
+        this.form.controls[key].markAsDirty();
+      });
+
       console.log('Form is INVALID!');
     }
   }
