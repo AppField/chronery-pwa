@@ -7,10 +7,10 @@
         </ion-fab-button>
       </ion-fab>
 
-      <ion-item>
+      <ion-item (click)="openProjectModal()">
         <ion-label position="stacked">Projekt</ion-label>
         <!-- visible input field to show text value on an input and interact with the user -->
-        <ion-input class="select-modal" placeholder="Projekt ausw&auml;hlen" readonly (click)="openProjectModal()"
+        <ion-input class="select-modal" placeholder="Projekt ausw&auml;hlen" readonly
                    [value]="displayProject" role="button"></ion-input>
 
         <!-- hidden input field to hold actual value (project object) -->
