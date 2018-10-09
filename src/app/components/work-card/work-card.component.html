@@ -38,7 +38,7 @@
             <ion-item>
               <ion-label position="floating">Bis</ion-label>
               <ion-datetime [displayFormat]="displayFormat" formControlName="to"
-                            (focus)="onToFocus($event)" (blur)="saveWorkingHours()"></ion-datetime>
+                            (focus)="onToFocus()" (blur)="saveWorkingHours()"></ion-datetime>
             </ion-item>
             <div class="error" *ngIf="toRequired" [@expandCollapse]>
               Pflichtfeld
