@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-
+import { ModalController } from '@ionic/angular';
 import { Platform, ToastController } from '@ionic/angular';
 import { SwUpdate } from '@angular/service-worker';
 import { environment } from '../environments/environment';
@@ -48,7 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
     private windowRef: WindowRefService,
-    public auth: AuthService
+    public auth: AuthService,
+    private modalCtr: ModalController
   ) {
   }
 
@@ -56,6 +57,19 @@ export class AppComponent implements OnInit, OnDestroy {
     if (environment.production) {
       this.setupSWUpdate();
     }
+    this.listenBackButton();
+  }
+
+  private listenBackButton(): void {
+    console.log('setup BACK BUTTONS');
+    this.platform.backButton.subscribe(() => {
+      console.log('BACK BUTTONS PRESSED', event);
+      const top = this.modalCtr.getTop();
+      console.log('TOP MODAL', top);
+      if (top) {
+        console.log('top modal', top);
+      }
+    });
   }
 
   private setupSWUpdate(): void {
