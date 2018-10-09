@@ -10,14 +10,15 @@
       <ion-label>
         <small>Inaktive ausblenden</small>
       </ion-label>
-      <ion-toggle color="secondary" slot="end" [(ngModel)]="hideInactive" (ionChange)="showInactiveChange()"></ion-toggle>
+      <ion-toggle color="secondary" slot="end" [(ngModel)]="hideInactive"
+                  (ionChange)="showInactiveChange()"></ion-toggle>
     </ion-buttons>
 
   </ion-toolbar>
   <ion-toolbar [color]="toolbarColor">
     <ion-searchbar animated [showCancelButton]="showCancelButton" cancelButtonText="Abbrechen"
                    placeholder="Projekte durchsuchen"
-                   (ionChange)="searchProjects($event)"></ion-searchbar>
+                   [(ngModel)]="searchText"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
@@ -25,7 +26,8 @@
   <div>
     <ion-grid>
       <ion-row [@cardAnimation]="projects.length">
-        <ion-col *ngFor="let project of projects; trackBy: trackById" size="12" size-sm="6" size-lg="4" size-xl="3">
+        <ion-col *ngFor="let project of projects | filter: searchText: searchText; trackBy: trackById" size="12" size-sm="6"
+                 size-lg="4" size-xl="3">
           <ion-card>
             <ion-card-content>
               <ion-item>

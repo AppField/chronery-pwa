@@ -20,6 +20,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
 
   toolbarColor: string = null;
   showCancelButton = true;
+  searchText = '';
   // projects$: Observable<Project[]>;
   projects: Project[] = [];
   hideInactive = true;
