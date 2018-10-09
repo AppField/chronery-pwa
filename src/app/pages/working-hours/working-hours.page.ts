@@ -45,8 +45,8 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  updateWorkingHours(workingHours: WorkingHours): void {
-    console.log('working hours to update', workingHours);
+  updateWorkingHours(): void {
+    console.log('working hours to update');
   }
 
   addWorkingHours(): void {
