@@ -83,7 +83,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     return await modal.present();
   }
 
-  onToFocus(event): void {
+  onToFocus(): void {
     const toValue = this.form.controls['to'].value;
     if (toValue === '' || !toValue) {
       setTimeout(() => {
