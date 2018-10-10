@@ -62,7 +62,7 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   }
 
   addWorkingHours(): void {
-    const date = getDateFromObject(this.selectedDate);
+    const date = typeof this.selectedDate === 'string' ? new Date(this.selectedDate) : getDateFromObject(this.selectedDate);
     this.workingHours.unshift(new WorkingHours(date));
   }
 
@@ -70,11 +70,7 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
     // TODO: Implement actual delete method
     this.workingHoursService.deleteItem(workingHours);
   }
-
-  loadWorkingHours(event): void {
-    console.log('load new workinghours', this.selectedDate);
-  }
-
+  
   trackById(index: number, workingHours: WorkingHours): string {
     if (workingHours) {
       return workingHours.id;
