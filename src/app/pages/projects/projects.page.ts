@@ -37,17 +37,11 @@ export class ProjectsPage implements OnInit, OnDestroy {
     this.projectsService.items$
       .pipe(takeUntil(this.destroy$))
       .subscribe((projects: Project[]) => {
-        if (this.hideInactive) {
-          this.projects = projects;
-        }
+        this.projects = projects;
       });
   }
 
   ngOnInit() {
-  }
-
-  searchProjects(event): void {
-    console.log('search projects input', event.target.value);
   }
 
   async addProject() {
@@ -99,7 +93,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
   }
 
   async showInactiveChange() {
-    this.projects = await this.projectsService.updateHideInactive(this.hideInactive);
+    this.projectsService.updateHideInactive(this.hideInactive);
   }
 
   private async showToast(message: string) {
@@ -122,6 +116,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
+    this.projectsService.updateHideInactive(true);
   }
 
 }

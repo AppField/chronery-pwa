@@ -22,9 +22,8 @@ export class ProjectsService extends FirestoreService<Project> {
   }
 
   async updateHideInactive(hideInactive: boolean) {
-    console.log('filter!', hideInactive);
     const inactiveQuery = [{ field: 'active', operator: '==', value: hideInactive } as FirebaseQuery];
-    return await this.filterItems(inactiveQuery);
+    this.filterCollection(inactiveQuery);
   }
 
 
