@@ -21,4 +21,14 @@ export class WorkingHoursService extends FirestoreService<WorkingHours> {
       ]
     );
   }
+
+  async getWorkingHoursByDate(date: Date): Promise<void> {
+    const encodedDate = encodeDate(date);
+    console.log('date to query', encodedDate);
+    const query = [{ field: 'date', operator: '==', value: encodedDate } as FirebaseQuery];
+    this.filterCollection(query);
+  }
+
+
+
 }

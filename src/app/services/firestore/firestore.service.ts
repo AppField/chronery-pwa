@@ -1,5 +1,5 @@
 import { AngularFirestore, AngularFirestoreCollection, CollectionReference, Query } from '@angular/fire/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { map } from 'rxjs/operators';
 import { Timestamps } from '../../models/timestamps';
@@ -8,6 +8,7 @@ import { FirebaseQuery } from '../../models/firebase-query';
 export class FirestoreService<Item extends Timestamps> {
   private readonly collectionPath: string;
   private _items$ = new BehaviorSubject<Item[]>([]);
+  private activeSubscription: Subscription;
 
   // Normal collection
   collection: AngularFirestoreCollection<Item>;
@@ -46,7 +47,7 @@ export class FirestoreService<Item extends Timestamps> {
 
 
   private setupSnapshotChanges(collection: AngularFirestoreCollection, itemsSubject: BehaviorSubject<Item[]>): void {
-    collection.snapshotChanges()
+    this.activeSubscription = collection.snapshotChanges()
       .pipe(
         map(actions => {
           return actions.map(a => {
@@ -60,6 +61,34 @@ export class FirestoreService<Item extends Timestamps> {
       .subscribe((items: Item[]) => {
         itemsSubject.next(items);
       });
+  }
+
+  async filterCollection(queries: FirebaseQuery[]) {
+    this.collection = this.afs
+      .collection<Item>(this.collectionPath, ref => {
+
+        return this.buildQuery(ref, queries);
+      });
+
+    this.activeSubscription.unsubscribe();
+    this.setupSnapshotChanges(this.collection, this._items$);
+  }
+
+  async filterItems(queries: FirebaseQuery[]): Promise<Item[]> {
+    const ref = this.collection.ref;
+
+    const queryRef = this.buildQuery(ref, queries);
+
+    const items: Item[] = [];
+    queryRef.get().then(snapshot => {
+      snapshot.docs.forEach(doc => {
+        const item = doc.data() as Item;
+        item.id = doc.id;
+        items.push(item);
+      });
+    });
+
+    return items;
   }
 
   async addItem(item: Item) {
@@ -91,21 +120,5 @@ export class FirestoreService<Item extends Timestamps> {
     }
   }
 
-  async filterItems(queries: FirebaseQuery[]): Promise<Item[]> {
-    const ref = this.collection.ref;
-
-    const queryRef = this.buildQuery(ref, queries);
-
-    const items: Item[] = [];
-    queryRef.get().then(snapshot => {
-      snapshot.docs.forEach(doc => {
-        const item = doc.data() as Item;
-        item.id = doc.id;
-        items.push(item);
-      });
-    });
-
-    return items;
-  }
 
 }

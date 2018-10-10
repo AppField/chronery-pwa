@@ -1,3 +1,4 @@
+import { parse } from 'date-fns';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { WorkingHours } from '../../models/working-hours';
@@ -7,6 +8,7 @@ import { Project } from '../../models/project';
 import { appear } from '../../core/animations';
 import { WorkingHoursService } from '../../services/working-hours/working-hours.service';
 import { takeUntil } from 'rxjs/operators';
+import { encodeDate, getDateFromObject } from '../../utils/utils';
 
 
 @Component({
@@ -21,14 +23,14 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
 
   toolbarColor: string;
-  selectedDate: string;
+  selectedDate: string | any;
 
   workingHours: WorkingHours[] = [];
   projects$: Observable<Project[]>;
 
   constructor(private platform: Platform,
-    private projectsService: ProjectsService,
-    private workingHoursService: WorkingHoursService
+              private projectsService: ProjectsService,
+              private workingHoursService: WorkingHoursService
   ) {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
     this.selectedDate = new Date().toISOString();
@@ -45,6 +47,12 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
+  async getWorkingHours(): Promise<void> {
+    const date = getDateFromObject(this.selectedDate);
+
+    this.workingHoursService.getWorkingHoursByDate(date);
+  }
+
   updateWorkingHours(workingHours: WorkingHours): void {
     if (workingHours.id) {
       this.workingHoursService.updateItem(workingHours);
@@ -54,7 +62,8 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   }
 
   addWorkingHours(): void {
-    this.workingHours.unshift(new WorkingHours());
+    const date = getDateFromObject(this.selectedDate);
+    this.workingHours.unshift(new WorkingHours(date));
   }
 
   deleteWorkingHours(workingHours: WorkingHours): void {

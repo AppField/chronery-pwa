@@ -10,9 +10,9 @@ export class WorkingHours extends Timestamps {
   comment: string;
   minutesSpent: string;
 
-  constructor() {
+  constructor(date?: Date) {
     super();
-    this.date = encodeDate(new Date());
+    this.date = encodeDate((date || new Date()));
     this.project = null;
 
 
