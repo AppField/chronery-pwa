@@ -27,8 +27,8 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   projects$: Observable<Project[]>;
 
   constructor(private platform: Platform,
-              private projectsService: ProjectsService,
-              private workingHoursService: WorkingHoursService
+    private projectsService: ProjectsService,
+    private workingHoursService: WorkingHoursService
   ) {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
     this.selectedDate = new Date().toISOString();
@@ -45,8 +45,12 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  updateWorkingHours(): void {
-    console.log('working hours to update');
+  updateWorkingHours(workingHours: WorkingHours): void {
+    if (workingHours.id) {
+      this.workingHoursService.updateItem(workingHours);
+    } else {
+      this.workingHoursService.addItem(workingHours);
+    }
   }
 
   addWorkingHours(): void {
@@ -55,7 +59,17 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
 
   deleteWorkingHours(workingHours: WorkingHours): void {
     // TODO: Implement actual delete method
-    this.workingHours.pop();
+    this.workingHoursService.deleteItem(workingHours);
+  }
+
+  loadWorkingHours(event): void {
+    console.log('load new workinghours', this.selectedDate);
+  }
+
+  trackById(index: number, workingHours: WorkingHours): string {
+    if (workingHours) {
+      return workingHours.id;
+    }
   }
 
   /*

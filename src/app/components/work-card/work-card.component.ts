@@ -26,11 +26,12 @@ export class WorkCardComponent implements OnInit, OnDestroy {
 
   @Input() projects: Project[];
   @Input() workingHour: WorkingHours;
+  @Output() updateWorkingHours = new EventEmitter<WorkingHours>();
   @Output() deleteWorkingHours = new EventEmitter();
 
   constructor(public modalCtrl: ModalController,
-              private fb: FormBuilder,
-              private cd: ChangeDetectorRef) {
+    private fb: FormBuilder,
+    private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -77,7 +78,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
           this.cd.detectChanges();
         }
         this.form.controls['project'].markAsTouched();
-        this.cd.detectChanges();
+        this.saveWorkingHours();
       });
 
     return await modal.present();
@@ -93,7 +94,8 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  setMinutesSpent(): void {
+  private setMinutesSpent(): void {
+    console.log('CALCLUDATE SPENT');
     const from = this.form.controls['from'].value;
     const to = this.form.controls['to'].value;
 
@@ -105,6 +107,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     const differenceMinutes = differenceSeconds / 60;
 
     this.form.controls['minutesSpent'].setValue(differenceMinutes > 0 ? differenceMinutes : 0);
+    this.cd.detectChanges();
   }
 
   removeWorkingHours(): void {
@@ -112,16 +115,19 @@ export class WorkCardComponent implements OnInit, OnDestroy {
   }
 
   saveWorkingHours(): void {
+
     if (this.form.valid) {
       console.log('Form is VALID!');
-      console.log(this.form.value);
+      const workingHour = { ...this.workingHour, ...this.form.value };
+      console.log('TO UPDATE', workingHour);
+      this.updateWorkingHours.emit(workingHour);
     } else {
       const keys = Object.keys(this.form.controls);
       keys.forEach((key: string) => {
         this.form.controls[key].markAsTouched();
         this.form.controls[key].markAsDirty();
       });
-
+      this.cd.detectChanges();
       console.log('Form is INVALID!');
     }
   }
@@ -141,7 +147,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
   }
 
   get toIsNotAFter(): boolean {
-    return this.form.get('to').hasError('isNotAfter') && this.form.get('to').value != '';
+    return this.form.get('to').hasError('isNotAfter') && this.form.get('to').value !== '';
   }
 
   ngOnDestroy() {

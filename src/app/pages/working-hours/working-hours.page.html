@@ -11,9 +11,10 @@
   <div>
     <ion-grid>
       <ion-row [@cardAnimation]="workingHours.length">
-        <ion-col *ngFor="let workingHour of workingHours" size="12" size-sm="6" size-md="6" size-lg="4">
+        <ion-col *ngFor="let workingHour of workingHours trackBy: trackById" size="12" size-sm="6" size-md="6" size-lg="4">
           <chy-work-card [workingHour]="workingHour" [projects]="projects$ | async"
-                         (deleteWorkingHours)="deleteWorkingHours()"></chy-work-card>
+                         (updateWorkingHours)="updateWorkingHours($event)"
+                         (deleteWorkingHours)="deleteWorkingHours($event)"></chy-work-card>
         </ion-col>
       </ion-row>
     </ion-grid>
@@ -30,7 +31,7 @@
 <ion-footer>
   <ion-toolbar>
     <!--<ion-item>-->
-    <ion-datetime displayFormat="DD. MMMM YYYY" [ngModel]="selectedDate" (ionChange)="updateWorkingHours()"
+    <ion-datetime displayFormat="DD. MMMM YYYY" [ngModel]="selectedDate" 
                   class="selected-date"></ion-datetime>
     <!--</ion-item>-->
   </ion-toolbar>

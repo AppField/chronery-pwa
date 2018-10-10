@@ -68,6 +68,29 @@ export class FirestoreService<Item extends Timestamps> {
     return await this.collection.add(copied);
   }
 
+  async updateItem(item: Item) {
+    try {
+      // Firestore needs an object, not an instance of a class. Cast it to an object
+      const copied = Object.assign({}, item) as Item;
+      const id = copied.id;
+      copied.id = null;
+      copied.updatedAt = new Date();
+
+      this.collection.doc(`/${id}`).update(copied);
+    } catch (error) {
+      console.log('error updating item', error);
+    }
+  }
+
+  async deleteItem(item: Item) {
+    try {
+      const deleted = await this.collection.doc(`${item.id}`).delete();
+      console.log('deleted', deleted);
+    } catch (error) {
+      console.log('error deleting item', error);
+    }
+  }
+
   async filterItems(queries: FirebaseQuery[]): Promise<Item[]> {
     const ref = this.collection.ref;
 
@@ -85,17 +108,4 @@ export class FirestoreService<Item extends Timestamps> {
     return items;
   }
 
-  async updateItem(item: Item) {
-    try {
-      // Firestore needs an object, not an instance of a class. Cast it to an object
-      const copied = Object.assign({}, item) as Item;
-      const id = copied.id;
-      copied.id = null;
-      copied.updatedAt = new Date();
-
-      this.collection.doc(`/${id}`).update(copied);
-    } catch (error) {
-      console.log('error updating item', error);
-    }
-  }
 }
