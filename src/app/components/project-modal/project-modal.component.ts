@@ -1,11 +1,12 @@
-import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { ModalController, Platform, RippleEffect, Searchbar } from '@ionic/angular';
+import { AfterViewInit, ChangeDetectionStrategy, Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { ModalController, Platform, Searchbar } from '@ionic/angular';
 import { Project } from '../../models/project';
 
 @Component({
   selector: 'chy-project-modal',
   templateUrl: './project-modal.component.html',
-  styleUrls: ['./project-modal.component.scss']
+  styleUrls: ['./project-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProjectModalComponent implements OnInit, AfterViewInit {
   @ViewChild('searchBar') searchBar: Searchbar;
