@@ -1,4 +1,3 @@
-import { parse } from 'date-fns';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { WorkingHours } from '../../models/working-hours';
@@ -8,7 +7,7 @@ import { Project } from '../../models/project';
 import { appear } from '../../core/animations';
 import { WorkingHoursService } from '../../services/working-hours/working-hours.service';
 import { takeUntil } from 'rxjs/operators';
-import { encodeDate, getDateFromObject } from '../../utils/utils';
+import { getDateFromObject } from '../../utils/utils';
 
 
 @Component({

@@ -1,8 +1,7 @@
 import { parse, format, toDate } from 'date-fns';
 
 
-export function getDateTime(time): Date {
-  let date: Date;
+export function getDateTime(time, date: Date = new Date()): Date {
   if (typeof time !== 'string') {
     const { hour, minute } = time;
     date = toDate(new Date().toISOString());

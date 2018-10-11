@@ -42,7 +42,6 @@ export class ProjectModalComponent implements OnInit, AfterViewInit {
 
 
   selectProject(project: Project): void {
-    console.log('selected project', project);
     this.modalCtrl.dismiss(project);
   }
 

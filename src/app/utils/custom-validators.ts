@@ -8,9 +8,9 @@ export function timeIsAfter(control: FormControl): any {
     const from = control.parent.controls['from'].value;
     const to = control.value;
 
-    const fromDate = getDateTime(from);
-    const toDate = getDateTime(to);
-
+    const fromDate = getDateTime(from).setSeconds(0);
+    const toDate = getDateTime(to).setSeconds(0);
+    console.log('VALIDATOR timeIsAfter ', isAfter(toDate, fromDate) ? true : { isNotAfter: true });
     return isAfter(toDate, fromDate) ? true : { isNotAfter: true };
   }
   return null;

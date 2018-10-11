@@ -30,8 +30,8 @@ export class WorkCardComponent implements OnInit, OnDestroy {
   @Output() deleteWorkingHours = new EventEmitter();
 
   constructor(public modalCtrl: ModalController,
-    private fb: FormBuilder,
-    private cd: ChangeDetectorRef) {
+              private fb: FormBuilder,
+              private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -75,9 +75,9 @@ export class WorkCardComponent implements OnInit, OnDestroy {
 
         if (project) {
           this.form.get('project').setValue(project);
-          this.cd.detectChanges();
         }
         this.form.controls['project'].markAsTouched();
+        this.cd.detectChanges();
         this.saveWorkingHours();
       });
 
@@ -89,25 +89,28 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     if (toValue === '' || !toValue) {
       setTimeout(() => {
         this.form.controls['to'].setValue(getDateWithCurrentTime().toISOString());
+        this.form.controls['to'].updateValueAndValidity();
+        this.cd.detectChanges();
       });
 
     }
   }
 
   private setMinutesSpent(): void {
-    console.log('CALCLUDATE SPENT');
+    this.cd.detectChanges();
+
     const from = this.form.controls['from'].value;
     const to = this.form.controls['to'].value;
 
-    const fromMinutes = getDateTime(from);
-    const toMinutes = getDateTime(to);
+    const workingHoursDate = new Date(this.workingHour.date);
+    const fromMinutes = getDateTime(from, workingHoursDate);
+    const toMinutes = getDateTime(to, workingHoursDate);
 
     // const differenceMinutes = differenceInMinutes(toMinutes, fromMinutes);
     const differenceSeconds = differenceInSeconds(toMinutes, fromMinutes);
     const differenceMinutes = differenceSeconds / 60;
 
     this.form.controls['minutesSpent'].setValue(differenceMinutes > 0 ? differenceMinutes : 0);
-    this.cd.detectChanges();
   }
 
   removeWorkingHours(): void {
@@ -115,10 +118,14 @@ export class WorkCardComponent implements OnInit, OnDestroy {
   }
 
   saveWorkingHours(): void {
-
     if (this.form.valid) {
-      console.log('Form is VALID!');
-      const workingHour = { ...this.workingHour, ...this.form.value };
+      console.log('FORM IS VALID');
+      const data = { ...this.form.value } as WorkingHours;
+
+      data.from = getDateTime(data.from).toISOString();
+      data.to = getDateTime(data.to).toISOString();
+
+      const workingHour = { ...this.workingHour, ...data };
       console.log('TO UPDATE', workingHour);
       this.updateWorkingHours.emit(workingHour);
     } else {
@@ -127,7 +134,6 @@ export class WorkCardComponent implements OnInit, OnDestroy {
         this.form.controls[key].markAsTouched();
         this.form.controls[key].markAsDirty();
       });
-      this.cd.detectChanges();
       console.log('Form is INVALID!');
     }
   }
