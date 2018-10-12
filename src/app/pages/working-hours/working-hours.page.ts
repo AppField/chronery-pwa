@@ -27,7 +27,7 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   hideAddButton = false;
 
   workingHours: WorkingHours[] = [];
-  projects$: Observable<Project[]>;
+  projects: Project[] = [];
 
   constructor(private platform: Platform,
               private projectsService: ProjectsService,
@@ -36,7 +36,9 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
     this.selectedDate = new Date().toISOString();
 
-    this.projects$ = this.projectsService.items$;
+    this.projectsService.items$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((projects: Project[]) => this.projects = projects);
 
     this.workingHoursService.items$
       .pipe(takeUntil(this.destroy$))
@@ -49,12 +51,23 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
+  private checkIfProjectsHaveChanged(): void {
+    this.workingHours.forEach((wH: WorkingHours) => {
+      const project = this.projects.filter((p: Project) => p.id === wH.project.id && p.updatedAt !== wH.project.updatedAt)[0];
+      if (project) {
+        wH.project = project;
+        this.updateWorkingHours(wH);
+      }
+    });
+  }
+
   /* CRUD OPERATIONS */
 
   async getWorkingHours(): Promise<void> {
     const date = getDateFromObject(this.selectedDate);
 
-    this.workingHoursService.getWorkingHoursByDate(date);
+    await this.workingHoursService.getWorkingHoursByDate(date);
+    this.checkIfProjectsHaveChanged();
   }
 
   updateWorkingHours(workingHours: WorkingHours): void {
