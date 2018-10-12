@@ -1,10 +1,10 @@
 import { Project } from './project';
 import { Timestamps } from './timestamps';
-import { encodeDate, getDateWithCurrentTime } from '../utils/utils';
+import { getDateWithCurrentTime } from '../utils/utils';
 
 export class WorkingHours extends Timestamps {
   project: Project;
-  date: string;
+  date: Date;
   from: string;
   to: string;
   comment: string;
@@ -12,7 +12,13 @@ export class WorkingHours extends Timestamps {
 
   constructor(date?: Date) {
     super();
-    this.date = encodeDate((date || new Date()));
+
+    date = date ? date : new Date();
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+    this.date = date;
     this.project = null;
 
 

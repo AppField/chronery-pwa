@@ -35,9 +35,9 @@ export class FirestoreService<Item extends Timestamps> {
     this.setupSnapshotChanges(this.collection, this._items$);
   }
 
-  private buildQuery(ref: CollectionReference, queries: FirebaseQuery[]): Query {
+  private buildQuery(ref: CollectionReference, queries: FirebaseQuery[], shouldOrder: boolean = true): Query {
 
-    let newRef = ref.orderBy('createdAt', 'desc');
+    let newRef = shouldOrder ? ref.orderBy('createdAt', 'desc') : ref;
     queries.forEach((query: FirebaseQuery) => {
       newRef = newRef.where(query.field, query.operator, query.value);
     });
@@ -74,19 +74,25 @@ export class FirestoreService<Item extends Timestamps> {
     this.setupSnapshotChanges(this.collection, this._items$);
   }
 
-  async filterItems(queries: FirebaseQuery[]): Promise<Item[]> {
+  async filterItems(queries: FirebaseQuery[], shouldOrder?: boolean): Promise<Item[]> {
     const ref = this.collection.ref;
 
-    const queryRef = this.buildQuery(ref, queries);
+    const queryRef = this.buildQuery(ref, queries, shouldOrder);
 
     const items: Item[] = [];
-    queryRef.get().then(snapshot => {
-      snapshot.docs.forEach(doc => {
-        const item = doc.data() as Item;
-        item.id = doc.id;
-        items.push(item);
-      });
+    const snapshot = await queryRef.get();
+    snapshot.docs.forEach(doc => {
+      const item = doc.data() as Item;
+      item.id = doc.id;
+      items.push(item);
     });
+    // queryRef.get().then(snapshot => {
+    //   snapshot.docs.forEach(doc => {
+    //     const item = doc.data() as Item;
+    //     item.id = doc.id;
+    //     items.push(item);
+    //   });
+    // });
 
     return items;
   }

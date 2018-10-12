@@ -139,7 +139,7 @@
     <ion-datetime displayFormat="DD.MM.YYYY" [value]="from" (ionChange)="updateFrom($event)"
                   class="date-picker"></ion-datetime>
 
-    <ion-datetime displayFormat="DD.MM.YYYY" [value]="to" (ionChange)="updateTo($event)"
+    <ion-datetime #toPicker displayFormat="DD.MM.YYYY" [value]="to" (ionChange)="updateTo($event)"
                   class="date-picker "></ion-datetime>
 
   </ion-toolbar>
