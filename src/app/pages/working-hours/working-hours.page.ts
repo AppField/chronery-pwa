@@ -4,7 +4,7 @@ import { WorkingHours } from '../../models/working-hours';
 import { ProjectsService } from '../../services/projects/projects.service';
 import { Observable, Subject } from 'rxjs';
 import { Project } from '../../models/project';
-import { appear } from '../../core/animations';
+import { appear, fadeScaleInOut } from '../../core/animations';
 import { WorkingHoursService } from '../../services/working-hours/working-hours.service';
 import { takeUntil } from 'rxjs/operators';
 import { getDateFromObject } from '../../utils/utils';
@@ -15,7 +15,8 @@ import { getDateFromObject } from '../../utils/utils';
   templateUrl: './working-hours.page.html',
   styleUrls: ['./working-hours.page.scss'],
   animations: [
-    appear
+    appear,
+    fadeScaleInOut
   ]
 })
 export class WorkingHoursPage implements OnInit, OnDestroy {
@@ -23,6 +24,7 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
 
   toolbarColor: string;
   selectedDate: string | any;
+  hideAddButton = false;
 
   workingHours: WorkingHours[] = [];
   projects$: Observable<Project[]>;
@@ -40,11 +42,14 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((workingHours: WorkingHours[]) => {
         this.workingHours = workingHours;
+        this.hideAddButton = this.checkWorkingHoursCompletion();
       });
   }
 
   ngOnInit() {
   }
+
+  /* CRUD OPERATIONS */
 
   async getWorkingHours(): Promise<void> {
     const date = getDateFromObject(this.selectedDate);
@@ -53,23 +58,32 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   }
 
   updateWorkingHours(workingHours: WorkingHours): void {
-    if (workingHours.id) {
-      this.workingHoursService.updateItem(workingHours);
-    } else {
-      this.workingHoursService.addItem(workingHours);
-    }
+    this.workingHoursService.updateItem(workingHours);
+    this.hideAddButton = false;
   }
 
   addWorkingHours(): void {
     const date = typeof this.selectedDate === 'string' ? new Date(this.selectedDate) : getDateFromObject(this.selectedDate);
-    this.workingHours.unshift(new WorkingHours(date));
+    const newWorkingHours = new WorkingHours(date);
+    this.workingHoursService.addItem(newWorkingHours);
   }
 
   deleteWorkingHours(workingHours: WorkingHours): void {
     // TODO: Implement actual delete method
     this.workingHoursService.deleteItem(workingHours);
   }
-  
+
+  /* END CRUD OPERATIONS */
+
+  /**
+   *  Check if there are any Working Hours which don't have spent minutes
+   *  There these are uncompleted working hours
+   */
+  checkWorkingHoursCompletion(): boolean {
+    return this.workingHours
+      .filter((workingHours: WorkingHours) => workingHours.minutesSpent != null).length !== this.workingHours.length;
+  }
+
   trackById(index: number, workingHours: WorkingHours): string {
     if (workingHours) {
       return workingHours.id;

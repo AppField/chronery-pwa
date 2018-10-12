@@ -20,7 +20,7 @@
 
   </div>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addWorkingHours()" size="large" color="primary">
+    <ion-fab-button (click)="addWorkingHours()" size="large" color="primary" *ngIf="!hideAddButton" [@fadeScaleInOut]>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

@@ -29,6 +29,4 @@ export class WorkingHoursService extends FirestoreService<WorkingHours> {
     this.filterCollection(query);
   }
 
-
-
 }
