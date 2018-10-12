@@ -110,5 +110,9 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.destroy$.next(true);
     this.destroy$.complete();
+
+    // reset Working Hours in service to todays data
+    const today = new Date();
+    this.workingHoursService.getWorkingHoursByDate(today);
   }
 }
