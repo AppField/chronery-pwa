@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { ReportPage } from './report.page';
+import { MinutesToTimeModule } from '../../utils/pipes/minutes-to-time/minutes-to-time.module';
 
 const routes: Routes = [
   {
@@ -19,8 +20,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    MinutesToTimeModule,
     RouterModule.forChild(routes)
   ],
   declarations: [ReportPage]
 })
-export class ReportPageModule {}
+export class ReportPageModule {
+}

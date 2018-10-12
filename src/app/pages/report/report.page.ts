@@ -24,6 +24,7 @@ export class ReportPage implements OnInit {
 
   projects$: Observable<Project[]>;
   selectedProjects: Project[] = [];
+  reportData: WorkingHours[];
 
   @ViewChild('toPicker') toPicker;
 
@@ -87,6 +88,7 @@ export class ReportPage implements OnInit {
     ] as FirebaseQuery[];
 
     const reportData = await this.workingHoursService.filterItems(query, false);
+    this.reportData = reportData;
     console.log('REPORT DATA', reportData);
   }
 

@@ -8,8 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { WorkingHoursPage } from './working-hours.page';
 import { WorkCardComponent } from '../../components/work-card/work-card.component';
 import { ProjectModalComponent } from '../../components/project-modal/project-modal.component';
-import { MinutesToTimePipe } from '../../utils/pipes/minutes-to-time';
 import { FilterModule } from '../../utils/pipes/filter.module';
+import { MinutesToTimeModule } from '../../utils/pipes/minutes-to-time/minutes-to-time.module';
 
 const routes: Routes = [
   {
@@ -25,9 +25,10 @@ const routes: Routes = [
     IonicModule,
     ReactiveFormsModule,
     FilterModule,
+    MinutesToTimeModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [WorkingHoursPage, MinutesToTimePipe, WorkCardComponent, ProjectModalComponent],
+  declarations: [WorkingHoursPage, WorkCardComponent, ProjectModalComponent],
   entryComponents: [ProjectModalComponent]
 })
 export class WorkingHoursPageModule {
