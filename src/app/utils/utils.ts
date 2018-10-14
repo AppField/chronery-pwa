@@ -31,13 +31,13 @@ export function getDateWithCurrentTime(): Date {
 }
 
 export function encodeDate(date: Date): string {
-  return format(date, 'YYYY-MM-dd');
+  return format(date, 'yyyy-MM-dd');
 }
 
 
 export function decodeDate(encodedDate: string): Date {
   if (encodedDate) {
-    return parse(encodedDate, 'YYYY-MM-dd', new Date());
+    return parse(encodedDate, 'yyyy-MM-dd', new Date());
   } else {
     return null;
   }
