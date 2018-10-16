@@ -4,7 +4,7 @@ import { Project } from '../../models/project';
 import { Observable } from 'rxjs';
 import { ProjectsService } from '../../services/projects/projects.service';
 import { endOfMonth } from 'date-fns';
-import { encodeDate, getDateFromObject } from '../../utils/utils';
+import { encodeDate } from '../../utils/utils';
 import { FirebaseQuery } from '../../models/firebase-query';
 import { WorkingHours } from '../../models/working-hours';
 import { WorkingHoursService } from '../../services/working-hours/working-hours.service';
@@ -67,20 +67,8 @@ export class ReportPage implements OnInit {
 
   async updateReport() {
 
-    let from;
-    let to;
-    if (typeof this.from === 'string') {
-      from = encodeDate(new Date(this.from));
-    } else {
-      from = encodeDate(getDateFromObject(this.from));
-    }
-
-    if (typeof this.to === 'string') {
-      to = encodeDate(new Date(this.to));
-    } else {
-      to = encodeDate(getDateFromObject(this.to));
-    }
-
+    const from = encodeDate(new Date(this.from));
+    const to = encodeDate(new Date(this.to));
 
     const query = [
       { field: 'date', operator: '>=', value: from },

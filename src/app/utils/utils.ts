@@ -17,12 +17,6 @@ export function getDateTime(time, date: Date = new Date()): Date {
   return date;
 }
 
-export function getDateFromObject(dateObj): Date {
-  const { day, month, year } = dateObj;
-
-  return parse(`${day.value}.${month.value}.${year.value}`, 'dd.MM.yyyy', new Date());
-}
-
 export function getDateWithCurrentTime(): Date {
   const date = new Date();
   // Add timezone offset

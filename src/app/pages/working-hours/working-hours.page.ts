@@ -2,12 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { WorkingHours } from '../../models/working-hours';
 import { ProjectsService } from '../../services/projects/projects.service';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Project } from '../../models/project';
 import { appear, fadeScaleInOut } from '../../core/animations';
 import { WorkingHoursService } from '../../services/working-hours/working-hours.service';
 import { takeUntil } from 'rxjs/operators';
-import { getDateFromObject } from '../../utils/utils';
 
 
 @Component({
@@ -64,7 +63,7 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   /* CRUD OPERATIONS */
 
   async getWorkingHours(): Promise<void> {
-    const date = getDateFromObject(this.selectedDate);
+    const date = new Date(this.selectedDate);
 
     await this.workingHoursService.getWorkingHoursByDate(date);
     this.checkIfProjectsHaveChanged();
@@ -76,7 +75,7 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   }
 
   addWorkingHours(): void {
-    const date = typeof this.selectedDate === 'string' ? new Date(this.selectedDate) : getDateFromObject(this.selectedDate);
+    const date = new Date(this.selectedDate);
     const newWorkingHours = new WorkingHours(date);
     this.workingHoursService.addItem(newWorkingHours);
   }

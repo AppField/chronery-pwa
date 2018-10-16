@@ -126,7 +126,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
       data.to = getDateTime(data.to).toISOString();
 
       const workingHour = { ...this.workingHour, ...data };
-      console.log('TO UPDATE', workingHour);
+
       this.updateWorkingHours.emit(workingHour);
     } else {
       const keys = Object.keys(this.form.controls);
