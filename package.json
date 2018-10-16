@@ -11,7 +11,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "bundle-report": "ng build --prod --build-optimizer --extract-css false --stats-json && npx webpack-bundle-analyzer www/stats.json"
-
   },
   "private": true,
   "dependencies": {
@@ -26,7 +25,7 @@
     "@angular/pwa": "^0.8.5",
     "@angular/router": "~6.1.10",
     "@angular/service-worker": "~6.1.10",
-    "@ionic/angular": "^4.0.0-beta.12",
+    "@ionic/angular": "^4.0.0-beta.13",
     "@ionic/pro": "2.0.3",
     "core-js": "^2.5.7",
     "date-fns": "^2.0.0-alpha.18",
@@ -49,7 +48,7 @@
     "@ionic/schematics-angular": "^1.0.7",
     "@types/jasmine": "~2.8.9",
     "@types/jasminewd2": "~2.0.5",
-    "@types/node": "~10.11.7",
+    "@types/node": "~10.12.0",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~3.2.1",
     "jasmine-spec-reporter": "~4.2.1",
@@ -62,7 +61,7 @@
     "ts-node": "~7.0.1",
     "tslint": "~5.11.0",
     "typescript": "2.9.2",
-    "webpack-bundle-analyzer": "^3.0.2"
+    "webpack-bundle-analyzer": "^3.0.3"
   },
   "description": "An Ionic project"
 }

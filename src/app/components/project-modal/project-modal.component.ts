@@ -30,7 +30,7 @@ export class ProjectModalComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // TODO: remove this with modals ionModalDiPresent event
     setTimeout(() => {
-      this.searchBar.focus();
+      this.searchBar.setFocus();
     }, 250);
 
   }
