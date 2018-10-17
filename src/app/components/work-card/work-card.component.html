@@ -1,7 +1,7 @@
 <ion-card>
   <form [formGroup]="form" (ngSubmit)="saveWorkingHours()">
     <ion-card-content>
-      <ion-fab vertical="top" horizontal="end" edge="false" >
+      <ion-fab vertical="top" horizontal="end" edge="false">
         <ion-fab-button size="small" color="light" mini translucent="true" (click)="removeWorkingHours()">
           <ion-icon name="close"></ion-icon>
         </ion-fab-button>
@@ -56,7 +56,7 @@
     </ion-card-content>
 
     <ion-item class="activated">
-      <p class="spent">{{form.get('minutesSpent').value | minutesToTime}}</p>
+      <p class="spent">{{ form.get('minutesSpent').value | minutesToTime }} Std.</p>
       <!--<ion-input class="spent" [value]="form.get('minutesSpent').value | minutesToTime" formControlName="minutesSpent" readonly ></ion-input>-->
     </ion-item>
   </form>

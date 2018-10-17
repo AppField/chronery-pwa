@@ -122,9 +122,6 @@ export class WorkCardComponent implements OnInit, OnDestroy {
       console.log('FORM IS VALID');
       const data = { ...this.form.value } as WorkingHours;
 
-      data.from = getDateTime(data.from).toISOString();
-      data.to = getDateTime(data.to).toISOString();
-
       const workingHour = { ...this.workingHour, ...data };
 
       this.updateWorkingHours.emit(workingHour);

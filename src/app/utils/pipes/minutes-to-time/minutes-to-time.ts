@@ -1,7 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 
-@Pipe({ name: 'minutesToTime' })
+@Pipe({
+  name: 'minutesToTime',
+  pure: true
+})
 export class MinutesToTimePipe implements PipeTransform {
   transform(allMinutes: number): string {
     let time = '00:00 h';
@@ -13,7 +16,7 @@ export class MinutesToTimePipe implements PipeTransform {
       // Ensure leading zeros
       const hoursStr = ('00' + hours).substr(-2);
       const minutesStr = ('00' + minutes).substr(-2);
-      time = `${hoursStr}:${minutesStr} h`;
+      time = `${hoursStr}:${minutesStr}`;
     }
 
     return time;
