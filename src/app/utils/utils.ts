@@ -1,21 +1,5 @@
-import { parse, format, toDate } from 'date-fns';
+import { parse, format } from 'date-fns';
 
-
-export function getDateTime(time, date: Date = new Date()): Date {
-  if (typeof time !== 'string') {
-    const { hour, minute } = time;
-    date = toDate(new Date().toISOString());
-
-    date.setUTCHours(hour.value);
-    date.setUTCMinutes(minute.value);
-    // return parse(format(date, ' YYYY-MM-DDTHH:mm:ss.sssZ'));
-  } else {
-    date = toDate(time);
-  }
-
-  date.setUTCSeconds(0);
-  return date;
-}
 
 export function getDateWithCurrentTime(): Date {
   const date = new Date();

@@ -6,7 +6,7 @@ import { merge, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { differenceInSeconds } from 'date-fns';
 import { WorkingHours } from '../../models/working-hours';
-import { getDateTime, getDateWithCurrentTime } from '../../utils/utils';
+import { getDateWithCurrentTime } from '../../utils/utils';
 import { timeIsAfter } from '../../utils/custom-validators';
 import { expandCollapse } from '../../core/animations';
 import { Project } from '../../models/project';
@@ -102,9 +102,20 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     const from = this.form.controls['from'].value;
     const to = this.form.controls['to'].value;
 
+    if (!from || !to) {
+      return;
+    }
+
     const workingHoursDate = new Date(this.workingHour.date);
-    const fromMinutes = getDateTime(from, workingHoursDate);
-    const toMinutes = getDateTime(to, workingHoursDate);
+    // const fromMinutes = getDateTime(from, workingHoursDate);
+    // const toMinutes = getDateTime(to, workingHoursDate);
+
+    const fromMinutes = new Date(from);
+    const toMinutes = new Date(to);
+    fromMinutes.setSeconds(0);
+    fromMinutes.setMilliseconds(0);
+    toMinutes.setSeconds(0);
+    toMinutes.setMilliseconds(0);
 
     // const differenceMinutes = differenceInMinutes(toMinutes, fromMinutes);
     const differenceSeconds = differenceInSeconds(toMinutes, fromMinutes);

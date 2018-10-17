@@ -1,15 +1,16 @@
 import { AbstractControl, FormControl } from '@angular/forms';
 import { isAfter } from 'date-fns';
-import { getDateTime } from './utils';
-
 
 export function timeIsAfter(control: FormControl): any {
   if (control.parent) {
     const from = control.parent.controls['from'].value;
     const to = control.value;
 
-    const fromDate = getDateTime(from).setSeconds(0);
-    const toDate = getDateTime(to).setSeconds(0);
+    console.log('FROM', from);
+    console.log('TO', to);
+
+    const fromDate = new Date(from).setSeconds(0);
+    const toDate = new Date(to).setSeconds(0);
     return isAfter(toDate, fromDate) ? true : { isNotAfter: true };
   }
   return null;
