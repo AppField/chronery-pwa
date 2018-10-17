@@ -10,29 +10,19 @@
 
 /* START TABLE STYLES */
 
-.report-table {
+.table-container {
+  overflow: auto;
 
-  .table-header {
-    --padding-start: 0;
-  }
-
-  .no-padding {
-    padding: 0;
-  }
-
-  .ion-label {
-    white-space: normal;
-  }
-
-  @media screen and (max-width: 720px) {
-    .hide-sm {
-      display: none;
+  .table {
+    thead {
+      background-color: var(--ion-item-background-color-active, #f1f1f1);
     }
-  }
+    th {
+      text-align: left;
 
-  @media screen and(min-width: 720px) {
-    .hide-big {
-      display: none;
+    }
+    td:not(:last-of-type), th:not(:last-of-type) {
+      padding-right: 0;
     }
   }
 }

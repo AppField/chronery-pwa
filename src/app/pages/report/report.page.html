@@ -19,116 +19,35 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card class="report-table">
-    <ion-item class="activated hide-sm table-header">
-      <ion-grid style="width: 100%">
-        <ion-row>
-          <ion-col size="1" size-md="1" class="no-padding">
-            <ion-item>
-              <ion-label><strong>Datum</strong></ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col size="1" size-md="1" class="no-padding">
-            <ion-item>
-              <ion-label>Von</ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col size="1" size-md="1" class="no-padding">
-            <ion-item>
-              <ion-label>Bis</ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col size="1" size-md="1" class="no-padding">
-            <ion-item>
-              <ion-label><strong>Stunden</strong></ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col size="2" size-md="2" class="no-padding">
-            <ion-item>
-              <ion-label>Projektnummer</ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col size="3" size-md="2" class="no-padding">
-            <ion-item>
-              <ion-label>Projektname</ion-label>
-            </ion-item>
-          </ion-col>
-          <ion-col size="3" size-md="4" class="no-padding">
-            <ion-item>
-              <ion-label>Kommentar</ion-label>
-            </ion-item>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-    <!--<ion-card-content>-->
-    <ion-grid>
-      <ion-row *ngFor="let workingHours of reportData">
-        <ion-col size="12" size-xs="12" size-sm="12" size-md="1" class="no-padding">
-          <ion-item>
 
-            <ion-label class="hide-big"><strong>Datum</strong></ion-label>
+  <ion-card class="table-container">
+    <table style="width:100%" class="table">
+      <thead>
+      <tr class="activated">
+        <th padding>Datum</th>
+        <th padding>Von</th>
+        <th padding>Bis</th>
+        <th padding>Stunden</th>
+        <th padding>Projektname</th>
+        <th padding>Projektnummer</th>
+        <th padding>Kommentar</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let workingHours of reportData">
+        <td padding><strong>{{workingHours.date}}</strong></td>
+        <td padding>{{workingHours.from}}</td>
+        <td padding>{{workingHours.to}}</td>
+        <td padding><strong>{{workingHours.minutesSpent}}</strong></td>
+        <td padding>{{workingHours.project.name}}</td>
+        <td padding>{{workingHours.project.number}}</td>
+        <td padding>{{workingHours.comment}}</td>
+      </tr>
+      </tbody>
 
-            <ion-label><strong>{{workingHours.date}}</strong></ion-label>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="12" size-xs="12" size-sm="12" size-md="1" class="no-padding">
-
-          <ion-item>
-            <ion-label class="hide-big">Von</ion-label>
-            <ion-label>{{workingHours.from}}</ion-label>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="12" size-xs="12" size-sm="12" size-md="1" class="no-padding">
-          <ion-item>
-
-            <ion-label class="hide-big">Bis</ion-label>
-
-            <ion-label>{{workingHours.to}}</ion-label>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="12" size-xs="12" size-sm="12" size-md="1" class="no-padding">
-          <ion-item>
-
-            <ion-label class="hide-big">Stunden</ion-label>
-
-            <ion-label><strong>{{workingHours.minutesSpent | minutesToTime}} Std.</strong></ion-label>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="12" size-xs="12" size-sm="12" size-md="2" class="no-padding">
-          <ion-item>
-
-            <ion-label class="hide-big">Projektnummer</ion-label>
-
-            <ion-label>{{workingHours.project.number}}</ion-label>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="12" size-xs="12" size-sm="12" size-md="2" class="no-padding">
-          <ion-item>
-
-            <ion-label class="hide-big">Projektname</ion-label>
-
-            <ion-label>{{workingHours.project.name}}</ion-label>
-          </ion-item>
-        </ion-col>
-
-        <ion-col size="12" size-xs="12" size-sm="12" size-md="4" class="no-padding">
-          <ion-item>
-
-            <ion-label class="hide-big">Kommentar</ion-label>
-
-            <ion-label>{{workingHours.comment}}</ion-label>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <!--</ion-card-content>-->
+    </table>
   </ion-card>
+
 </ion-content>
 
 <ion-footer>
