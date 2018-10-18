@@ -4,6 +4,9 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Bericht</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="exportCSV()">Exportieren</ion-button>
+    </ion-buttons>
   </ion-toolbar>
   <ion-toolbar [color]="toolbarColor">
     <ion-item [ngClass]="contrastColor">

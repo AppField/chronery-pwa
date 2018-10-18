@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -9,6 +9,7 @@ import { ReportPage } from './report.page';
 import { MinutesToTimeModule } from '../../utils/pipes/minutes-to-time/minutes-to-time.module';
 import { EncodedDatePipe } from '../../utils/pipes/encoded-date/encoded-date.pipe';
 import { UtcTimePipe } from '../../utils/pipes/utc-time/utc-time.pipe';
+import { MinutesToTimePipe } from '../../utils/pipes/minutes-to-time/minutes-to-time';
 
 const routes: Routes = [
   {
@@ -29,6 +30,12 @@ const routes: Routes = [
     ReportPage,
     EncodedDatePipe,
     UtcTimePipe
+  ],
+  providers: [
+    DatePipe,
+    EncodedDatePipe,
+    UtcTimePipe,
+    MinutesToTimePipe
   ]
 })
 export class ReportPageModule {
