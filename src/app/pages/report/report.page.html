@@ -44,7 +44,6 @@
         <td padding>{{ workingHours.comment }}</td>
       </tr>
       </tbody>
-
     </table>
   </ion-card>
 
@@ -54,11 +53,11 @@
   <ion-icon class="date-direction" name="arrow-forward"></ion-icon>
   <ion-toolbar class="datepicker-toolbar">
 
-    <ion-datetime displayFormat="DD.MM.YYYY" [value]="from" (ionChange)="updateFrom($event)"
-                  class="date-picker"></ion-datetime>
+    <ion-datetime displayFormat="DD.MM.YYYY" [value]="from" class="date-picker"
+                  (ionChange)="updateFrom($event)" cancelText="Abbrechen"></ion-datetime>
 
-    <ion-datetime #toPicker displayFormat="DD.MM.YYYY" [value]="to" (ionChange)="updateTo($event)"
-                  class="date-picker "></ion-datetime>
+    <ion-datetime #toPicker displayFormat="DD.MM.YYYY" [value]="to" class="date-picker"
+                  (ionChange)="updateTo($event)" cancelText="Abbrechen" ></ion-datetime>
 
   </ion-toolbar>
 </ion-footer>

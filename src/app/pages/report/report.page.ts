@@ -87,8 +87,7 @@ export class ReportPage implements OnInit {
       { field: 'date', operator: '<=', value: to },
     ] as FirebaseQuery[];
 
-    const reportData = await this.workingHoursService.filterItems(query, false);
-    this.reportData = reportData;
+    this.reportData = await this.workingHoursService.filterItems(query, false);
     this.filterProjects();
   }
 
