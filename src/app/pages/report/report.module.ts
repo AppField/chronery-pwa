@@ -8,6 +8,7 @@ import { IonicModule } from '@ionic/angular';
 import { ReportPage } from './report.page';
 import { MinutesToTimeModule } from '../../utils/pipes/minutes-to-time/minutes-to-time.module';
 import { EncodedDatePipe } from '../../utils/pipes/encoded-date/encoded-date.pipe';
+import { UtcTimePipe } from '../../utils/pipes/utc-time/utc-time.pipe';
 
 const routes: Routes = [
   {
@@ -24,7 +25,11 @@ const routes: Routes = [
     MinutesToTimeModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ReportPage, EncodedDatePipe]
+  declarations: [
+    ReportPage,
+    EncodedDatePipe,
+    UtcTimePipe
+  ]
 })
 export class ReportPageModule {
 }

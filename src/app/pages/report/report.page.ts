@@ -23,8 +23,9 @@ export class ReportPage implements OnInit {
   to: string;
 
   projects$: Observable<Project[]>;
-  selectedProjects: Project[] = [];
+  selectedProjects: Project[];
   reportData: WorkingHours[];
+  filteredReportData: WorkingHours[];
 
   @ViewChild('toPicker') toPicker;
 
@@ -48,12 +49,14 @@ export class ReportPage implements OnInit {
   }
 
   ngOnInit() {
+    this.updateReport();
   }
 
   updateProjects(event): void {
-    this.selectedProjects = event.target.value;
-    this.updateReport();
+    this.selectedProjects = event.target.value as Project[];
+    this.filterProjects();
   }
+
 
   updateFrom(event): void {
     this.from = event.target.value;
@@ -63,6 +66,15 @@ export class ReportPage implements OnInit {
   updateTo(event): void {
     this.to = event.target.value;
     this.updateReport();
+  }
+
+  private filterProjects(): void {
+    const projectIds = this.selectedProjects.map((project: Project) => project.id);
+    if (this.reportData && projectIds.length > 0) {
+      this.filteredReportData = this.reportData.filter((wh: WorkingHours) => projectIds.includes(wh.project.id));
+    } else {
+      this.filteredReportData = this.reportData;
+    }
   }
 
   async updateReport() {
@@ -77,7 +89,7 @@ export class ReportPage implements OnInit {
 
     const reportData = await this.workingHoursService.filterItems(query, false);
     this.reportData = reportData;
-    console.log('REPORT DATA', reportData);
+    this.filterProjects();
   }
 
 }

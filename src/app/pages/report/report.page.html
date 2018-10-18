@@ -34,10 +34,10 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let workingHours of reportData">
+      <tr *ngFor="let workingHours of filteredReportData">
         <td padding><strong>{{ workingHours.date | encodedDate | date }}</strong></td>
-        <td padding>{{ workingHours.from | date: 'HH:mm' }}</td>
-        <td padding>{{ workingHours.to | date: 'HH:mm' }}</td>
+        <td padding>{{ workingHours.from | utcTime | date: 'HH:mm' }}</td>
+        <td padding>{{ workingHours.to | utcTime | date: 'HH:mm' }}</td>
         <td padding><strong>{{ workingHours.minutesSpent | minutesToTime }} Std.</strong></td>
         <td padding>{{ workingHours.project.name }}</td>
         <td padding>{{ workingHours.project.number }}</td>
