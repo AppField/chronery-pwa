@@ -102,7 +102,6 @@ export class ReportPage implements OnInit {
   exportCSV(): void {
     const csv = this.convertArrayOfObjectsToCSV();
     this.downloadCSV(csv);
-    console.log(csv);
   }
 
   private convertArrayOfObjectsToCSV() {
