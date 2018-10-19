@@ -5,6 +5,10 @@
     </ion-buttons>
     <ion-title>Bericht</ion-title>
     <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="download" padding></ion-icon>
+        PDF Herunterladen
+      </ion-button>
       <ion-button (click)="exportCSV()">Exportieren</ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -60,7 +64,7 @@
                   (ionChange)="updateFrom($event)" cancelText="Abbrechen"></ion-datetime>
 
     <ion-datetime #toPicker displayFormat="DD.MM.YYYY" [value]="to" class="date-picker"
-                  (ionChange)="updateTo($event)" cancelText="Abbrechen" ></ion-datetime>
+                  (ionChange)="updateTo($event)" cancelText="Abbrechen"></ion-datetime>
 
   </ion-toolbar>
 </ion-footer>

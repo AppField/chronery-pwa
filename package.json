@@ -30,6 +30,8 @@
     "core-js": "^2.5.7",
     "date-fns": "^2.0.0-alpha.18",
     "firebase": "^5.5.4",
+    "jspdf": "^1.4.1",
+    "jspdf-autotable": "^2.3.5",
     "momentjs": "^2.0.0",
     "rxjs": "6.3.3",
     "zone.js": "^0.8.26"
