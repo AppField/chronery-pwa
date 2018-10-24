@@ -76,8 +76,8 @@ export class ReportPage implements OnInit {
     this.updateReport();
   }
 
-  private filterProjects(): void {
-    const projectIds = this.selectedProjects.map((project: Project) => project.id);
+  filterProjects(): void {
+    const projectIds = this.selectedProjects ? this.selectedProjects.map((project: Project) => project.id) : [];
     if (this.reportData && projectIds.length > 0) {
       this.filteredReportData = this.reportData.filter((wh: WorkingHours) => projectIds.includes(wh.project.id));
     } else {
@@ -104,31 +104,17 @@ export class ReportPage implements OnInit {
     this.downloadCSV(csv);
   }
 
-  private convertArrayOfObjectsToCSV() {
-    let result, ctr, keys, columnDelimiter, lineDelimiter, data;
+  prepareData() {
+    let result;
+    const data = this.filteredReportData;
 
-    data = this.filteredReportData;
-    if (data == null || !data.length) {
-      return null;
-    }
+    const keys = ['date', 'from', 'to', 'minutesSpent', 'project.name', 'project.number', 'comment'];
 
-    columnDelimiter = ',';
-    lineDelimiter = '\n';
-
-    const header = ['Datum', 'Von', 'Bis', 'Stunden', 'Projektname', 'Projektnummer', 'Kommentar'];
-
-    keys = ['date', 'from', 'to', 'minutesSpent', 'project.name', 'project.number', 'comment'];
-
-    result = '';
-    result += header.join(columnDelimiter);
-    result += lineDelimiter;
+    result = [];
 
     data.forEach((item: WorkingHours) => {
-      ctr = 0;
+      const preparedItem = {};
       keys.forEach((key) => {
-        if (ctr > 0) {
-          result += columnDelimiter;
-        }
         let value;
         if (key.indexOf('.') !== -1) {
           const ids = key.split('.');
@@ -152,7 +138,43 @@ export class ReportPage implements OnInit {
             break;
         }
 
-        result += `"${value}"`;
+        preparedItem[key] = value;
+
+      });
+      result.push(preparedItem);
+    });
+
+    return result;
+
+  }
+
+  private convertArrayOfObjectsToCSV() {
+    let result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+    data = this.prepareData();
+    if (data == null || !data.length) {
+      return null;
+    }
+
+    columnDelimiter = ',';
+    lineDelimiter = '\n';
+
+    const header = ['Datum', 'Von', 'Bis', 'Stunden', 'Projektname', 'Projektnummer', 'Kommentar'];
+
+    keys = ['date', 'from', 'to', 'minutesSpent', 'project.name', 'project.number', 'comment'];
+
+    result = '';
+    result += header.join(columnDelimiter);
+    result += lineDelimiter;
+
+    data.forEach((item: WorkingHours) => {
+      ctr = 0;
+      keys.forEach((key) => {
+        if (ctr > 0) {
+          result += columnDelimiter;
+        }
+
+        result += `"${item[key]}"`;
         ctr++;
       });
       result += lineDelimiter;

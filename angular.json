@@ -40,7 +40,14 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": [
+              {
+                "input": "node_modules/jspdf/dist/jspdf.min.js"
+              },
+              {
+                "input": "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+              }
+            ]
           },
           "configurations": {
             "production": {
