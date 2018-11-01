@@ -5,12 +5,13 @@
     </ion-buttons>
     <ion-title>Bericht</ion-title>
     <ion-buttons slot="end">
-      <chy-btn-report-pdf [data]="prepareData.bind(this)" [totalTime]="totalTime"></chy-btn-report-pdf>
+      <chy-btn-report-pdf [data]="prepareData.bind(this)" [totalTime]="totalTime"
+                          [from]="from" [to]="to"></chy-btn-report-pdf>
       <ion-button (click)="exportCSV()">Exportieren</ion-button>
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar [color]="toolbarColor">
-    <ion-item >
+    <ion-item>
       <ion-label>Projekte</ion-label>
       <ion-select multiple="true" cancelText="Abbrechen" okText="Filtern" (ionChange)="updateProjects($event)"
                   placeholder="Projekte auswählen">

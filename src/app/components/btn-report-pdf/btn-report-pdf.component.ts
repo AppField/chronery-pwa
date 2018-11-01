@@ -25,6 +25,10 @@ export class BtnReportPdfComponent implements OnInit {
 
   @Input()
   totalTime;
+  @Input()
+  from: Date;
+  @Input()
+  to: Date;
 
   fields = [
     { title: 'Datum', dataKey: 'date' },
@@ -67,7 +71,9 @@ export class BtnReportPdfComponent implements OnInit {
     this._data = this.data();
     try {
       const pdf = this.generatePDF();
-      pdf.save(`Chronery Report`);
+      const from = this.datePipe.transform(this.from);
+      const to = this.datePipe.transform(this.to);
+      pdf.save(`Chronery Report ${from} bis ${to}`);
     } catch (error) {
 
     }
