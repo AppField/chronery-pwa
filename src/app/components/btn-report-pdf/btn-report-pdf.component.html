@@ -6,9 +6,6 @@
   <ion-label>Felder ausw&auml;hlen</ion-label>
   <ion-select #selectPdf multiple="true" interface="alert" [interfaceOptions]="options" (ionChange)="downloadPDF()"
               cancelText="Abbrechen" okText="Herunterladen" [(ngModel)]="selectedFields">
-    <ion-select-option *ngFor="let field of fields" [value]="field">{{field.name}}</ion-select-option>
+    <ion-select-option *ngFor="let field of fields" [value]="field">{{field.title}}</ion-select-option>
   </ion-select>
 </ion-item>
-
-
-

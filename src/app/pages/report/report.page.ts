@@ -30,6 +30,7 @@ export class ReportPage implements OnInit {
   selectedProjects: Project[];
   reportData: WorkingHours[];
   filteredReportData: WorkingHours[];
+  totalTime = 0;
 
   @ViewChild('toPicker') toPicker;
 
@@ -97,6 +98,11 @@ export class ReportPage implements OnInit {
 
     this.reportData = await this.workingHoursService.filterItems(query, false);
     this.filterProjects();
+    this.calculateTotalTime();
+  }
+
+  private calculateTotalTime(): void {
+    this.totalTime = this.filteredReportData.reduce((acc, val) => +acc + +val.minutesSpent, 0);
   }
 
   exportCSV(): void {
