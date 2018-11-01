@@ -10,10 +10,10 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar [color]="toolbarColor">
-    <ion-item [ngClass]="contrastColor">
+    <ion-item >
       <ion-label>Projekte</ion-label>
       <ion-select multiple="true" cancelText="Abbrechen" okText="Filtern" (ionChange)="updateProjects($event)"
-                  placeholder="Projekte auswählen" class="select-field">
+                  placeholder="Projekte auswählen">
         <ion-select-option *ngFor="let project of projects$ | async" [value]="project">
           {{project.name}} - {{project.number}}
         </ion-select-option>
