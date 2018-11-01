@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DashboardPage } from './dashboard.page';
+import { WorkingHoursChartComponent } from '../../components/working-hours-chart/working-hours-chart.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DashboardPage]
+  declarations: [DashboardPage, WorkingHoursChartComponent]
 })
-export class DashboardPageModule {}
+export class DashboardPageModule {
+}
