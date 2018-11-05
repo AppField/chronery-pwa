@@ -19,6 +19,7 @@
           <ion-card-content>
             <p class="kpi">{{ averageWorkTime}}</p>
           </ion-card-content>
+          <chy-loading-overlay *ngIf="isLoading"></chy-loading-overlay>
         </ion-card>
       </ion-col>
 
@@ -30,6 +31,7 @@
           <ion-card-content>
             <p class="kpi">{{ totalWorkTime }}</p>
           </ion-card-content>
+          <chy-loading-overlay *ngIf="isLoading"></chy-loading-overlay>
         </ion-card>
       </ion-col>
 
@@ -43,9 +45,38 @@
       </ion-card-title>
     </ion-card-header>
 
-    <ion-card-content>
-      <chy-working-hours-chart [data]="monthData"></chy-working-hours-chart>
+    <ion-card-content style="height: 450px;">
+      <div *ngIf="!isLoading" style="height: 100%;">
+        <chy-working-hours-chart *ngIf="monthData.length > 0; else noData"
+                                 [data]="monthData"></chy-working-hours-chart>
+      </div>
+
+
+      <ng-template #noData>
+        <p>Im {{ currentMonth | date: 'MMMM' }} ist es ziemlich leer... <br>
+          Auf gehts, Zeit eine Arbeit zu starten oder ein neues Projekt zu beginnen!</p>
+        <ion-grid padding>
+          <ion-row padding>
+            <ion-col size="12" size-sm="6">
+              <ion-button expand="block" size="large" fill="clear" color="tertiary" padding
+                          (click)="goToWorkingHours()">
+                <ion-icon name="time"></ion-icon>
+                Neue Arbeit starten
+              </ion-button>
+            </ion-col>
+            <ion-col size="12" size-sm="6">
+              <ion-button expand="block" size="large" fill="clear" color="tertiary" padding
+                          (click)="goToProjects()">
+                <ion-icon name="briefcase"></ion-icon>
+                Ein neues Projekt anlegen
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ng-template>
+
     </ion-card-content>
+    <chy-loading-overlay *ngIf="isLoading"></chy-loading-overlay>
   </ion-card>
 </ion-content>
 

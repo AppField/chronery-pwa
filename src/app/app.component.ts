@@ -19,7 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
     {
       title: 'Dashboard',
       url: '/dashboard',
-      icon: 'home'
+      icon: 'pie'
     },
     {
       title: 'Arbeitsstunden',

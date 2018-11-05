@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { WorkingHoursService } from '../../services/working-hours/working-hours.service';
 import { WorkingHours } from '../../models/working-hours';
@@ -6,14 +6,15 @@ import { addMonths, endOfMonth, subMonths } from 'date-fns';
 import { FirebaseQuery } from '../../models/firebase-query';
 import { encodeDate } from '../../utils/utils';
 import { MinutesToTimePipe } from '../../utils/pipes/minutes-to-time/minutes-to-time';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'chy-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
 })
-export class DashboardPage implements OnInit {
-
+export class DashboardPage {
+  isLoading = true;
   toolbarColor: string;
   currentMonth: Date;
   monthData: WorkingHours[] = [];
@@ -23,9 +24,16 @@ export class DashboardPage implements OnInit {
   constructor(
     private platform: Platform,
     private workingHoursService: WorkingHoursService,
-    private minutesToTimePipe: MinutesToTimePipe
+    private minutesToTimePipe: MinutesToTimePipe,
+    private router: Router
   ) {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
+
+    const timePlaceholder = this.minutesToTimePipe.transform(0);
+    this.averageWorkTime = timePlaceholder;
+    this.totalWorkTime = timePlaceholder;
+
+
     this.currentMonth = new Date();
     this.currentMonth.setUTCDate(1);
 
@@ -43,7 +51,16 @@ export class DashboardPage implements OnInit {
     this.updateMonthData();
   }
 
+  goToWorkingHours(): void {
+    this.router.navigate(['working-hours']);
+  }
+
+  goToProjects(): void {
+    this.router.navigate(['projects']);
+  }
+
   private async updateMonthData() {
+    this.isLoading = true;
     const from = this.currentMonth;
     const to = endOfMonth(from);
 
@@ -52,20 +69,20 @@ export class DashboardPage implements OnInit {
       { field: 'date', operator: '<=', value: encodeDate(to) },
     ] as FirebaseQuery[];
 
-    this.monthData = await this.workingHoursService.filterItems(query, false);
-    this.calcKpis();
+    try {
+      this.monthData = await this.workingHoursService.filterItems(query, false);
+      this.calcKpis();
+    } catch (e) {
+      this.isLoading = false;
+    }
+
   }
 
   private calcKpis(): void {
     const total = this.monthData.reduce((acc, val) => acc += val.minutesSpent, 0);
     const average = total / this.monthData.length;
-    console.log({ total, average });
+    this.isLoading = false;
     this.averageWorkTime = this.minutesToTimePipe.transform(average) + ' Std.';
     this.totalWorkTime = this.minutesToTimePipe.transform(total) + ' Std.';
   }
-
-
-  ngOnInit() {
-  }
-
 }

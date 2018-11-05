@@ -9,6 +9,7 @@ import { DashboardPage } from './dashboard.page';
 import { WorkingHoursChartComponent } from '../../components/working-hours-chart/working-hours-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { MinutesToTimePipe } from '../../utils/pipes/minutes-to-time/minutes-to-time';
+import { LoadingOverlayModule } from '../../components/loading-overlay/loading-overlay.module';
 
 const routes: Routes = [
   {
@@ -23,7 +24,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    NgxChartsModule
+    NgxChartsModule,
+    LoadingOverlayModule
   ],
   declarations: [DashboardPage, WorkingHoursChartComponent],
   providers: [DatePipe, MinutesToTimePipe]
