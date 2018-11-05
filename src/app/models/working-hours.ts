@@ -8,7 +8,7 @@ export class WorkingHours extends Timestamps {
   from: string;
   to: string;
   comment: string;
-  minutesSpent: string;
+  minutesSpent: number;
 
   constructor(date?: Date) {
     super();

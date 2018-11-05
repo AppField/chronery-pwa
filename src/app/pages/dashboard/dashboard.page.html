@@ -8,6 +8,34 @@
 </ion-header>
 
 <ion-content padding>
+
+  <ion-grid padding="0">
+    <ion-row>
+      <ion-col size="12" size-md="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Durchschnittliche Arbeitszeit</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p class="kpi">{{ averageWorkTime}}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" size-md="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Gesamte Arbeitszeit</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <p class="kpi">{{ totalWorkTime }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
   <ion-card>
     <ion-card-header>
       <ion-card-title class="button-header">

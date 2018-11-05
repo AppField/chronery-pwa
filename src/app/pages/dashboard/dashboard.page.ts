@@ -5,6 +5,7 @@ import { WorkingHours } from '../../models/working-hours';
 import { addMonths, endOfMonth, subMonths } from 'date-fns';
 import { FirebaseQuery } from '../../models/firebase-query';
 import { encodeDate } from '../../utils/utils';
+import { MinutesToTimePipe } from '../../utils/pipes/minutes-to-time/minutes-to-time';
 
 @Component({
   selector: 'chy-dashboard',
@@ -16,10 +17,13 @@ export class DashboardPage implements OnInit {
   toolbarColor: string;
   currentMonth: Date;
   monthData: WorkingHours[] = [];
+  averageWorkTime: string;
+  totalWorkTime: string;
 
   constructor(
+    private platform: Platform,
     private workingHoursService: WorkingHoursService,
-    private platform: Platform
+    private minutesToTimePipe: MinutesToTimePipe
   ) {
     this.toolbarColor = !this.platform.is('ios') ? 'primary' : null;
     this.currentMonth = new Date();
@@ -49,7 +53,17 @@ export class DashboardPage implements OnInit {
     ] as FirebaseQuery[];
 
     this.monthData = await this.workingHoursService.filterItems(query, false);
+    this.calcKpis();
   }
+
+  private calcKpis(): void {
+    const total = this.monthData.reduce((acc, val) => acc += val.minutesSpent, 0);
+    const average = total / this.monthData.length;
+    console.log({ total, average });
+    this.averageWorkTime = this.minutesToTimePipe.transform(average) + ' Std.';
+    this.totalWorkTime = this.minutesToTimePipe.transform(total) + ' Std.';
+  }
+
 
   ngOnInit() {
   }
