@@ -9,8 +9,20 @@
 
 <ion-content padding>
   <ion-card>
+    <ion-card-header>
+      <ion-card-title class="button-header">
+        <ion-button fill="clear" shape="round" (click)="previousMonth()">
+          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+        </ion-button>
+        <span class="month-indicator">{{ currentMonth | date: 'MMMM yyyy' }}</span>
+        <ion-button fill="clear" shape="round" (click)="nextMonth()">
+          <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+        </ion-button>
+      </ion-card-title>
+    </ion-card-header>
+
     <ion-card-content>
-      <chy-working-hours-chart></chy-working-hours-chart>
+      <chy-working-hours-chart [data]="monthData"></chy-working-hours-chart>
     </ion-card-content>
   </ion-card>
 </ion-content>

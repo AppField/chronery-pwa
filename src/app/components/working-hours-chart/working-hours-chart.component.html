@@ -1,3 +1,20 @@
-<p>
-  working-hours-chart works!
-</p>
+<div class="chart-wrapper">
+  <ngx-charts-bar-vertical
+      [results]="chartData"
+      [xAxis]="showXAxis"
+      [yAxis]="showYAxis"
+      [showXAxisLabel]="showXAxisLabel"
+      [showYAxisLabel]="showYAxisLabel"
+      [xAxisLabel]="xAxisLabel"
+      [yAxisLabel]="yAxisLabel"
+      [legend]="showLegend"
+      [scheme]="colors"
+      [yAxisTickFormatting]="minutesFormatter.bind(this)">
+
+
+    <ng-template #tooltipTemplate let-model="model">
+      <p>{{model.name}}</p>
+      <p><strong>{{minutesFormatter(model.value)}}</strong></p>
+    </ng-template>
+  </ngx-charts-bar-vertical>
+</div>

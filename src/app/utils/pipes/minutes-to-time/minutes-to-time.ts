@@ -7,7 +7,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class MinutesToTimePipe implements PipeTransform {
   transform(allMinutes: number): string {
-    let time = '00:00 h';
+    let time = '00:00';
 
     if (allMinutes) {
       const hours = Math.floor(allMinutes / 60);

@@ -27,6 +27,7 @@
     "@angular/service-worker": "~7.0.2",
     "@ionic/angular": "^4.0.0-beta.15-0",
     "@ionic/pro": "2.0.3",
+    "@swimlane/ngx-charts": "^10.0.0",
     "core-js": "^2.5.7",
     "date-fns": "^2.0.0-alpha.18",
     "firebase": "^5.5.6",
