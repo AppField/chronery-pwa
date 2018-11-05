@@ -1,9 +1,13 @@
-.button-header {
+.dashboard-navigator {
   display: flex;
   align-items: center;
-}
 
-.month-indicator{
-  text-align: center;
-  min-width: 200px;
+  .navigator-btn, .button {
+    display: flex;
+    flex: 1 auto;
+  }
+
+  .navigator-title {
+    text-align: center;
+  }
 }

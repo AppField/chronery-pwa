@@ -23,7 +23,6 @@ export class WorkingHoursChartComponent {
   // options
   showXAxis = true;
   showYAxis = true;
-  gradient = false;
   showLegend = false;
   showXAxisLabel = true;
   xAxisLabel = 'Tage';
@@ -51,9 +50,8 @@ export class WorkingHoursChartComponent {
     return this.minutesToTimePipe.transform(value) + ' Std.';
   }
 
-
   /***
-   * Reduce Array of WorkingHours to two arrays for labels and their associated total minutes spent.
+   * Reduce Array of WorkingHours to an Array of Objects with a name (the date) and the value (total minutes of this day)
    *
    * @param workingHours
    */
@@ -91,7 +89,6 @@ export class WorkingHoursChartComponent {
 
     chartData[chartData.length - 1].name = this.datePipe.transform(chartData[chartData.length - 1].name, 'dd. MMM');
 
-    this.chartData = [...chartData, ...this.chartData];
-    console.log('NEW CHART DATA', this.chartData);
+    this.chartData = chartData;
   }
 }

@@ -11,13 +11,7 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title class="button-header">
-        <ion-button fill="clear" shape="round" (click)="previousMonth()">
-          <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-        </ion-button>
-        <span class="month-indicator">{{ currentMonth | date: 'MMMM yyyy' }}</span>
-        <ion-button fill="clear" shape="round" (click)="nextMonth()">
-          <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
-        </ion-button>
+        T&auml;gliche Arbeitszeit
       </ion-card-title>
     </ion-card-header>
 
@@ -26,3 +20,20 @@
     </ion-card-content>
   </ion-card>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar class="dashboard-navigator">
+    <ion-buttons slot="start" class="navigator-btn">
+      <ion-button expand="full" fill="clear" shape="round" (click)="previousMonth()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end" class="navigator-btn">
+      <ion-button expand="full" fill="clear" shape="round" (click)="nextMonth()">
+        <ion-icon slot="icon-only" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="navigator-title">{{ currentMonth | date: 'MMMM yyyy' }}</ion-title>
+  </ion-toolbar>
+</ion-footer>
