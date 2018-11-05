@@ -66,7 +66,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
   async openProjectModal() {
     const modal = await this.modalCtrl.create({
       component: ProjectModalComponent,
-      componentProps: { projects: this.projects, project: 'Nummer 6' },
+      componentProps: { projects: this.projects },
     });
 
     modal.onDidDismiss()
