@@ -123,7 +123,7 @@ export class AuthenticatePage implements OnInit {
     });
     // automatically focus password input field
     // setTimeout is used to let angular register the field
-    setTimeout(() => this.passwordInput.focus());
+    setTimeout(() => this.passwordInput.setFocus());
   }
 
   private setupRegisterForm(email): void {
