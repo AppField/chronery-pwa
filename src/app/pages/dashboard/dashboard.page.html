@@ -19,7 +19,7 @@
           <ion-card-content>
             <p class="kpi">{{ averageWorkTime}}</p>
           </ion-card-content>
-          <chy-loading-overlay *ngIf="isLoading"></chy-loading-overlay>
+          <chy-loading-overlay [@fadeInOut] *ngIf="isLoading"></chy-loading-overlay>
         </ion-card>
       </ion-col>
 
@@ -31,7 +31,7 @@
           <ion-card-content>
             <p class="kpi">{{ totalWorkTime }}</p>
           </ion-card-content>
-          <chy-loading-overlay *ngIf="isLoading"></chy-loading-overlay>
+          <chy-loading-overlay [@fadeInOut] *ngIf="isLoading"></chy-loading-overlay>
         </ion-card>
       </ion-col>
 
@@ -76,7 +76,7 @@
       </ng-template>
 
     </ion-card-content>
-    <chy-loading-overlay *ngIf="isLoading"></chy-loading-overlay>
+    <chy-loading-overlay [@fadeInOut] *ngIf="isLoading"></chy-loading-overlay>
   </ion-card>
 </ion-content>
 

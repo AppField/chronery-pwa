@@ -7,11 +7,13 @@ import { FirebaseQuery } from '../../models/firebase-query';
 import { encodeDate } from '../../utils/utils';
 import { MinutesToTimePipe } from '../../utils/pipes/minutes-to-time/minutes-to-time';
 import { Router } from '@angular/router';
+import { fadeInOut } from '../../core/animations';
 
 @Component({
   selector: 'chy-dashboard',
   templateUrl: './dashboard.page.html',
   styleUrls: ['./dashboard.page.scss'],
+  animations: [fadeInOut(0.5)]
 })
 export class DashboardPage {
   isLoading = true;
