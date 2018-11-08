@@ -23,20 +23,26 @@
       <ion-grid class="time">
         <ion-row>
           <ion-col class="from">
-            <ion-item>
+            <ion-item *ngIf="isMobile; else timeFromTextInput">
               <ion-label position="stacked">Von</ion-label>
-              <ion-datetime [displayFormat]="displayFormat" formControlName="from"
-                            (ionChange)="saveWorkingHours()"></ion-datetime>
+
+              <ion-datetime [displayFormat]="displayFormat" formControlName="from"></ion-datetime>
             </ion-item>
+            <ng-template #timeFromTextInput>
+              <chy-time-input formControlName="from"></chy-time-input>
+            </ng-template>
             <div class="error" *ngIf="fromRequired" [@expandCollapse]>Pflichtfeld
             </div>
           </ion-col>
           <ion-col class="to">
-            <ion-item>
+            <ion-item *ngIf="isMobile; else timeToTextInput">
               <ion-label position="stacked">Bis</ion-label>
               <ion-datetime [displayFormat]="displayFormat" formControlName="to" placeholder="Bis"
                             (ionChange)="saveWorkingHours()" (focus)="onToFocus()"></ion-datetime>
             </ion-item>
+            <ng-template #timeToTextInput>
+              <chy-time-input formControlName="to"></chy-time-input>
+            </ng-template>
             <div class="error" *ngIf="toRequired" [@expandCollapse]>
               Pflichtfeld
             </div>

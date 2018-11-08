@@ -6,9 +6,6 @@ export function timeIsAfter(control: FormControl): any {
     const from = control.parent.controls['from'].value;
     const to = control.value;
 
-    console.log('FROM', from);
-    console.log('TO', to);
-
     const fromDate = new Date(from).setSeconds(0);
     const toDate = new Date(to).setSeconds(0);
     return isAfter(toDate, fromDate) ? true : { isNotAfter: true };

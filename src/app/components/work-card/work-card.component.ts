@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { ProjectModalComponent } from '../project-modal/project-modal.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { merge, takeUntil } from 'rxjs/operators';
@@ -15,14 +15,15 @@ import { Project } from '../../models/project';
   selector: 'chy-work-card',
   templateUrl: './work-card.component.html',
   styleUrls: ['./work-card.component.scss'],
-  animations: [expandCollapse],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  animations: [expandCollapse]
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WorkCardComponent implements OnInit, OnDestroy {
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
   form: FormGroup;
   displayFormat = 'HH:mm';
+  isMobile: boolean;
 
   @Input() projects: Project[];
   @Input() workingHour: WorkingHours;
@@ -30,8 +31,10 @@ export class WorkCardComponent implements OnInit, OnDestroy {
   @Output() deleteWorkingHours = new EventEmitter();
 
   constructor(public modalCtrl: ModalController,
+              private platform: Platform,
               private fb: FormBuilder,
               private cd: ChangeDetectorRef) {
+    this.isMobile = this.platform.is('mobile');
   }
 
   ngOnInit() {
@@ -53,7 +56,10 @@ export class WorkCardComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         merge(toControl.valueChanges)
       )
-      .subscribe(() => this.setMinutesSpent());
+      .subscribe(() => {
+        this.setMinutesSpent();
+        this.saveWorkingHours();
+      });
   }
 
   get displayProject(): string {
@@ -96,8 +102,21 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     }
   }
 
+  formatTime(value: string): void {
+    if (value.length === 2) {
+      if (value[1] === ':') {
+        value = `0${value}`;
+      } else {
+        value += ':';
+      }
+    }
+
+    this.form.controls['from'].patchValue(value);
+  }
+
   private setMinutesSpent(): void {
     this.cd.detectChanges();
+    console.log('CALC SPENT', this.form.get('from').value);
 
     const from = this.form.controls['from'].value;
     const to = this.form.controls['to'].value;
@@ -129,8 +148,8 @@ export class WorkCardComponent implements OnInit, OnDestroy {
   }
 
   saveWorkingHours(): void {
+    console.log('SAVE WORKING HOURS', this.form.get('from').value);
     if (this.form.valid) {
-      console.log('FORM IS VALID');
       const data = { ...this.form.value } as WorkingHours;
 
       const workingHour = { ...this.workingHour, ...data };
@@ -142,7 +161,6 @@ export class WorkCardComponent implements OnInit, OnDestroy {
         this.form.controls[key].markAsTouched();
         this.form.controls[key].markAsDirty();
       });
-      console.log('Form is INVALID!');
     }
   }
 

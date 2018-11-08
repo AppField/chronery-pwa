@@ -1,0 +1,7 @@
+<ion-item>
+  <ion-label position="stacked">Von</ion-label>
+  <ion-input [formControl]="formControl" (blur)="formatTime($event);" maxlength="5" placeholder="HH:mm"></ion-input>
+</ion-item>
+
+<div class="error" *ngIf="mismatch24Hours" [@expandCollapse]>Format: HH:mm
+</div>

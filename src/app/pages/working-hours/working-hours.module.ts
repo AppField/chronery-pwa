@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { WorkCardComponent } from '../../components/work-card/work-card.componen
 import { ProjectModalComponent } from '../../components/project-modal/project-modal.component';
 import { FilterModule } from '../../utils/pipes/filter.module';
 import { MinutesToTimeModule } from '../../utils/pipes/minutes-to-time/minutes-to-time.module';
+import { TimeInputComponent } from '../../components/time-input/time-input.component';
 
 const routes: Routes = [
   {
@@ -28,8 +29,9 @@ const routes: Routes = [
     MinutesToTimeModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [WorkingHoursPage, WorkCardComponent, ProjectModalComponent],
-  entryComponents: [ProjectModalComponent]
+  declarations: [WorkingHoursPage, WorkCardComponent, ProjectModalComponent, TimeInputComponent],
+  entryComponents: [ProjectModalComponent],
+  providers: [DatePipe]
 })
 export class WorkingHoursPageModule {
 }
