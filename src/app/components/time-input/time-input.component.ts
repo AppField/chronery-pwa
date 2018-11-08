@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
@@ -8,6 +8,7 @@ import { expandCollapse } from '../../core/animations';
   selector: 'chy-time-input',
   templateUrl: './time-input.component.html',
   styleUrls: ['./time-input.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [expandCollapse],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
