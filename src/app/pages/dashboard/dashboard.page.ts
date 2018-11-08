@@ -77,12 +77,22 @@ export class DashboardPage {
     } catch (e) {
       this.isLoading = false;
     }
-
   }
 
   private calcKpis(): void {
     const total = this.monthData.reduce((acc, val) => acc += val.minutesSpent, 0);
-    const average = total / this.monthData.length;
+    let curDate;
+
+    const days = this.monthData.reduce((acc, value) => {
+      if (curDate !== value.date) {
+        curDate = value.date;
+        return ++acc;
+      } else {
+        return acc;
+      }
+    }, 0);
+    const average = Math.round(total / days);
+
     this.isLoading = false;
     this.averageWorkTime = this.minutesToTimePipe.transform(average) + ' Std.';
     this.totalWorkTime = this.minutesToTimePipe.transform(total) + ' Std.';

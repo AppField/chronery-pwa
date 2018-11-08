@@ -102,18 +102,6 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  formatTime(value: string): void {
-    if (value.length === 2) {
-      if (value[1] === ':') {
-        value = `0${value}`;
-      } else {
-        value += ':';
-      }
-    }
-
-    this.form.controls['from'].patchValue(value);
-  }
-
   private setMinutesSpent(): void {
     this.cd.detectChanges();
     console.log('CALC SPENT', this.form.get('from').value);
@@ -124,10 +112,6 @@ export class WorkCardComponent implements OnInit, OnDestroy {
     if (!from || !to) {
       return;
     }
-
-    const workingHoursDate = new Date(this.workingHour.date);
-    // const fromMinutes = getDateTime(from, workingHoursDate);
-    // const toMinutes = getDateTime(to, workingHoursDate);
 
     const fromMinutes = new Date(from);
     const toMinutes = new Date(to);

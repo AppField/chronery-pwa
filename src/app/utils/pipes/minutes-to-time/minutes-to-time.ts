@@ -11,7 +11,7 @@ export class MinutesToTimePipe implements PipeTransform {
 
     if (allMinutes) {
       const hours = Math.floor(allMinutes / 60);
-      const minutes = allMinutes % 60;
+      const minutes = Math.round(allMinutes % 60);
 
       // Ensure leading zeros
       const hoursStr = ('00' + hours).substr(-2);
@@ -20,6 +20,5 @@ export class MinutesToTimePipe implements PipeTransform {
     }
 
     return time;
-
   }
 }
