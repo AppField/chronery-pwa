@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, forwardRef, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, OnDestroy, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { DatePipe } from '@angular/common';
@@ -19,6 +19,7 @@ import { expandCollapse } from '../../core/animations';
 export class TimeInputComponent implements OnInit, OnDestroy, ControlValueAccessor {
 
   private timeDate: string;
+  @Output() focus: EventEmitter<void>;
 
   formControl = new FormControl('', [this.check24Hours]);
 
@@ -39,6 +40,7 @@ export class TimeInputComponent implements OnInit, OnDestroy, ControlValueAccess
 
   constructor(private datePipe: DatePipe) {
     this.destroy$ = new Subject<boolean>();
+    this.focus = new EventEmitter<void>();
   }
 
   ngOnInit() {

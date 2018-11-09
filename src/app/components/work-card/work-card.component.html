@@ -41,7 +41,7 @@
                             (ionChange)="saveWorkingHours()" (focus)="onToFocus()"></ion-datetime>
             </ion-item>
             <ng-template #timeToTextInput>
-              <chy-time-input formControlName="to"></chy-time-input>
+              <chy-time-input formControlName="to" (focus)="onToFocus()"></chy-time-input>
             </ng-template>
             <div class="error" *ngIf="toRequired" [@expandCollapse]>
               Pflichtfeld
