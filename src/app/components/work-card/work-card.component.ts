@@ -92,6 +92,7 @@ export class WorkCardComponent implements OnInit, OnDestroy {
 
   onToFocus(): void {
     const toValue = this.form.controls['to'].value;
+    console.log('TO FOCUS', toValue);
     if (toValue === '' || !toValue) {
       setTimeout(() => {
         this.form.controls['to'].setValue(getDateWithCurrentTime().toISOString());
