@@ -92,8 +92,8 @@ export class TimeInputComponent implements OnInit, OnDestroy, ControlValueAccess
     const splitted = time.split(':');
     const hours = splitted[0];
     const minutes = splitted[1];
-    date.setHours(+hours);
-    date.setMinutes(+minutes);
+    date.setUTCHours(+hours);
+    date.setUTCMinutes(+minutes);
     this.onChange(date.toISOString());
   }
 
@@ -102,8 +102,12 @@ export class TimeInputComponent implements OnInit, OnDestroy, ControlValueAccess
   }
 
   writeValue(dateISO: string): void {
-    this.timeDate = dateISO || new Date().toISOString();
-    this.formControl.patchValue(this.datePipe.transform(dateISO, 'HH:mm'), { emitEvent: false });
+    if(dateISO){
+      const date = new Date(dateISO);
+      date.setHours(date.getUTCHours());
+      this.timeDate = date.toISOString();
+      this.formControl.patchValue(this.datePipe.transform(this.timeDate, 'HH:mm'), { emitEvent: false });
+    }
   }
 
   registerOnChange(fn: any): void {
