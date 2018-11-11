@@ -8,8 +8,8 @@
 </ion-header>
 
 <ion-content>
-  <div>
-    <ion-grid>
+  <div *ngIf="!isLoading; else loadingOverlay">
+    <ion-grid *ngIf="workingHours.length > 0; else noData">
       <ion-row [@cardAnimation]="workingHours.length">
         <ion-col *ngFor="let workingHour of workingHours trackBy: trackById" size="12" size-sm="6" size-md="6"
                  size-lg="4">
@@ -20,9 +20,31 @@
       </ion-row>
     </ion-grid>
 
+    <ng-template #noData>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Keine Arbeitszeit vorhanden</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          F&uuml;r den {{ selectedDate | date: 'dd.mm.yyyy' }} sind noch keine Zeiten vorhanden.
+
+          <ion-button expand="block" size="large" fill="clear" color="tertiary" padding
+                      (click)="addWorkingHours()">
+            <ion-icon name="time"></ion-icon>
+            Neue Arbeit starten
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
   </div>
+
+  <ng-template #loadingOverlay>
+    <chy-loading-overlay [@fadeInOut]></chy-loading-overlay>
+  </ng-template>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addWorkingHours()" size="large" color="primary" *ngIf="!hideAddButton" [@fadeScaleInOut]>
+    <ion-fab-button (click)="addWorkingHours()" size="large" color="primary" *ngIf="!hideAddButton && !isLoading"
+                    [@fadeScaleInOut]>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

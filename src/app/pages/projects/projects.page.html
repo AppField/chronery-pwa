@@ -23,11 +23,11 @@
 </ion-header>
 
 <ion-content padding>
-  <div>
-    <ion-grid>
+  <div *ngIf="!isLoading; else loadingOverlay">
+    <ion-grid *ngIf="projects.length > 0; else noData">
       <ion-row [@cardAnimation]="projects.length">
-        <ion-col *ngFor="let project of projects | filter: searchText: searchText; trackBy: trackById" size="12" size-sm="6"
-                 size-lg="4" size-xl="3">
+        <ion-col *ngFor="let project of projects | filter: searchText: searchText; trackBy: trackById"
+                 size="12" size-sm="6" size-lg="4" size-xl="3">
           <ion-card>
             <ion-card-content>
               <ion-item>
@@ -47,10 +47,32 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+    <ng-template #noData>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Keine Projekte vorhanden</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          Es sind noch keine Projekte angelegt. Zeit eines anzulegen!
+
+          <ion-button expand="block" size="large" fill="clear" color="tertiary" padding
+                      (click)="addProject()">
+            <ion-icon name="briefcase"></ion-icon>
+            Projekt anlegen
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
   </div>
 
+  <ng-template #loadingOverlay>
+    <chy-loading-overlay [@fadeInOut]></chy-loading-overlay>
+  </ng-template>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addProject()" size="large" color="primary">
+    <ion-fab-button (click)="addProject()" size="large" color="primary"
+                    *ngIf="!isLoading" [@fadeScaleInOut]>
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

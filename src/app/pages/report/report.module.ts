@@ -11,6 +11,7 @@ import { EncodedDatePipe } from '../../utils/pipes/encoded-date/encoded-date.pip
 import { UtcTimePipe } from '../../utils/pipes/utc-time/utc-time.pipe';
 import { MinutesToTimePipe } from '../../utils/pipes/minutes-to-time/minutes-to-time';
 import { BtnReportPdfComponent } from '../../components/btn-report-pdf/btn-report-pdf.component';
+import { LoadingOverlayModule } from '../../components/loading-overlay/loading-overlay.module';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     MinutesToTimeModule,
+    LoadingOverlayModule,
     RouterModule.forChild(routes)
   ],
   declarations: [

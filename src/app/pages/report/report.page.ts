@@ -12,14 +12,17 @@ import { DatePipe } from '@angular/common';
 import { EncodedDatePipe } from '../../utils/pipes/encoded-date/encoded-date.pipe';
 import { UtcTimePipe } from '../../utils/pipes/utc-time/utc-time.pipe';
 import { MinutesToTimePipe } from '../../utils/pipes/minutes-to-time/minutes-to-time';
+import { fadeInOut } from '../../core/animations';
 
 @Component({
   selector: 'chy-report',
   templateUrl: './report.page.html',
   styleUrls: ['./report.page.scss'],
+  animations: [fadeInOut(.5)]
 })
 export class ReportPage implements OnInit {
 
+  isLoading = false;
   toolbarColor: string;
   contrastColor: string;
   isDesktop: boolean;
@@ -84,9 +87,11 @@ export class ReportPage implements OnInit {
     } else {
       this.filteredReportData = this.reportData;
     }
+    this.calculateTotalTime();
   }
 
   async updateReport() {
+    this.isLoading = true;
 
     const from = encodeDate(new Date(this.from));
     const to = encodeDate(new Date(this.to));
@@ -97,12 +102,13 @@ export class ReportPage implements OnInit {
     ] as FirebaseQuery[];
 
     this.reportData = await this.workingHoursService.filterItems(query, false);
+    this.isLoading = false;
     this.filterProjects();
     this.calculateTotalTime();
   }
 
   private calculateTotalTime(): void {
-    this.totalTime = this.filteredReportData.reduce((acc, val) => +acc + +val.minutesSpent, 0);
+    this.totalTime = this.filteredReportData ? this.filteredReportData.reduce((acc, val) => +acc + +val.minutesSpent, 0) : 0;
   }
 
   exportCSV(): void {

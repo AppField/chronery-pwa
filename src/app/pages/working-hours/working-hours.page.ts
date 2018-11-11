@@ -4,7 +4,7 @@ import { WorkingHours } from '../../models/working-hours';
 import { ProjectsService } from '../../services/projects/projects.service';
 import { Subject } from 'rxjs';
 import { Project } from '../../models/project';
-import { appear, fadeScaleInOut } from '../../core/animations';
+import { appear, fadeInOut, fadeScaleInOut } from '../../core/animations';
 import { WorkingHoursService } from '../../services/working-hours/working-hours.service';
 import { takeUntil } from 'rxjs/operators';
 
@@ -15,12 +15,14 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./working-hours.page.scss'],
   animations: [
     appear,
-    fadeScaleInOut
+    fadeScaleInOut,
+    fadeInOut(.5)
   ]
 })
 export class WorkingHoursPage implements OnInit, OnDestroy {
   private destroy$ = new Subject<boolean>();
 
+  isLoading = false;
   toolbarColor: string;
   selectedDate: string | any;
   hideAddButton = false;
@@ -39,11 +41,13 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((projects: Project[]) => this.projects = projects);
 
+    this.isLoading = true;
     this.workingHoursService.items$
       .pipe(takeUntil(this.destroy$))
       .subscribe((workingHours: WorkingHours[]) => {
         this.workingHours = workingHours;
         this.hideAddButton = this.checkWorkingHoursCompletion();
+        this.isLoading = false;
       });
   }
 
@@ -63,8 +67,8 @@ export class WorkingHoursPage implements OnInit, OnDestroy {
   /* CRUD OPERATIONS */
 
   async getWorkingHours(): Promise<void> {
+    this.isLoading = true;
     const date = new Date(this.selectedDate);
-
     await this.workingHoursService.getWorkingHoursByDate(date);
     this.checkIfProjectsHaveChanged();
   }

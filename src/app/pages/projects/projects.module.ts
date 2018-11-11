@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ProjectsPage } from './projects.page';
 import { FilterModule } from '../../utils/pipes/filter.module';
+import { LoadingOverlayModule } from '../../components/loading-overlay/loading-overlay.module';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     FilterModule,
+    LoadingOverlayModule,
     RouterModule.forChild(routes)
   ],
   declarations: [ProjectsPage]

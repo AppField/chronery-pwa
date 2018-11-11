@@ -25,8 +25,8 @@
 
 <ion-content padding>
 
-  <ion-card class="table-container">
-    <table style="width:100%" class="table">
+  <ion-card class="table-container" style="min-height: 500px;">
+    <table style="width:100%" class="table" *ngIf="!isLoading; else loadingOverlay">
       <thead>
       <tr class="activated">
         <th padding>Datum</th>
@@ -50,6 +50,10 @@
       </tr>
       </tbody>
     </table>
+
+    <ng-template #loadingOverlay>
+      <chy-loading-overlay [@fadeInOut]></chy-loading-overlay>
+    </ng-template>
   </ion-card>
 
 </ion-content>

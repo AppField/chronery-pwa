@@ -3,21 +3,24 @@ import { AlertController, Platform, ToastController } from '@ionic/angular';
 import { Project } from '../../models/project';
 import { ProjectsService } from '../../services/projects/projects.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { appear } from '../../core/animations';
+import { delay, takeUntil } from 'rxjs/operators';
+import { appear, fadeInOut, fadeScaleInOut } from '../../core/animations';
 
 @Component({
   selector: 'chy-projects',
   templateUrl: './projects.page.html',
   styleUrls: ['./projects.page.scss'],
   animations: [
-    appear
+    appear,
+    fadeInOut(.5),
+    fadeScaleInOut
   ]
 })
 export class ProjectsPage implements OnInit, OnDestroy {
 
   private destroy$: Subject<boolean> = new Subject<boolean>();
 
+  isLoading: boolean;
   toolbarColor: string = null;
   showCancelButton = true;
   searchText = '';
@@ -34,10 +37,12 @@ export class ProjectsPage implements OnInit, OnDestroy {
       this.showCancelButton = false;
     }
 
+    this.isLoading = true;
     this.projectsService.items$
       .pipe(takeUntil(this.destroy$))
       .subscribe((projects: Project[]) => {
         this.projects = projects;
+        this.isLoading = false;
       });
   }
 
@@ -93,6 +98,7 @@ export class ProjectsPage implements OnInit, OnDestroy {
   }
 
   async showInactiveChange() {
+    this.isLoading = true;
     this.projectsService.updateHideInactive(this.hideInactive);
   }
 

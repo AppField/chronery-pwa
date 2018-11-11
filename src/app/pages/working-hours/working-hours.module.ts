@@ -11,6 +11,7 @@ import { ProjectModalComponent } from '../../components/project-modal/project-mo
 import { FilterModule } from '../../utils/pipes/filter.module';
 import { MinutesToTimeModule } from '../../utils/pipes/minutes-to-time/minutes-to-time.module';
 import { TimeInputComponent } from '../../components/time-input/time-input.component';
+import { LoadingOverlayModule } from '../../components/loading-overlay/loading-overlay.module';
 
 const routes: Routes = [
   {
@@ -27,6 +28,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     FilterModule,
     MinutesToTimeModule,
+    LoadingOverlayModule,
     RouterModule.forChild(routes)
   ],
   declarations: [WorkingHoursPage, WorkCardComponent, ProjectModalComponent, TimeInputComponent],
